@@ -1,0 +1,27 @@
+# --- Core Framework & Middleware ---
+Flask>=3.0.0
+Flask-Cors>=4.0.0
+Werkzeug>=3.0.0
+
+# --- Environment & Configuration ---
+python-dotenv>=1.0.0
+
+# --- HTTP Client for External APIs (Pl@ntNet, Perenual, Wikipedia) ---
+requests>=2.31.0
+
+# --- Database & ORM (MySQL Integration) ---
+Flask-SQLAlchemy>=3.1.0
+PyMySQL>=1.1.0
+cryptography>=42.0.0
+
+# --- Image Handling & Validation ---
+Pillow>=10.2.0
+
+# --- Production WSGI Server (Optional / Deployment) ---
+gunicorn>=21.2.0
+
+# For testing
+flasgger
+
+#for database connection
+flask_migrate
