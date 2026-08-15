@@ -17,7 +17,7 @@ class DevelopmentConfig(Config):
     db_host = os.getenv("DATABASE_HOST", "localhost")
     db_password = quote_plus(os.getenv("DATABASE_PASSWORD", "")) 
     db_port = os.getenv("DATABASE_PORT", "3306")
-    db_database = os.getenv("DATABASE_NAME", "expense_tracker")
+    db_database = os.getenv("DATABASE_NAME", "my_plant")
      
     SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{db_user}:{db_password}@{db_host}:{db_port}/{db_database}"
    
