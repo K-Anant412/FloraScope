@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flasgger import Swagger
 from flask_cors import CORS
 from flask_migrate import Migrate
+from flask_jwt_extended import JWTManager
 import os
 
 from config import config_options
@@ -10,6 +11,7 @@ from config import config_options
 db = SQLAlchemy()
 migrate = Migrate()
 cors = CORS()
+jwt = JWTManager()
 swagger_config = {
         "headers": [],
         "specs": [
@@ -71,8 +73,12 @@ def create_app(config_name="development"):
     db.init_app(app)
     migrate.init_app(app, db)
     cors.init_app(app, resources={r"/api/*": {"origins": "*"}})
+    jwt.init_app(app)
     swagger.init_app(app)
     
     from App import models
+    
+    from App.Routes.Auth import auth_route
+    app.register_blueprint(auth_route, url_prefix="/api/auth")
     
     return app

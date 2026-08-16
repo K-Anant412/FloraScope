@@ -25,3 +25,6 @@ flasgger
 
 #for database connection
 flask_migrate
+
+# for authentication
+flask_jwt_extended
