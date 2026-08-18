@@ -1,9 +1,14 @@
 from App.models import Scan_history, Plant, Plant_care, User
-from App.Utils.Response import error_response, success_response
+from App.Utils.Response import error_response, success_response, plant_identification_response
 from flask import request, Blueprint
+from dotenv import load_dotenv
+import os
 from werkzeug.utils import secure_filename
 from datetime import timedelta
 from App import db
+import requests
+
+load_dotenv()
 
 service_route = Blueprint("plant", __name__)
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'webp'}
@@ -28,24 +33,86 @@ def identify():
         description: Plant image to identify
     responses:
       200:
-        description: Image uploaded successfully
+        description: Plant identified successfully
       400:
-        description: No image provided, no file selected, or invalid file format
+        description: Invalid image
       500:
         description: Internal server error
     """
+
     try:
         if 'image' not in request.files:
-            return error_response(message="No image file provided in the request.", status_code=400)
+            return error_response(
+                message="No image file provided in the request.",
+                status_code=400
+            )
 
         file = request.files["image"]
-        
+
         if file.filename == '':
-            return error_response(message="No selected file.", status_code=400)
-        
+            return error_response(
+                message="No selected file.",
+                status_code=400
+            )
+
         if not allowed_file(file.filename):
-            return error_response(message="Invalid file format.")
-        
-        return success_response(message="File sent successfully.", data=file.filename)
+            return error_response(
+                message="Invalid file format.",
+                status_code=400
+            )
+
+        api_key = os.getenv("PLANTNET_API_KEY")
+
+        url = "https://my-api.plantnet.org/v2/identify/all"
+
+        params = {
+            "api-key": api_key
+        }
+
+        files = {
+            "images": (
+                file.filename,
+                file.stream,
+                file.mimetype
+            )
+        }
+
+        data = {
+            "organs": "auto"
+        }
+
+        response = requests.post(
+            url,
+            params=params,
+            files=files,
+            data=data,
+            timeout=30
+        )
+
+        if response.status_code != 200:
+            return error_response(
+                message=f"PlantNet API error: {response.text}",
+                status_code=response.status_code
+            )
+
+        raw_api_data = response.json()
+
+        return plant_identification_response(raw_api_data)
+
+    except requests.exceptions.Timeout:
+        return error_response(
+            message="Plant identification service timed out.",
+            status_code=504
+        )
+
+    except requests.exceptions.RequestException as e:
+        return error_response(
+            message=f"Plant identification service error: {str(e)}",
+            status_code=502
+        )
+
     except Exception as e:
-        return error_response(str(e))
+        return error_response(
+            message=str(e),
+            status_code=500
+        )
