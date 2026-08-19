@@ -1,8 +1,8 @@
-"""adding all required models to database
+"""changing previous table structure.
 
-Revision ID: 40b4ee10b78a
+Revision ID: 36999845a3d5
 Revises: 
-Create Date: 2026-08-15 10:10:24.800390
+Create Date: 2026-08-19 20:32:36.067483
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '40b4ee10b78a'
+revision = '36999845a3d5'
 down_revision = None
 branch_labels = None
 depends_on = None

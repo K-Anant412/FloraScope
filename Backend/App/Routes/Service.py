@@ -1,5 +1,5 @@
 from App.models import Scan_history, Plant, Plant_care, User
-from App.Utils.Response import error_response, success_response, plant_identification_response
+from App.Utils.Response import error_response, success_response, plant_identification_response, fetch_wikipedia_details, fetch_perenual_details
 from flask import request, Blueprint
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from dotenv import load_dotenv
@@ -66,33 +66,12 @@ def identify():
             )
 
         api_key = os.getenv("PLANTNET_API_KEY")
-
         url = "https://my-api.plantnet.org/v2/identify/all"
-
-        params = {
-            "api-key": api_key
-        }
-
-        files = {
-            "images": (
-                file.filename,
-                file.stream,
-                file.mimetype
-            )
-        }
-
-        data = {
-            "organs": "auto"
-        }
-
-        response = requests.post(
-            url,
-            params=params,
-            files=files,
-            data=data,
-            timeout=30
-        )
-
+        params = { "api-key": api_key }
+        files = { "images": ( file.filename, file.stream, file.mimetype ) }
+        data = { "organs": "auto" }
+        response = requests.post( url, params=params, files=files, data=data, timeout=30 )
+        
         if response.status_code != 200:
             return error_response(
                 message=f"PlantNet API error: {response.text}",
@@ -100,38 +79,56 @@ def identify():
             )
 
         raw_api_data = response.json()
-
-        formatted_response = plant_identification_response(raw_api_data)
-
-        formatted_data = formatted_response[0]["data"]
-        
-        best_match = formatted_data["best_match"]
-        
+        formatted_response, status_code = plant_identification_response(raw_api_data)
+        best_match = formatted_response["data"]["best_match"]
+        # formatted_data = formatted_response[0]["data"]
         if not best_match:
             return error_response(
                 message="No plant could be identified.",
                 status_code=404
-            )
+        )
         
         current_user_id = int(get_jwt_identity())
         scientific_name = best_match["scientific_name"]
         common_name = best_match["primary_common_name"]
         family = best_match["family"]
         confidence = best_match["confidence_score"]
+        
+        wiki_info = fetch_wikipedia_details(scientific_name, common_name)
+        perenual_info = fetch_perenual_details(scientific_name=scientific_name).first()
             
+        details = os.getenv("PERENUAL_API_KEY")
+        details_url = f"GET https://perenual.com/api/v2/species-list?key={details}"
         plant = Plant.query.filter_by(
             scientific_name = scientific_name
         ).first()
-        if not plant:
-            
+        if not plant:  
             plant = Plant(
                 scientific_name=scientific_name,
                 common_name=common_name,
-                family=family
+                family=family,
+                description=wiki_info.get("description"),
+                image_url=wiki_info.get("image_url") or perenual_info.get("default_image", {}).get("regular_url"),
+                pet_toxicity_level="Toxic" if perenual_info.get("poisonous_to_pets") else "Non-toxic",
+                human_toxicity_level="Toxic" if perenual_info.get("poisonous_to_humans") else "Non-toxic"
             )
             db.session.add(plant)
             db.session.flush()
-            
+        
+        care = Plant_care.query.filter_by(plant_id=plant.id).first()
+        if not care:
+            sunlight = perenual_info.get("sunlight", [])
+            care = Plant_care(
+                plant_id=plant.id,
+                sunlight_requirement=", ".join(sunlight) if isinstance(sunlight, list) else str(sunlight),
+                soil_type=", ".join(perenual_info.get("soil", [])) if perenual_info.get("soil") else None,
+                watering_frequency=7 if perenual_info.get("watering") == "Average" else 14,
+                watering_unit="days",
+                min_temp=perenual_info.get("hardiness", {}).get("min"),
+                max_temp=perenual_info.get("hardiness", {}).get("max")
+            )
+            db.session.add(care)
+        
         scan = Scan_history(
             user_id = current_user_id,
             plant_id=plant.id,
@@ -146,22 +143,14 @@ def identify():
         return formatted_response
 
     except requests.exceptions.Timeout:
-        return error_response(
-            message="Plant identification service timed out.",
-            status_code=504
-        )
-
+            db.session.rollback()
+            return error_response(message="Plant identification service timed out.", status_code=504)
     except requests.exceptions.RequestException as e:
-        return error_response(
-            message=f"Plant identification service error: {str(e)}",
-            status_code=502
-        )
-
+            db.session.rollback()
+            return error_response(message=f"Plant identification service error: {str(e)}", status_code=502)
     except Exception as e:
-        return error_response(
-            message=str(e),
-            status_code=500
-        )
+            db.session.rollback()
+            return error_response(message=str(e), status_code=500)
         
   
 @service_route.route("/history", methods=["GET"])
