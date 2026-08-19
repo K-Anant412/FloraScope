@@ -8,19 +8,13 @@ class User(db.Model):
     __tablename__ = "user"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-
     name = db.Column(db.String(150), nullable=False)
-
     email = db.Column(db.String(255), unique=True, nullable=False, index=True)
-
     password = db.Column(db.String(255), nullable=False)
-
     created_at = db.Column(
         db.DateTime, default=lambda: datetime.now(timezone.utc), nullable=False
     )
-
     is_active = db.Column(db.Boolean, default=True, nullable=False)
-
     scans = db.relationship(
         "Scan_history", backref="user", lazy=True, cascade="all, delete-orphan"
     )
@@ -58,19 +52,12 @@ class Scan_history(db.Model):
     __tablename__ = "scan_history"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-
     plant_id = db.Column(db.Integer, db.ForeignKey("plant.id"), nullable=True)
-
     image_path = db.Column(db.String(600), nullable=False)
-
     identified_name = db.Column(db.String(300))
-
     confidence_score = db.Column(db.Float, default=0.0)
-
     identification_status = db.Column(db.String(50), default="success")
-
     scan_timestamp = db.Column(
         db.DateTime, default=lambda: datetime.now(timezone.utc), nullable=False
     )

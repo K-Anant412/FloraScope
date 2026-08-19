@@ -127,7 +127,7 @@ def login_user():
             return error_response(message="Password wrong.", status_code=401)
         
         expires = timedelta(days=7)
-        access_token = create_access_token(identity=(user.id), expires_delta=expires)
+        access_token = create_access_token(identity=str(user.id), expires_delta=expires)
         
         return auth_response(message="Login successful", status_code=200, access=access_token)
     except Exception as e:
