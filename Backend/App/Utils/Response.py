@@ -1,3 +1,6 @@
+import os
+import requests
+
 def success_response(message, data=None, status_code=200):
     return({
         "message": message,
@@ -83,3 +86,44 @@ def plant_identification_response(
         "success": True,
         "data": formatted_data,
     }), status_code
+    
+def fetch_wikipedia_details(scientific_name, common_name=None):
+    """Fetches plant description and thumbnail from Wikipedia REST API."""
+    headers = {"User-Agent": "PlantApp/1.0 (contact@yourdomain.com)"}
+    names_to_try = [scientific_name]
+    if common_name:
+        names_to_try.append(common_name)
+
+    for name in names_to_try:
+        url = f"https://en.wikipedia.org/api/rest_v1/page/summary/{name.replace(' ', '_')}"
+        try:
+            res = requests.get(url, headers=headers, timeout=5)
+            if res.status_code == 200:
+                data = res.json()
+                return {
+                    "description": data.get("extract"),
+                    "image_url": data.get("thumbnail", {}).get("source")
+                }
+        except requests.RequestException:
+            continue
+    return {}
+
+
+def fetch_perenual_details(scientific_name):
+    """Fetches care guidelines and toxicity info from Perenual API."""
+    api_key = os.getenv("PERENUAL_API_KEY")
+    if not api_key:
+        return {}
+
+    search_url = f"https://perenual.com/api/v2/species-list?key={api_key}&q={scientific_name}"
+    try:
+        search_res = requests.get(search_url, timeout=5).json()
+        data_list = search_res.get("data", [])
+        if not data_list:
+            return {}
+
+        species_id = data_list[0].get("id")
+        details_url = f"https://perenual.com/api/v2/species/details/{species_id}?key={api_key}"
+        return requests.get(details_url, timeout=5).json()
+    except requests.RequestException:
+        return {}
