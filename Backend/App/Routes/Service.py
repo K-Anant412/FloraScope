@@ -234,6 +234,7 @@ def show_all_plants():
         
     except Exception as e:
         return error_response(str(e))
+ 
         
 @service_route.route("/plant_details/<int:id>", methods=["GET"])
 def show_plant_details(id):
@@ -281,3 +282,51 @@ def show_plant_details(id):
         
     except Exception as e:
         return error_response(str(e))        
+
+
+@service_route.route("/plant_history/<int:id>", methods=["GET"])
+def show_plant_history(id):
+    """
+    Get history about plant
+    ---
+    tags:
+        - Plant history
+    parameters:
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: Plant id for history
+    responses:
+        200:
+            description: History of the plant
+        400:
+            description: Invalid inputs
+        500:
+            description: Internal server error
+    """    
+    try:
+        data = Scan_history.query.filter_by(plant_id=id).all()
+        
+        if not data:
+            return error_response(
+                message="History not found.",
+                status_code=404
+            )
+        
+        plant_history = []
+        for info in data:
+            plant_history.append({
+                "image_path": info.image_path,
+                "name": info.identified_name,
+                "confidence_score": info.confidence_score,
+                "timestamp": info.scan_timestamp 
+            })
+
+        return success_response(
+            message="Plant history",
+            data=plant_history
+        )
+        
+    except Exception as e:
+        return error_response(str(e))
