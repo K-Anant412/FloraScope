@@ -330,3 +330,48 @@ def show_plant_history(id):
         
     except Exception as e:
         return error_response(str(e))
+
+
+@service_route.route("/remove_history", methods=["DELETE"])
+@jwt_required()
+def remove_all_history():
+    """
+    Removed all history
+    ---
+    tags:
+        - Remove history
+    responses:
+        200:
+            description: History found successfully
+        404:
+            description: History not found
+    """
+    try:
+        user_id = int(get_jwt_identity())
+        user = User.query.get(user_id)
+        
+        if not user:
+            return error_response(message="Unauthorized user.")
+        
+        plant_ids = (
+        db.session.query(Scan_history.plant_id)
+        .filter(Scan_history.user_id == user_id, Scan_history.plant_id.isnot(None))
+        .distinct()
+        .all()
+        )
+        
+        plant_id_list = [p[0] for p in plant_ids]
+        
+        Scan_history.query.filter_by(user_id=user_id, plant_id=None).delete(synchronize_session=False)
+        
+        if plant_id_list:
+            plants_to_delete = Plant.query.filter(Plant.id.in_(plant_id_list)).all()
+            for plant in plants_to_delete:
+                db.session.delete(plant)
+
+        db.session.commit()
+        
+        return success_response(message="History deleted.")
+    
+    except Exception as e:
+        return error_response(str(e))
