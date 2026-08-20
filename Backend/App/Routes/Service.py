@@ -43,7 +43,6 @@ def identify():
       500:
         description: Internal server error
     """
-
     try:
         if 'image' not in request.files:
             return error_response(
@@ -95,7 +94,7 @@ def identify():
         confidence = best_match["confidence_score"]
         
         wiki_info = fetch_wikipedia_details(scientific_name, common_name)
-        perenual_info = fetch_perenual_details(scientific_name=scientific_name).first()
+        perenual_info = fetch_perenual_details(scientific_name=scientific_name)
             
         details = os.getenv("PERENUAL_API_KEY")
         details_url = f"GET https://perenual.com/api/v2/species-list?key={details}"
@@ -160,7 +159,7 @@ def history():
     Get All History for Logged-in User
     ---
     tags:
-      - User History
+      - Plant history
     security:
       - Bearer: []
     responses:
@@ -197,4 +196,88 @@ def history():
     except Exception as e:
         return error_response(str(e))      
   
+
+@service_route.route("/show_plants", methods=["GET"])
+# @jwt_required()
+def show_all_plants():
+    """
+    Get all plants
+    ---
+    tags:
+        - Plant List
+    responses:
+        200:
+            description: A list of plants
+    """
+    try:
+        data = Plant.query.all()
         
+        if not data:
+            return error_response(
+                message="No data found.",
+                status_code=404
+            )
+            
+        plants = []
+        for plant in data:
+            plants.append({
+                "id": plant.id,
+                "name": plant.common_name,
+                "scientific_name":plant.scientific_name,
+                "description": plant.description
+            })
+        
+        return success_response(
+            message="Plants data",
+            data=plants
+        )
+        
+    except Exception as e:
+        return error_response(str(e))
+        
+@service_route.route("/plant_details/<int:id>", methods=["GET"])
+def show_plant_details(id):
+    """
+    Get inforamtion about plant
+    ---
+    tags:
+        - Plant details
+    parameters:
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: Plant id for details
+    responses:
+        200:
+            description: Details of the plant
+        400:
+            description: Invalid inputs
+        500:
+            description: Internal server error
+    """
+    try:
+        data = Scan_history.query.filter_by(plant_id=id).all()
+        
+        if not data:
+            return error_response(message="No such plant stored yet.")
+        
+        plant = []
+        for info in data:
+            plant.append({
+                "scan_id": info.id,
+                "identified_name": info.identified_name,
+                "confidence_score": info.confidence_score,
+                "image_path": info.plant.image_url if info.plant else None,
+                "scan_timestamp": info.scan_timestamp,
+                "common_name": info.plant.common_name if info.plant else None,
+                "scientific_name": info.plant.scientific_name if info.plant else None,
+            })
+            
+        return success_response(
+            message="Plant details",
+            data=plant
+        )
+        
+    except Exception as e:
+        return error_response(str(e))        
