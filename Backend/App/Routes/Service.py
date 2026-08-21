@@ -375,3 +375,131 @@ def remove_all_history():
     
     except Exception as e:
         return error_response(str(e))
+
+
+@service_route.route("/remove_history_byid/<int:plant_id>", methods=["DELETE"])
+@jwt_required()
+def delete_single_plant_history(plant_id):
+    """
+    Removed history
+    ---
+    tags:
+        - Remove history
+    security:
+      - Bearer: []
+    parameters:
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: Plant id for history
+    responses:
+        200:
+            description: History found successfully
+        404:
+            description: History not found
+    """
+    try:
+        current_user_id = get_jwt_identity()
+        
+        user_scan = Scan_history.query.filter_by(
+            user_id=current_user_id, 
+            plant_id=plant_id
+        ).first()
+        
+        if not user_scan:
+            return error_response(
+                message="User not found.",
+                status_code=404
+            )
+        
+        plant = Plant.query.get(plant_id)
+        if not plant:
+            return error_response(
+                message="Plant not found.",
+                status_code=404
+            )
+        
+        db.session.delete(plant)
+        db.session.commit()
+        
+        return success_response(message="Plant removed from history.")
+    
+    except Exception as e:
+        return error_response(str(e))
+    
+    
+    
+@service_route.route("/user/plants/<int:plant_id>/care", methods=["GET"])
+@jwt_required()
+def get_plant_care_details(plant_id):
+    """
+    Get care inforamtion about plant
+    ---
+    tags:
+        - Plant details
+    parameters:
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: Plant id for details
+    responses:
+        200:
+            description: Care details of the plant
+        400:
+            description: Invalid inputs
+        500:
+            description: Internal server error
+    """
+    try:
+        current_user_id = get_jwt_identity()
+        scan = (
+            Scan_history.query.filter_by(user_id=current_user_id, plant_id=plant_id)
+            .order_by(Scan_history.scan_timestamp.desc())
+            .first()
+        )
+        
+        if not scan:
+            return error_response(message="Scan history not found.")
+        
+        plant = Plant.query.get(plant_id)
+        if not plant:
+            return error_response(message="Plant not found.")
+        
+        care = Plant_care.query.filter_by(plant_id=plant_id).first()
+        
+        response_data = {
+            "plant_id": plant.id,
+            "common_name": plant.common_name or "Unknown Plant",
+            "scientific_name": plant.scientific_name or "N/A",
+            "image_url": plant.image_url,
+            "scan_details": {
+                "scan_id": scan.id,
+                "identified_name": scan.identified_name or plant.common_name,
+                "confidence_score": round(scan.confidence_score, 2) if scan.confidence_score is not None else 0.0,
+                "scan_timestamp": scan.scan_timestamp.isoformat() if scan.scan_timestamp else None,
+                "identification_status": scan.identification_status
+            },
+            "care_instructions": {
+                "watering_frequency": care.watering_frequency if (care and care.watering_frequency is not None) else 1,
+                "watering_unit": (care.watering_unit if (care and care.watering_unit) else "day"),
+                "sunlight_requirement": (care.sunlight_requirement if (care and care.sunlight_requirement) else "Moderate indirect sunlight"),
+                "soil_type": (care.soil_type if (care and care.soil_type) else "Well-draining potting mix"),
+                "temperature_range": {
+                    "min_temp": care.min_temp if (care and care.min_temp is not None) else 18.0,
+                    "max_temp": care.max_temp if (care and care.max_temp is not None) else 28.0,
+                    "unit": "°C"
+                },
+                "humidity": care.humidity if (care and care.humidity is not None) else 50.0
+            },
+            "toxicity": {
+                "pet": plant.pet_toxicity_level or "Unknown",
+                "human": plant.human_toxicity_level or "Unknown"
+            }
+        }  
+        
+        return success_response(message="Plant care data.", data=response_data)
+    
+    except Exception as e:
+        return error_response(str(e))
