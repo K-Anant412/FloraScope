@@ -340,6 +340,8 @@ def remove_all_history():
     ---
     tags:
         - Remove history
+    security:
+        - Bearer: []
     responses:
         200:
             description: History found successfully
@@ -389,7 +391,7 @@ def delete_single_plant_history(plant_id):
       - Bearer: []
     parameters:
         - in: path
-          name: id
+          name: plant_id
           type: integer
           required: true
           description: Plant id for history
@@ -400,7 +402,7 @@ def delete_single_plant_history(plant_id):
             description: History not found
     """
     try:
-        current_user_id = get_jwt_identity()
+        current_user_id = int(get_jwt_identity())
         
         user_scan = Scan_history.query.filter_by(
             user_id=current_user_id, 
@@ -429,15 +431,16 @@ def delete_single_plant_history(plant_id):
         return error_response(str(e))
     
     
-    
-@service_route.route("/user/plants/<int:plant_id>/care", methods=["GET"])
+@service_route.route("/care/<int:id>", methods=["GET"])
 @jwt_required()
-def get_plant_care_details(plant_id):
+def get_plant_care_details(id):
     """
     Get care inforamtion about plant
     ---
     tags:
         - Plant details
+    security:
+        - Bearer: []
     parameters:
         - in: path
           name: id
@@ -453,9 +456,9 @@ def get_plant_care_details(plant_id):
             description: Internal server error
     """
     try:
-        current_user_id = get_jwt_identity()
+        current_user_id = int(get_jwt_identity())
         scan = (
-            Scan_history.query.filter_by(user_id=current_user_id, plant_id=plant_id)
+            Scan_history.query.filter_by(user_id=current_user_id, plant_id=id)
             .order_by(Scan_history.scan_timestamp.desc())
             .first()
         )
@@ -463,11 +466,11 @@ def get_plant_care_details(plant_id):
         if not scan:
             return error_response(message="Scan history not found.")
         
-        plant = Plant.query.get(plant_id)
+        plant = Plant.query.get(id)
         if not plant:
             return error_response(message="Plant not found.")
         
-        care = Plant_care.query.filter_by(plant_id=plant_id).first()
+        care = Plant_care.query.filter_by(plant_id=id).first()
         
         response_data = {
             "plant_id": plant.id,
