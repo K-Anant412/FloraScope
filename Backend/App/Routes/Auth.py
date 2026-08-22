@@ -131,6 +131,4 @@ def login_user():
         
         return auth_response(message="Login successful", status_code=200, access=access_token)
     except Exception as e:
-        return error_response(str(e))
-
-    
+        return error_response(str(e))   
