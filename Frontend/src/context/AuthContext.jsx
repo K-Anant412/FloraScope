@@ -1,9 +1,51 @@
-import React from 'react'
+import React, { createContext, useState, useEffect, Children } from 'react'
+import { authService } from '../service/api';
 
-const AuthContext = () => {
+export const AuthContext = createContext(null);
+
+
+export const AuthProvider = ({children}) =>{
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(()=> {
+    const savedUser = localStorage.getItem('user');
+    const token = localStorage.getItem('token');
+
+    if (savedUser && token){
+      setUser(JSON.parse(savedUser));
+    }
+    setLoading(false);
+  }, []);
+
+  const loginUser = async(email, password) => {
+    try {
+      const response =await authService.login(email, password);
+      const { access_token, user: userData } = response.data;
+
+      localStorage.setItem('token', access_token);
+      localStorage.setItem('user', JSON.stringify(userData));
+
+      setUser(userData);
+
+      return {success: true};
+
+    } catch (err) {
+      const errMessage = err.response?.data?.error || err.response?.data?.message || err.message || 'Login failed';
+      return { success: false,  error: errMessage};
+    }
+
+    }
+  const logoutUser = () =>{
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      setUser(null);
+    };
+
   return (
-    <div>AuthContext</div>
-  )
-}
-
-export default AuthContext
+    <AuthContext.Provider value={{ user, loading, loginUser, logoutUser }}>
+      {!loading && children }
+    </AuthContext.Provider>
+  )  
+    
+};
