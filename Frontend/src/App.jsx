@@ -5,6 +5,7 @@ import desktop_bg_sticker from '../public/Desktop_image/desktop_bg_sticker.png';
 import phone_bg from '../public/Phone_image/phone_bg.jpg';
 import phone_bg_sticker from '../public/Phone_image/phone_bg_sticker.png';
 import AuthPage from './pages/AuthPage';
+import Home from './pages/Home';
 import './App.css'
 
 function App() {
@@ -19,15 +20,16 @@ function App() {
     <>
       <section className="relative w-screen h-screen overflow-hidden">
 
-        {/* Desktop background */}
-        <div
+        <Home />
+        
+        {/* <AuthPage /> */}
+        {/* <div
           className="absolute inset-0 hidden md:block bg-center bg-cover"
           style={{
             backgroundImage: `url(${desktop_bg})`,
           }}
         />
 
-        {/* Mobile background */}
         <div
           className="absolute inset-0 block md:hidden bg-center bg-cover"
           style={{
@@ -35,10 +37,8 @@ function App() {
           }}
         />
 
-          <AuthPage />
-        
+          
 
-        {/* Desktop foreground */}
         <div
           className="absolute inset-0 hidden md:block z-40 bg-center bg-cover pointer-events-none"
           style={{
@@ -46,13 +46,12 @@ function App() {
           }}
         />
 
-        {/* Mobile foreground */}
         <div
           className="absolute inset-0 block md:hidden z-40 bg-center bg-cover pointer-events-none"
           style={{
             backgroundImage: `url(${phone_bg_sticker})`,
           }}
-        />
+        /> */}
 
       </section>
     </>
