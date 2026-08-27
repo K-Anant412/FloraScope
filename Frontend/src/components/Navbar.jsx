@@ -4,7 +4,7 @@ import { IoSearch } from "react-icons/io5";
 import { CiMenuKebab } from "react-icons/ci";
 const Navbar = () => {
   return (
-    <nav className='shrink-0 h-15 w-full md:p-6 p-3 md:border-r-2 border-b-2 flex items-center bg-white'>
+    <nav className='shrink-0 h-15 w-full md:p-6 p-3 md:border-r-2 border-b-2 flex items-center bg-white sticky'>
 
             {/* ---Logo visible only for desktop view--- */}
             <h1 className='shrink-0 w-full flex md:w-fit h-full p-2 text-3xl font-semibold font-["Fredoka"] items-center md:justify-center text-gray-600'>
