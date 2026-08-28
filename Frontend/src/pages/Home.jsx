@@ -1,49 +1,45 @@
 import React, { useState, useEffect } from 'react'
 import Navbar from '../components/Navbar'
+import HeroSection from '../components/HeroSection'
+import { CiLocationArrow1 } from "react-icons/ci";
 const Home = () => {
   return (
     <>
         <section className='z-50 w-full h-full flex flex-col overflow-x-hidden overflow-y-auto scrollbar-none bg-[#E8F5E9]'>
-
-          {/*  ---Navbar--- */}
-          <Navbar />
-
+            {/*  ---Navbar--- */}
+            <Navbar />
           <div className='w-full min-h-full h-fit md:p-10 flex flex-col items-center '>
+            <HeroSection />
 
-            <div className='w-full h-full flex md:flex-row flex-col items-center justify-center'>
+            {/*  Middle body content */}
+            <div className='w-full min-h-full flex flex-col md:flex-row items-center justify-center border border-black relative md:-top-20 -top-10'>
 
-              {/*  left Box  */}
-              <div className='w-full md:w-[50%] h-full flex flex-col md:justify-center items-center md:p-0 p-3 md:pt-0 pt-10 relative md:left-30'>
-                  <div className='md:w-[60%] w-full h-60 md:h-70 border-2 rounded-3xl bg-white border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]'>
+              <div className='w-full h-full flex items-center justify-center border gap-3'>
 
-                  </div>
-                  <h1 className='w-full md:w-[60%] text-4xl md:text-5xl font-["nunito"] font-extrabold mt-4 pl-1'>
-                      Plant Information
+                <div className='flex flex-col md:max-w-[50%] w-full md:h-fit h-full pt-10 md:pt-0 gap-2 border'>
+                  <h1 className='w-fit h-fit font-["nunito"] font-bold text-2xl md:text-4xl flex items-center justify-center gap-3'>
+                    <CiLocationArrow1 className='rotate-45' />
+                    Discover your plant.
                   </h1>
-                  <h1 className='w-full md:w-[60%] text-4xl md:text-5xl font-["nunito"] font-extrabold pl-1'>
-                      By Image
+                  <h1 className='hidden w-fit mb-4 h-fit font-["nunito"] font-bold text-2xl md:text-4xl md:flex items-center justify-center gap-3'>
+                    <CiLocationArrow1 className='rotate-45' />
+                    Learn how to help it thrive.
                   </h1>
-                  <h1 className='w-full md:w-[60%] mt-2 text-3xl md:text-4xl font-["nunito"] font-extrabold flex items-center gap-3 pl-1'>
-                      100% 
-                      <p className=' w-fit h-fit p-1 border rounded-3xl px-3 bg-blue-300 text-white' >Free</p>
-                  </h1>
-              </div>
 
-              {/*  right Box  */}
-              <div className='flex md:w-[50%] w-full h-full flex-col items-center justify-center md:p-0 p-3'>
-
-                <div className='md:w-[60%] w-full flex-col h-50 md:h-70 border-2 rounded-3xl bg-white mt-4 relative md:-left-10 border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)] flex items-center justify-center gap-4'>
-                    <button className='w-fit h-fit md:text-3xl font-["nunito"] font-extrabold border p-2 md:px-4 px-3 text-2xl rounded-3xl bg-blue-300 text-white transition-all duration-300 hover:bg-blue-400 shadow-2xl hover:shadow-xl'>
-                      Upload Image
-                    </button>
-                    <p className='font-["nunito"] text-xl font-bold'>or, drop a file</p>
+                    <p className='w-full md:max-w-[70%] h-fit text-xl px-3'>           
+                      Simply <span className="font-bold">upload or capture a photo</span>, and get detailed information about the plant, including its <span className="font-bold">name, species, and characteristics</span> and more. 
+                    </p>
+                    <p className='hidden md:flex w-full md:max-w-[70%] h-fit text-xl px-3'>
+                      Beyond identification, explore personalized care guidance with helpful tips on watering, sunlight, soil, temperature, and other essential needs to help your plants grow healthy and thrive.
+                    </p>
                 </div>
-                
 
+                <div className='border md:flex hidden w-[30%] h-full border-black'>
+
+                </div>
               </div>
 
             </div>
-
           </div>
 
         </section>
