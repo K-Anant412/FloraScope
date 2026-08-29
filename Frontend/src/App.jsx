@@ -22,7 +22,6 @@ function App() {
 
         <Home />
         
-        {/* <AuthPage /> */}
         {/* <div
           className="absolute inset-0 hidden md:block bg-center bg-cover"
           style={{
@@ -38,6 +37,7 @@ function App() {
         />
 
           
+          <AuthPage />
 
         <div
           className="absolute inset-0 hidden md:block z-40 bg-center bg-cover pointer-events-none"
