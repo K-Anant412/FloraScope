@@ -6,6 +6,8 @@ import phone_bg from '../public/Phone_image/phone_bg.jpg';
 import phone_bg_sticker from '../public/Phone_image/phone_bg_sticker.png';
 import AuthPage from './pages/AuthPage';
 import Home from './pages/Home';
+
+import { Route, Routes, Navigate } from 'react-router-dom';
 import './App.css'
 
 function App() {
@@ -21,6 +23,15 @@ function App() {
       <section className="relative w-screen h-screen overflow-hidden">
 
         <Home />
+        
+
+        {/* <Routes>
+          <Route path="/" element={<Home/>} />
+          <Route path="/login" element={<AuthPage/>} />
+          <Route path="/register" element={<AuthPage/>} />
+          <Route path="/profile" element={<Home/>} />
+          <Route path='*' element={<Navigate to="/" replace />} />
+        </Routes> */}
         
         {/* <div
           className="absolute inset-0 hidden md:block bg-center bg-cover"
