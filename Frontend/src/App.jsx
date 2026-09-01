@@ -22,8 +22,7 @@ function App() {
     <>
       <section className="relative w-screen h-screen overflow-hidden">
 
-        <Home />
-        
+        {/* <Home /> */}   
 
         {/* <Routes>
           <Route path="/" element={<Home/>} />
@@ -33,7 +32,7 @@ function App() {
           <Route path='*' element={<Navigate to="/" replace />} />
         </Routes> */}
         
-        {/* <div
+        <div
           className="absolute inset-0 hidden md:block bg-center bg-cover"
           style={{
             backgroundImage: `url(${desktop_bg})`,
@@ -62,7 +61,7 @@ function App() {
           style={{
             backgroundImage: `url(${phone_bg_sticker})`,
           }}
-        /> */}
+        />
 
       </section>
     </>

@@ -1,27 +1,42 @@
-import React, { useState, useEffect, createContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { AuthContext } from '../context/AuthContext';
 import { useForm } from 'react-hook-form';
 import { useNavigate, Link } from 'react-router-dom';
+import { authService } from '../service/api';
 
 const AuthPage = () => {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [isSignin, setIsSignin] = useState(false);
-    const { loginUser } = createContext(AuthContext);
+    const { loginUser } = useContext(AuthContext);
     const [serverError, setServerError] = useState('');
     const navigate = useNavigate();
 
     const onSubmit = async (data) => {
-        setServerError('');
-        const result = await loginUser(data.email, data.password);
-
-        if( result.success ){
-            // navigate();
-            alert("Login success");
+         if (isSignin){     
+             setServerError('');
+             const result = await loginUser(data.email, data.password);
+             
+             if( result.success ){
+                 alert("Login success");
+                }else{
+                    setServerError(result.error);
+                } 
         }else{
-            setServerError(result.error);
-        }
+            setServerError('');
+            const response = await authService.register(data.name, data.email, data.password);
+
+            if ( response.success ){
+                alert("Registration Successfull");
+            }else{
+                setServerError(response.error);
+            }
+        } 
+    
+        
     };
+
+
 
 
   return (
@@ -88,7 +103,8 @@ const AuthPage = () => {
                                 </div>
 
                                 <button 
-                                    className='border rounded-3xl w-[60%] h-fit p-2 shadow-xl font-bold text-xl flex items-center justify-center bg-[#4F9D4D] text-white'
+                                    type='submit'
+                                    className='border cursor-pointer rounded-3xl w-[60%] h-fit p-2 shadow-xl font-bold text-xl flex items-center justify-center bg-[#4F9D4D] text-white'
                                 >
                                     { isSignin ? "Register" : "Log-in"}
                                 </button>
@@ -114,13 +130,18 @@ const AuthPage = () => {
                                 <div className='w-full h-fit m-4 flex flex-col items-center justify-center'>
 
                                     <input 
-                                        type="text" 
+                                        type="email" 
+                                        {...register("email", { 
+                                            required: "Email is required",
+                                            pattern: { value: /^\S+@\S+$/i, message: "Invalid email address" }
+                                        })}
                                         placeholder='@email'  
                                         className='w-[90%] md:w-[80%] h-10 m-2 bg-[#E8F5E9] border-2 rounded-3xl border-white md:border-gray-400 placeholder:text-xl pl-3 outline-none focus:border-[#A8D58D] focus:ring-2 focus:ring-[#A8D58D]'  
                                         />
 
                                     <input 
-                                        type="password" 
+                                        type="password"
+                                        {...register("password", { required: "Password is required" })} 
                                         placeholder='password'  
                                         className='w-[90%] md:w-[80%] h-10 m-2 bg-[#E8F5E9] border-2 rounded-3xl border-white md:border-gray-400 placeholder:text-xl pl-3 outline-none focus:border-[#A8D58D] focus:ring-2 focus:ring-[#A8D58D]'  
                                         />
@@ -129,7 +150,7 @@ const AuthPage = () => {
 
                                 <button 
                                     type="submit"
-                                    className='border rounded-3xl w-[60%] h-fit p-2 shadow-xl font-bold text-xl flex items-center justify-center bg-[#4F9D4D] text-white'
+                                    className='border cursor-pointer rounded-3xl w-[60%] h-fit p-2 shadow-xl font-bold text-xl flex items-center justify-center bg-[#4F9D4D] text-white'
                                 >
                                     { isSignin ? "Register" : "Log-in"}
                                 </button>
