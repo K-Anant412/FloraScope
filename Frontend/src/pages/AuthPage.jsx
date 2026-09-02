@@ -13,7 +13,7 @@ const AuthPage = () => {
     const navigate = useNavigate();
 
     const onSubmit = async (data) => {
-         if (isSignin){     
+         if (!isSignin){     
              setServerError('');
              const result = await loginUser(data.email, data.password);
              
@@ -23,27 +23,28 @@ const AuthPage = () => {
                     setServerError(result.error);
                 } 
         }else{
-            setServerError('');
-            const response = await authService.register(data.name, data.email, data.password);
+            try {
+                setServerError('');
+                const response = await authService.register(data.name, data.email, data.password);
 
-            if ( response.success ){
-                alert("Registration Successfull");
-            }else{
-                setServerError(response.error);
+                if ( response.data.success ){
+                    alert("Registration Successfull");
+                }else{
+                    setServerError(response.error);
+                }   
+            } catch (error) {
+                console.log(error.response);
             }
+            
         } 
     
         
     };
 
-
-
-
   return (
-    <div className="relative z-30 w-full h-full overflow-hidden flex items-center justify-center md:pl-20 p-5">
-
+    <>
         {/*  Login card  */}
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} className='relative z-30 w-full h-full overflow-hidden flex items-center justify-center md:pl-20 p-5'>
 
             <div className="border rounded-2xl md:w-[65%] w-full md:h-[65%] h-[60%] relative md:-top-10 border-white/40 -top-28 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)] flex items-center md:p-0 p-3 bg-[#E8F5E9]">
                 
@@ -76,7 +77,7 @@ const AuthPage = () => {
 
                                     <input 
                                         type="text" 
-                                        {...register("username", {
+                                        {...register("name", {
                                             required: "Username is required"
                                         })}
                                         placeholder='username'  
@@ -181,7 +182,7 @@ const AuthPage = () => {
             </div>
 
         </form>
-    </div>
+    </>
   )
 }
 
