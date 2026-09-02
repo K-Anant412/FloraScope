@@ -2,9 +2,6 @@ import axios from "axios"
 
 const API = axios.create({
     baseURL: "/api",
-    headers: {
-        "Content-Type": "application/json"
-    },
 });
 
 API.interceptors.request.use(
@@ -13,6 +10,11 @@ API.interceptors.request.use(
         if ( token ){
             config.headers.Authorization = `Bearer ${token}`;
         }
+
+        if(config.data instanceof FormData) {
+            delete config.headers["Content-Type"];
+        }
+
         return config;
     },
     ( error ) => Promise.reject( error )
@@ -24,13 +26,13 @@ export const authService = {
 }
 
 export const plantService = {
-    plantIdentify: ( filename ) => API.post('/plant/identify', { filename }),
+    plantIdentify: ( formData ) => API.post('/plant/identify', formData),
     plantHistory: () => API.get('/plant/history'),
     plantData: () => API.get('/plant/show_plants'),
-    plantDetails: ( id ) => API.get( '/plant/plant_details', { id }),
+    plantDetails: ( id ) => API.get( '/plant/plant_details', {params: { id }}),
     plantRemoveHistory: () => API.delete('/plant/remove_history'),
-    plantRemoveById: ( id ) => API.delete('/plant/remove_history_byid', { id }),
-    plantCareDetails: ( id ) => API.get('/plant/care', { id })
+    plantRemoveById: ( id ) => API.delete('/plant/remove_history_byid', {params: { id }}),
+    plantCareDetails: ( id ) => API.get('/plant/care', {params: { id }})
 }
 
 export default API;

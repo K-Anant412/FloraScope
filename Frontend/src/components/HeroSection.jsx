@@ -1,21 +1,59 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { plantService } from '../service/api';
 
-const HeroSection = () => {
-  
-    const plantImageRef = useRef(null);
 
+const HeroSection = () => {
+    const plantImageRef = useRef(null);
     const handleButtonClick = () => {
         plantImageRef.current?.click();
     };
+    const [plant, setPlant] = useState(null);
+    const [alternatives, setAlternatives] = useState([]);
+    const [loading, setLoading] = useState(false);
 
+    const plantInfo = async (formData) => {
+    setLoading(true);
+    try {
+        const response = await plantService.plantIdentify(formData);
+        const { best_match, alternatives: rawAlts, detected_organ } = response.data.data;
+
+        setPlant({
+        primaryName: best_match.primary_common_name || best_match.common_names?.[0] || "Unknown Plant",
+        scientificName: best_match.scientific_name,
+        fullName: best_match.full_scientific_name,
+        family: best_match.family,
+        confidence: best_match.confidence_percentage,
+        detectedOrgan: detected_organ,
+        otherNames: best_match.common_names?.slice(1) || [],
+        });
+
+        const topAlts = (rawAlts || []).slice(0, 3).map((item) => ({
+        name: item.primary_common_name || item.scientific_name,
+        scientificName: item.scientific_name,
+        confidence: item.confidence_percentage,
+        }));
+        setAlternatives(topAlts);
+
+        console.log(plant, alternatives);
+        
+
+    } catch (error) {
+        console.error("Identification failed:", error);
+    } finally {
+        setLoading(false);
+    }
+    };
     const handleChange = (e) =>{
         const file = e.target.files?.[0];
-
+        
         if(file) {
-            console.log("Image Uploaded", file);
+            const formData = new FormData()
+            formData.append("image", file);
+            plantInfo(formData);
         }
+
     };
+
 
     return (
     <div className='shrink-0 w-full h-full flex md:flex-row flex-col items-center justify-center'>
