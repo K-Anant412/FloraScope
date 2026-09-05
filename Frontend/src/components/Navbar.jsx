@@ -29,7 +29,7 @@ import { NavLink } from 'react-router-dom';
               {/* ---Navigation Menu--- */}
               <ul className='shrink-0 h-full w-fit p-2 hidden md:flex items-center justify-center mt-2 ml-6 gap-3'>
                 <NavLink
-                  to='/upload'
+                  to='/plantinfo'
                   className='min-w-20 h-fit py-1 flex items-center justify-center text-[18px] font-["nunito"] px-2 border rounded-2xl border-white font-bold text-gray-600 transition-all duration-150 hover:text-gray-700 hover:border-gray-200 hover:bg-gray-200'
                   >
                   Uploads

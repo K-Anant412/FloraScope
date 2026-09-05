@@ -19,7 +19,6 @@ const Home = () => {
               <>
                 <HeroSection />
                 <Middle />
-                <PlantInfo />
               </>
             ) : (
               <Profile />

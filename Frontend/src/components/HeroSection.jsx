@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { plantService } from '../service/api';
+import PlantInfo from '../pages/PlantInfo';
 
 
 const HeroSection = () => {
@@ -95,7 +96,7 @@ const HeroSection = () => {
                 </div>
                 
         </div>
-
+        
     </div>
   )
 }
