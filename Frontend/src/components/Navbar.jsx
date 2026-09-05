@@ -40,6 +40,7 @@ import { NavLink } from 'react-router-dom';
                   >
                   Profile
                 </li>
+                
               </ul>
 
               <div className='hidden shrink-0 h-fit p-2 w-[72%] md:flex items-center justify-end gap-3'>

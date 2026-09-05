@@ -66,7 +66,7 @@ const HeroSection = () => {
     return (
     <div className='shrink-0 w-full h-full flex md:flex-row flex-col items-center justify-center'>
 
-              {/*  left Box  */}
+        {/*  left Box  */}
         <div className='w-full md:w-[50%] h-full flex flex-col md:justify-center items-center md:p-0 p-3 md:pt-0 pt-10 relative md:left-30'>
             <div className='md:w-[60%] w-full h-60 md:h-70 border-2 rounded-3xl border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)] bg-center bg-cover' style={{backgroundImage: "url('/Desktop_image/demo_image.jpg')"}}> 
             </div>
@@ -82,7 +82,7 @@ const HeroSection = () => {
                   </h1>
         </div>
 
-              {/*  right Box  */}
+        {/*  right Box  */}
         <div className='flex md:w-[50%] w-full h-full flex-col items-center justify-center md:p-0 p-3'>
                 <input type="file" ref={plantImageRef} onChange={handleChange} accept='image/*' className='hidden' />
 

@@ -8,6 +8,7 @@ import PlantInfo from './PlantInfo'
 const Home = () => {
 
   const [userProfile, setUserProfile] = useState(false);
+  const [ifPlant, setIsPlant] = useState(false);
 
   return (
     <>
@@ -19,6 +20,7 @@ const Home = () => {
               <>
                 <HeroSection />
                 <Middle />
+                <PlantInfo />
               </>
             ) : (
               <Profile />
