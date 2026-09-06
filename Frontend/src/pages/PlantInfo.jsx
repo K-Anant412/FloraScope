@@ -5,7 +5,14 @@ import { TbClipboardSearch } from "react-icons/tb";
 import { LuMicroscope } from "react-icons/lu";
 
 
-const PlantInfo = ({props}) => {
+const PlantInfo = ({ plantDetails }) => {
+
+  useEffect(() => {
+    console.log("From Plant Info Card.");
+    console.log(plantDetails);
+  }, [plantDetails])
+  
+
   return (
     <div className='w-full md:p-5 min-h-screen flex md:flex-row flex-col items-center md:justify-center md:overflow-hidden overflow-y-auto overflow-x-hidden'>
 
@@ -22,7 +29,7 @@ const PlantInfo = ({props}) => {
 
           {/*  plant Name  */}
           <h1 className='w-[85%] h-fit font-["Caveat_Brush"] text-gray-800 text-3xl md:text-6xl md:font-medium border-gray-700 italic pt-4 md:p-4  pb-1 border-b-2 '>
-            Yellow Bell
+            {plantDetails.primaryName}
           </h1>
 
           {/*  some General Info */}
@@ -31,10 +38,10 @@ const PlantInfo = ({props}) => {
             <span className='w-full md:border-0 border-b-2 h-fit flex items-center gap-2'>
               <h1 className='text-xl md:text-2xl font-semibold font-["nunito"] text-gray-600 flex items-center justify-center'>
                 <LuMicroscope className='md:flex hidden text-2xl mr-1 mb-1' />
-                Scientific Name:
+                Scientific Name: 
               </h1>
               <p>
-                
+                {plantDetails.scientificName}
               </p>
             </span>
 
@@ -43,7 +50,7 @@ const PlantInfo = ({props}) => {
                 Full Name:
               </h1>
               <p>
-
+                {plantDetails.fullName}
               </p>
             </span>
 
@@ -52,7 +59,7 @@ const PlantInfo = ({props}) => {
                 Family:
               </h1>
               <p>
-
+                {plantDetails.family}
               </p>
             </span>
 
@@ -60,8 +67,9 @@ const PlantInfo = ({props}) => {
               <h1 className='text-xl md:text-2xl font-semibold font-["nunito"] text-gray-600 flex items-center justify-center'>
                 Detection info:
               </h1>
-              <p>
-
+              <p className='capitalize flex items-center gap-2'>
+                {plantDetails.detectedOrgan}.
+                {plantDetails.confidence}
               </p>
             </span>
 
@@ -70,7 +78,11 @@ const PlantInfo = ({props}) => {
                 Other info:
               </h1>
               <p>
+                <span className='font-semibold'>Also known as: </span>
 
+                {plantDetails.otherNames.length > 0
+                  ? plantDetails.otherNames.join(", ")
+                  : "No other names available"}
               </p>
             </span>
 

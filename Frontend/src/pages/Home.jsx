@@ -8,7 +8,8 @@ import PlantInfo from './PlantInfo'
 const Home = () => {
 
   const [userProfile, setUserProfile] = useState(false);
-  const [ifPlant, setIsPlant] = useState(false);
+  const [isPlant, setIsPlant] = useState(false);
+  const [plantDetails, setPlantDetails] = useState([]);
 
   return (
     <>
@@ -18,9 +19,11 @@ const Home = () => {
           <div className='w-full min-h-full h-fit md:p-10 flex flex-col items-center'>
             {!userProfile ? (
               <>
-                <HeroSection />
+                <HeroSection setIsPlant={setIsPlant} setPlantDetails={setPlantDetails} />
                 <Middle />
-                <PlantInfo />
+                { isPlant && 
+                  <PlantInfo plantDetails={plantDetails} /> 
+                }
               </>
             ) : (
               <Profile />

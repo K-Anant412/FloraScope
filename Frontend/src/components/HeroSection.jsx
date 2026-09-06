@@ -3,11 +3,13 @@ import { plantService } from '../service/api';
 import PlantInfo from '../pages/PlantInfo';
 
 
-const HeroSection = () => {
+const HeroSection = ({setIsPlant, setPlantDetails}) => {
+
     const plantImageRef = useRef(null);
     const handleButtonClick = () => {
         plantImageRef.current?.click();
     };
+
     const [plant, setPlant] = useState(null);
     const [alternatives, setAlternatives] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -34,6 +36,8 @@ const HeroSection = () => {
         }
 
         setPlant(newPlant);
+        setPlantDetails(newPlant)
+        setIsPlant(true);
 
         const topAlts = (rawAlts || []).slice(0, 3).map((item) => ({
         name: item.primary_common_name || item.scientific_name,
@@ -42,8 +46,6 @@ const HeroSection = () => {
         }));
         setAlternatives(topAlts);
 
-        console.log(newPlant);
-        
 
     } catch (error) {
         console.error("Identification failed:", error);
