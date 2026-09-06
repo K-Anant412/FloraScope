@@ -20,8 +20,8 @@ const PlantInfo = ({ plantDetails }) => {
       <div className='w-full h-full md:rounded-3xl gap-10 md:p-3 flex flex-col md:items-center overflow-hidden md:flex-row shrink-0 md:border-white/40 md:shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]'>
 
         {/*  plant Image  */}
-        <div className='md:w-[28%] w-full md:h-full h-60 bg-center md:rounded-2xl bg-cover shrink-0 shadow-[#a0a6a0] shadow-[inset_0_0_8px_2px_rgba(0,0,0,0.06)]' style={{backgroundImage: "url('Desktop_image/plant9.jpg')"}}>
-
+        <div className='md:w-[28%] w-full md:h-full h-60 bg-center md:rounded-2xl bg-cover shrink-0 shadow-[#a0a6a0] shadow-[inset_0_0_8px_2px_rgba(0,0,0,0.06)]' 
+          style={{backgroundImage: "url('Desktop_image/plant9.jpg')"}}>
         </div>
 
         {/*  plant Information  */}
@@ -49,7 +49,7 @@ const PlantInfo = ({ plantDetails }) => {
               <h1 className='text-xl md:text-2xl font-semibold font-["nunito"] text-gray-600 flex items-center justify-center'>
                 Full Name:
               </h1>
-              <p>
+              <p className='capitalize flex items-center gap-2'>
                 {plantDetails.fullName}
               </p>
             </span>
@@ -58,7 +58,7 @@ const PlantInfo = ({ plantDetails }) => {
               <h1 className='text-xl md:text-2xl font-semibold font-["nunito"] text-gray-600 flex items-center justify-center'>
                 Family:
               </h1>
-              <p>
+              <p className='capitalize flex items-center gap-2'>
                 {plantDetails.family}
               </p>
             </span>
@@ -77,7 +77,7 @@ const PlantInfo = ({ plantDetails }) => {
               <h1 className='text-xl md:text-2xl font-semibold font-["nunito"] text-gray-600 flex items-center justify-center'>
                 Other info:
               </h1>
-              <p>
+              <p className='capitalize flex items-center gap-2'>
                 <span className='font-semibold'>Also known as: </span>
 
                 {plantDetails.otherNames.length > 0

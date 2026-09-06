@@ -1,6 +1,19 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
-const Profile = () => {
+const Profile = ({setPlantHistory}) => {
+
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const userData = async() =>{
+      const user = localStorage.getItem('user')
+      
+
+    }
+  }, [])
+  
+  
+
   return (
     <section className='w-full h-full flex items-center justify-center md:p-6 p-3 pt-0'>
 
@@ -18,6 +31,12 @@ const Profile = () => {
           <h1 className='text-2xl z-50 relative top-5 font-semibold'>User Name</h1>
 
         </div>
+
+        <button
+          className='w-50 px-0 py-3 flex items-center justify-center h-fit text-2xl font-sans font-semibold cursor-pointer border-0 rounded-3xl text-white bg-[#4F9D4D] transition-all duration-300 hover:bg-[#4b8649] hover:text-white/40 relative top-5 left-5'
+        >
+          Check History
+        </button>
 
       </div>
 
