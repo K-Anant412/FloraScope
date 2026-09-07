@@ -129,6 +129,12 @@ def login_user():
         expires = timedelta(days=7)
         access_token = create_access_token(identity=str(user.id), expires_delta=expires)
         
-        return auth_response(message="Login successful", status_code=200, access=access_token)
+        user_data = {
+          "id": user.id,
+          "name": user.name,
+          "email":user.email
+        }
+        
+        return auth_response(message="Login successful", data= user_data, status_code=200, access=access_token)
     except Exception as e:
         return error_response(str(e))   

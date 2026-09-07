@@ -1,17 +1,44 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
+import { plantService } from '../service/api';
+import { AuthContext } from '../context/AuthContext';
 
-const Profile = ({setPlantHistory}) => {
-
-  const [loading, setLoading] = useState(false);
+const Profile = () => {
+  
+  const {user} =  useContext(AuthContext);
+  const [plantHistory, setPlantHistory] = useState([]);
+  const [fetchingData, setFetchingData] = useState(true);
+  const [requestError, setRequestError] = useState(null);
 
   useEffect(() => {
-    const userData = async() =>{
-      const user = localStorage.getItem('user')
-      
+    console.log("Current user state in Profile:", user);
+    if (!user) {
+    console.log("fetch_plant did not run because user is null/falsy");
+    return;
+  }
+    const fetch_plant = async() =>{
+      try {
+        setFetchingData(true);
+        setRequestError(null);
 
+        const response = await plantService.plantHistory();
+
+        setPlantHistory(response.data.data || []);
+        console.log(response.data.data);
+      
+      } catch (error) {
+        if (error.response?.status ===400 && error.response?.data?.message ==="Empty dataset."){
+          setPlantHistory([]);
+        }
+      } finally {
+        setFetchingData(false)
+      }
+    };
+
+    if(user) {
+      fetch_plant();
     }
-  }, [])
-  
+
+  }, [user])
   
 
   return (

@@ -10,7 +10,6 @@ const Home = () => {
   const [userProfile, setUserProfile] = useState(false);
   const [isPlant, setIsPlant] = useState(false);
   const [plantDetails, setPlantDetails] = useState([]);
-  const [plantHistory, setPlantHistory] = useState([])
 
   return (
     <>
@@ -27,7 +26,7 @@ const Home = () => {
                 }
               </>
             ) : (
-              <Profile setPlantHistory={setPlantHistory} />
+              <Profile />
             )
             }
 
