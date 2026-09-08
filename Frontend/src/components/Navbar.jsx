@@ -69,7 +69,11 @@ import { NavLink } from 'react-router-dom';
                 isMenu && 
                 <div className='md:hidden absolute flex w-[30%] h-fit min-h-20 rounded-2xl rounded-r-none rounded-tl-none bg-white top-14 right-0 z-20 flex-col items-center justify-center gap-3 overflow-hidden transition-all duration-300 '>
                   
-                  <button className='text-[19px] font-["nunito"] font-semibold text-gray-600 flex items-center justify-center w-full transition-all duration-200 hover:bg-gray-200 py-1'>Upload</button>
+                  <NavLink 
+                    to='/plantinfo'
+                    className='text-[19px] font-["nunito"] font-semibold text-gray-600 flex items-center justify-center w-full transition-all duration-200 hover:bg-gray-200 py-1'>
+                    Upload
+                  </NavLink>
                   <button
                     onClick={handleProfile}  
                     className='text-[19px] font-["nunito"] font-semibold text-gray-600 flex items-center justify-center w-full transition-all duration-200 hover:bg-gray-200 py-1'>
