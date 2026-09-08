@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { plantService } from '../service/api';
 import { AuthContext } from '../context/AuthContext';
+import ProfileImg from '../assets/Desktop_image/profile.jpg'
 
 const Profile = () => {
   
@@ -8,6 +9,7 @@ const Profile = () => {
   const [plantHistory, setPlantHistory] = useState([]);
   const [fetchingData, setFetchingData] = useState(true);
   const [requestError, setRequestError] = useState(null);
+  const [userName, setUserName] = useState('');
 
   useEffect(() => {
     console.log("Current user state in Profile:", user);
@@ -35,6 +37,7 @@ const Profile = () => {
     };
 
     if(user) {
+      setUserName(user.name)
       fetch_plant();
     }
 
@@ -46,24 +49,25 @@ const Profile = () => {
 
       <div className='relative w-full h-full overflow-hidden md:rounded-3xl flex flex-col'>
 
-        <div className='w-full md:h-[28%] h-40 border-b-2 bg-center bg-cover absolute' style={{backgroundImage: "url('/Desktop_image/profile.jpg')"}}></div>
+        <div className='w-full md:h-[28%] h-40 border-b-2 bg-center bg-cover absolute bg-white overflow-hidden'>
+          <img src={ProfileImg} alt="desktop Profile" className='w-full h-full cover' />
+        </div>
 
         {/*  Profile header---> Card, Graph */}
-        <div className='shrink-0 w-full h-[50%] flex flex-col z-50 p-0 md:p-5'>
+        <div className='shrink-0 w-full h-[50%] flex items-center md:gap-10 z-50 p-0 md:p-5 relative md:top-0 -top-5 gap-2'>
 
-          <div className='md:w-[13%] w-30 md:h-45 h-30 rounded-[50%] border-4 relative md:top-15 top-26 left-5 border-[#E8F5E9] bg-white'>
+          <div className='md:w-[13%] w-30 md:h-45 h-30 rounded-[50%] border-4 relative md:top-15 shrink-0 md:left-5 border-[#E8F5E9] bg-white'>
 
           </div>
 
-          <h1 className='text-2xl z-50 relative md:top-15 top-26 md:left-10 left-5 font-semibold'>User Name</h1>
+          <h1 className='flex-col gap-0.5 rounded-3xl bg-white h-fit w-50 border text-2xl z-50 relative md:top-15 flex items-center justify-center font-semibold font-["nunito"] p-2'>
+            {userName}
+            <p className='text-sm font-mono font-normal'>
+              join: 2 August 2026
+            </p>
+          </h1>
 
         </div>
-
-        <button
-          className='w-50 px-0 py-3 flex items-center justify-center h-fit text-2xl font-sans font-semibold cursor-pointer border-0 rounded-3xl text-white bg-[#4F9D4D] transition-all duration-300 hover:bg-[#4b8649] hover:text-white/40 relative top-5 left-5'
-        >
-          Check History
-        </button>
 
       </div>
 

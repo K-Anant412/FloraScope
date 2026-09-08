@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react'
 import { plantService } from '../service/api';
 import PlantInfo from '../pages/PlantInfo';
 
+import backgroundImage from '../assets/Desktop_image/demo_image.jpg'
 
 const HeroSection = ({setIsPlant, setPlantDetails}) => {
 
@@ -53,6 +54,7 @@ const HeroSection = ({setIsPlant, setPlantDetails}) => {
         setLoading(false);
     }
     };
+
     const handleChange = (e) =>{
         const file = e.target.files?.[0];
         
@@ -64,13 +66,12 @@ const HeroSection = ({setIsPlant, setPlantDetails}) => {
 
     };
 
-
     return (
     <div className='shrink-0 w-full h-full flex md:flex-row flex-col items-center justify-center'>
 
         {/*  left Box  */}
         <div className='w-full md:w-[50%] h-full flex flex-col md:justify-center items-center md:p-0 p-3 md:pt-0 pt-10 relative md:left-30'>
-            <div className='md:w-[60%] w-full h-60 md:h-70 border-2 rounded-3xl border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)] bg-center bg-cover' style={{backgroundImage: "url('/Desktop_image/demo_image.jpg')"}}> 
+            <div className='md:w-[60%] w-full h-60 md:h-70 border-2 rounded-3xl border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)] bg-center bg-cover' style={{backgroundImage: `url(${backgroundImage})`}}> 
             </div>
                   <h1 className='w-full md:w-[60%] text-4xl md:text-5xl font-["nunito"] font-extrabold mt-4 pl-1'>
                       Plant Information
