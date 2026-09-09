@@ -75,40 +75,8 @@ const Profile = () => {
 
         </div>
 
-        {/*  Profile body---> Some options */}
-        <div className='shrink-0 w-full md:w-[35%] h-[50%] border-2 relative md:-top-14.5 bg-amber-50 rounded-b-3xl md:p-7 p-4 flex flex-col items-center'>
+        
 
-          <a href="#" className='shrink-0 w-full md:w-fit h-fit text-xl gap-1 font-["nunito"] font-semibold flex justify-end items-center px-4 py-2 absolute top-0 right-0 z-50 text-[#4F9D4D] cursor-pointer transition-colors duration-300 hover:text-black'>
-            <MdAlternateEmail className='relative top-0.5' />
-            {userEmail}
-          </a>
-
-          <div className='w-full flex-1 p-2 flex flex-col items-center'>
-
-            <h1 className='w-full h-fit text-2xl font-semibold pt-4 pl-3'>
-              Total Scans: 100
-            </h1>
-
-            <h1 className='w-full h-fit text-2xl font-semibold pt-4 pl-3'>
-              Unique : 100
-            </h1>
-
-            <h1 className='w-full h-fit text-2xl font-semibold pt-4 pl-3'>
-              Favorite : 100
-            </h1>
-
-            <h1 className='w-full h-fit text-2xl font-semibold pt-4 pl-3'>
-              How many days : 100
-            </h1>
-
-            <button className='w-[80%] gap-1 h-fit border-2 p-2 text-2xl font-bold rounded-3xl mt-4 transition-all duration-300 flex items-center justify-center bg-red-400 text-white hover:bg-red-500'>
-              LogOut
-              <TbLogout />
-            </button>
-
-          </div>
-
-        </div>
       </div>
 
     </section>
