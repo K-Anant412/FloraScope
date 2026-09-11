@@ -11,6 +11,8 @@ import screen1 from '../assets/Desktop_image/screen1.png'
 import screen2 from '../assets/Desktop_image/screen2.png'
 import screen3 from '../assets/Desktop_image/screen3.png'
 import screen4 from '../assets/Desktop_image/screen4.png'
+import wp from '../assets/Desktop_image/wp.png'
+
 const Home = () => {
 
   const [userProfile, setUserProfile] = useState(false);
@@ -76,7 +78,37 @@ const Home = () => {
 
             </div>
             
-            <div className='w-full min-h-screen bg-[#A8D58D] flex flex-col'>
+            <div className='w-full min-h-screen bg-[#E8F5E9] flex flex-col p-10 gap-4'>
+
+              <div className='shrink-0 p-4 w-full md:h-85 border-2 rounded-3xl bg-[#A8D58D] flex flex-col gap-3'>
+
+                <h1 className='shrink-0 w-full flex flex-col text-3xl font-["nunito"] font-bold text-[#2b532a]'>
+                 Why Plants Matter?
+                  <p className='text-xl font-normal flex gap-1'>Plants do more than just look good. They make life better.</p>
+                </h1>
+
+                <div className='border-2 w-full flex-1 relative'>
+
+                  <img src={wp} alt="image" className='md:flex hidden h-full absolute right-5 top-0' />
+
+                </div>
+
+              </div>
+
+              <div className='shrink-0 p-4 px-50 w-full md:h-60 border-2 rounded-3xl bg-[#A8D58D] flex items-center gap-50'>
+
+                <h1 className='shrink-0 w-[30%] flex flex-col h-full border-2 justify-center text-4xl font-["nunito"] font-bold text-[#2b532a]'>
+                 Ready to discover your plant?
+                  <p className='text-xl font-normal flex gap-1'>Join thousands of plant lovers and make your green journey easier</p>
+                </h1>
+
+                <button className='text-2xl font-bold font-["nunito"] w-fit h-fit py-2 px-6 border-2 rounded-4xl'>
+                  Identify Now
+                </button>
+
+              </div>
+
+
             </div>
         </section>
     </>
