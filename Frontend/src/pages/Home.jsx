@@ -12,6 +12,8 @@ import screen2 from '../assets/Desktop_image/screen2.png'
 import screen3 from '../assets/Desktop_image/screen3.png'
 import screen4 from '../assets/Desktop_image/screen4.png'
 import wp from '../assets/Desktop_image/wp.png'
+import { SiOverleaf } from "react-icons/si";
+import { IoSearch } from "react-icons/io5";
 
 const Home = () => {
 
@@ -108,6 +110,13 @@ const Home = () => {
 
               </div>
 
+                <h1 className='border shrink-0 w-full flex md:w-fit h-full p-2 text-3xl font-semibold font-["Fredoka"] items-center md:justify-center text-gray-600'>
+                    Fl
+                    <SiOverleaf className='text-[26px] text-gray-700' />
+                    raSc
+                    <IoSearch className='text-[24px] text-gray-700 relative top-1 font-extrabold rotate-90'/>
+                    pe
+                </h1>
 
             </div>
         </section>
