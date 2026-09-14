@@ -7,13 +7,16 @@ import Homepage from '../components/Homepage'
 import homebg from '../assets/Desktop_image/homebg.png'
 import { FaLeaf } from "react-icons/fa6";
 import PlantInfo from './PlantInfo'
-import screen1 from '../assets/Desktop_image/screen1.png'
-import screen2 from '../assets/Desktop_image/screen2.png'
-import screen3 from '../assets/Desktop_image/screen3.png'
-import screen4 from '../assets/Desktop_image/screen4.png'
 import wp from '../assets/Desktop_image/wp.png'
 import { SiOverleaf } from "react-icons/si";
 import { IoSearch } from "react-icons/io5";
+import FeatureCard from '../components/FeatureCard'
+
+// Images
+import camera from '../assets/Desktop_image/camera_icon.png'
+import info from'../assets/Desktop_image/info_icon.png'
+import toxic from'../assets/Desktop_image/toxic_icon.png'
+
 
 const Home = () => {
 
@@ -60,13 +63,13 @@ const Home = () => {
                 <p className='text-2xl font-normal flex gap-1'>Everything you need to understand and care for your Plant <FaLeaf /></p>
               </h1>
 
-              <div className='shrink-0 p-4 w-full md:h-65 border overflow-x-auto md:overflow-hidden flex items-center justify-center gap-10'>
+              <div className='shrink-0 p-4 w-full md:h-65 overflow-x-auto md:overflow-hidden flex items-center justify-center gap-30'>
 
-                <div className='h-full w-[18%] border-2 rounded-3xl flex flex-col items-center bg-center bg-cover' style={{backgroundImage: `url(${screen1})`}}></div>
-                <div className='h-full w-[18%] border-2 rounded-3xl flex flex-col items-center bg-center bg-cover' style={{backgroundImage: `url(${screen2})`}}></div>
-                <div className='h-full w-[18%] border-2 rounded-3xl flex flex-col items-center bg-center bg-cover' style={{backgroundImage: `url(${screen3})`}}></div>
-                <div className='h-full w-[18%] border-2 rounded-3xl flex flex-col items-center bg-center bg-cover' style={{backgroundImage: `url(${screen4})`}}></div>
-
+                {/*  features:  */}
+                <FeatureCard image={camera} title={"Plant Identification"} text={"Snap a photo and get accurate plant details instantly."} />
+                <FeatureCard image={info} title={"Care Guide"} text={"Get personalized tips for watering, sunlight, and more."} />
+                <FeatureCard image={toxic} title={"Toxicity Info"} text={"Know if a plant is safe for pets and hemans."} />
+                
               </div>
 
               <div className='shrink-0 p-4 w-full md:h-85 border-2 rounded-3xl bg-[#A8D58D] flex flex-col gap-3'>
