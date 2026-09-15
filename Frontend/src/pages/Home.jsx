@@ -4,7 +4,6 @@ import HeroSection from '../components/HeroSection'
 import Middle from '../components/Middle'
 import Profile from '../pages/Profile'
 import Homepage from '../components/Homepage'
-import homebg from '../assets/Desktop_image/homebg.png'
 import { FaLeaf } from "react-icons/fa6";
 import PlantInfo from './PlantInfo'
 import wp from '../assets/Desktop_image/wp.png'
@@ -13,6 +12,8 @@ import { IoSearch } from "react-icons/io5";
 import FeatureCard from '../components/FeatureCard'
 
 // Images
+import homebg from '../assets/Desktop_image/homebg.png'
+import phone_bg from '../assets/Phone_image/bg_phone.png'
 import camera from '../assets/Desktop_image/camera_icon.png'
 import info from'../assets/Desktop_image/info_icon.png'
 import toxic from'../assets/Desktop_image/toxic_icon.png'
@@ -49,8 +50,9 @@ const Home = () => {
 
         </section>
 
-        <section className='w-screen h-screen bg-amber-100 overflow-x-hidden overflow-y-auto scrollbar-none'>
-            <div className='w-full min-h-screen bg-amber-50 flex flex-col items-center md:bg-center md:bg-cover' style={{backgroundImage: `url(${homebg})`}}>
+        <section className='w-screen h-screen overflow-x-hidden overflow-y-auto scrollbar-none'>
+            <div className='relative w-full min-h-screen flex flex-col items-center md:bg-center md:bg-cover' style={{backgroundImage: `url(${homebg})`}}>
+              <img src={phone_bg} alt="bg" className='absolute top-30 flex md:hidden' />
               <Navbar setUserProfile={setUserProfile}/>
               
               {/*  New Home Page */}
@@ -58,20 +60,53 @@ const Home = () => {
 
             </div>
 
-            <div className='w-full min-h-screen bg-[#E8F5E9] flex flex-col p-10 gap-4'>
+            <div className='relative md:top-0 -top-25 w-full min-h-screen bg-[#E8F5E9] border-2 flex flex-col md:p-10 p-3 gap-4'>
 
-              <h1 className='shrink-0 w-full flex flex-col text-4xl font-["nunito"] font-bold text-[#2b532a]'>
+              <h1 className='shrink-0 w-full flex flex-col text-3xl md:text-4xl font-["nunito"] font-bold text-[#2b532a]'>
                 Our Features
-                <p className='text-2xl font-normal flex gap-1'>Everything you need to understand and care for your Plant <FaLeaf /></p>
+                <p className='md:text-2xl text-[18px] md:font-normal font-semibold flex gap-1'>Everything you need to understand and care for your Plant <FaLeaf className='md:flex hidden' /></p>
               </h1>
 
-              <div className='shrink-0 p-4 w-full md:h-65 overflow-x-auto md:overflow-hidden flex items-center justify-center gap-30'>
+              {/*  Features section for desktop only */}
+              <div className=' hidden shrink-0 md:p-4 w-full h-65 border-2 md:overflow-x-auto overflow-y-auto md:overflow-hidden scrollbar-none md:flex md:flex-row flex-col items-center justify-center gap-3 md:gap-30'>
 
                 {/*  features:  */}
                 <FeatureCard image={camera} title={"Plant Identification"} text={"Snap a photo and get accurate plant details instantly."} />
                 <FeatureCard image={info} title={"Care Guide"} text={"Get personalized tips for watering, sunlight, and more."} />
                 <FeatureCard image={toxic} title={"Toxicity Info"} text={"Know if a plant is safe for pets and hemans."} />
                 
+              </div>
+
+              {/*  Features section for mobile only */}
+              <div className='md:hidden shrink-0 p-2 gap-5 flex w-full h-85 flex-col items-center justify-center'>
+
+                <div className='w-full h-fit border p-2 rounded-3xl flex flex-col border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]'>
+                  <h1 className='w-full text-xl font-bold font-["nunito"] text-[#2b532a]'>
+                    1. Plant Identification
+                  </h1>
+                  <p className='font-semibold font-["nunito"] text-[#4F9D4D]'>
+                    Snap a photo and get accurate plant details instantly. 
+                  </p>
+                </div>
+
+                <div className='w-full h-fit border p-2 rounded-3xl flex flex-col border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]'>
+                  <h1 className='w-full text-xl font-bold font-["nunito"] text-[#2b532a]'>
+                    2. Care Guide
+                  </h1>
+                  <p className='font-semibold font-["nunito"] text-[#4F9D4D]'>
+                    Get personalized tips for watering, sunlight, and more. 
+                  </p>
+                </div>
+
+                <div className='w-full h-fit border p-2 rounded-3xl flex flex-col border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]'>
+                  <h1 className='w-full text-xl font-bold font-["nunito"] text-[#2b532a]'>
+                    3. Toxicity Info
+                  </h1>
+                  <p className='font-semibold font-["nunito"] text-[#4F9D4D]'>
+                    Know if a plant is safe for pets and hemans.
+                  </p>
+                </div>
+
               </div>
 
               <div className='relative shrink-0 p-4 w-full md:h-85 border-2 rounded-3xl bg-[#A8D58D] flex flex-col gap-3'>
@@ -81,7 +116,7 @@ const Home = () => {
                   <p className='text-xl font-normal flex gap-1'>Just a few simple steps to get started.</p>
                 </h1>
 
-                <div className='shrink-0 p-4 relative -top-5 w-full md:h-65 overflow-x-auto md:overflow-hidden flex items-center gap-30'>
+                <div className='shrink-0 p-4 relative -top-5 w-full md:h-65 overflow-x-auto md:overflow-hidden hidden md:flex items-center gap-30'>
                   
                   <FeatureCard
                     sr={true}
@@ -113,7 +148,7 @@ const Home = () => {
 
             </div>
             
-            <div className='w-full min-h-screen bg-[#E8F5E9] flex flex-col p-10 gap-4'>
+            <div className='w-full min-h-screen bg-[#E8F5E9] hidden md:flex flex-col p-10 gap-4'>
 
               <div className='shrink-0 p-4 w-full md:h-85 border-2 rounded-3xl border-[#A8D58D] flex flex-col gap-3'>
 
@@ -152,6 +187,7 @@ const Home = () => {
                 </h1>
 
             </div>
+
         </section>
     </>
   )

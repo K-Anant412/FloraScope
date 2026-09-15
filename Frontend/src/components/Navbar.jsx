@@ -15,7 +15,7 @@ import { NavLink } from 'react-router-dom';
     };
 
     return (
-      <nav className='relative shrink-0 h-15 w-full md:p-6 p-3 md:border-r-2 border-b-2 flex items-center bg-white md:mt-3 md:w-[95%] md:rounded-3xl transition-all duration-200 '>
+      <nav className='relative z-50 shrink-0 h-15 w-full md:p-6 p-3 md:border-r-2 border-b-2 flex items-center bg-white md:mt-3 md:w-[95%] md:rounded-3xl transition-all duration-200 '>
 
               {/* ---Logo visible only for desktop view--- */}
               <h1 className='shrink-0 w-full flex md:w-fit h-full p-2 text-3xl font-semibold font-["Fredoka"] items-center md:justify-center text-gray-600'>
