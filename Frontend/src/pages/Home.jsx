@@ -16,7 +16,9 @@ import FeatureCard from '../components/FeatureCard'
 import camera from '../assets/Desktop_image/camera_icon.png'
 import info from'../assets/Desktop_image/info_icon.png'
 import toxic from'../assets/Desktop_image/toxic_icon.png'
-
+import features from '../assets/Desktop_image/features.png'
+import plant from '../assets/Desktop_image/plant_icon.png'
+import care from '../assets/Desktop_image/care_icon.png'
 
 const Home = () => {
 
@@ -72,12 +74,40 @@ const Home = () => {
                 
               </div>
 
-              <div className='shrink-0 p-4 w-full md:h-85 border-2 rounded-3xl bg-[#A8D58D] flex flex-col gap-3'>
-
+              <div className='relative shrink-0 p-4 w-full md:h-85 border-2 rounded-3xl bg-[#A8D58D] flex flex-col gap-3'>
+                <img src={features} alt="3" className='h-full w-fit absolute right-2.5 top-0' />
                 <h1 className='shrink-0 w-full flex flex-col text-3xl font-["nunito"] font-bold text-[#2b532a]'>
                  How It Works?
                   <p className='text-xl font-normal flex gap-1'>Just a few simple steps to get started.</p>
                 </h1>
+
+                <div className='shrink-0 p-4 relative -top-5 w-full md:h-65 overflow-x-auto md:overflow-hidden flex items-center gap-30'>
+                  
+                  <FeatureCard
+                    sr={true}
+                    sr_num={"1."} 
+                    image={camera} 
+                    title={"Upload / Take Photo"} 
+                    text={"Choose an image from gallery or take a new one."} 
+                  />
+
+                  <FeatureCard
+                    sr={true}
+                    sr_num={"2."} 
+                    image={plant} 
+                    title={"Get Identification"} 
+                    text={"We will analyze the image & fint the best match for your plant."} 
+                  />
+
+                  <FeatureCard
+                    sr={true}
+                    sr_num={"3."} 
+                    image={care} 
+                    title={"Care Guide"} 
+                    text={"View detailed information and care tips for your plant."} 
+                  />
+
+                </div>
 
               </div>
 
