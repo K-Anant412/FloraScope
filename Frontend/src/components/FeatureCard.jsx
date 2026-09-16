@@ -2,7 +2,7 @@ import React from 'react'
 
 const FeatureCard = ({image, title, text, sr=false, sr_num}) => {
   return (
-    <div className='h-full md:w-[18%] w-full rounded-3xl flex flex-col items-center justify-center border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]'>
+    <div className='bg-[#E8F5E9] h-full md:w-[18%] w-full rounded-3xl flex flex-col items-center justify-center border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]'>
     
       { sr ? 
         <>
