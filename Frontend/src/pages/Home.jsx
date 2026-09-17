@@ -42,7 +42,7 @@ const Home = () => {
               <Homepage />
               <MiddleHomepage />
               <HomeFooter/>
-              <PlantIdentification />
+              {/* <PlantIdentification /> */}
 
         </section>
     </>

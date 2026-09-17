@@ -1,16 +1,70 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { FaCameraRetro } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa";
 import { GoDotFill } from "react-icons/go";
 import { FaLeaf } from "react-icons/fa6";
 import Navbar from './Navbar';
 
+//  Service imports
+import { plantService } from '../service/api';
+
 // images
 import homegb from '../assets/Desktop_image/homebg.png'
 import phone_bg from '../assets/Phone_image/bg_phone.png'
 
 const Homepage = () => {
+
+    const plantImageRef = useRef(null);
+    const handleButtonClick = () => {
+        plantImageRef.current?.click();
+    };
+
+    const [plant, setPlant] = useState(null);
+    const [alternatives, setAlternatives] = useState([]);
+    const [loading, setLoading] = useState(false);
     const [userProfile, setUserProfile] = useState(false);
+
+    const plantInfo = async (formData) => {
+        setLoading(true);
+
+        try{
+            const response = await plantService.plantIdentify(formData);
+            const { best_match, alternatives: rawAlts, detected_organ } = response.data.data;
+
+            const newPlant = {
+
+                primaryName:
+                best_match.primary_common_name ||
+                best_match.common_names?.[0] ||
+                "Unknown Plant",
+        
+                scientificName: best_match.scientific_name,
+                fullName: best_match.full_scientific_name,
+                family: best_match.family,
+                confidence: best_match.confidence_percentage,
+                detectedOrgan: detected_organ,
+                otherNames: best_match.common_names?.slice(1) || [],
+            }
+            
+            setPlant(newPlant);
+
+        }catch(err){
+            console.log("Idendification failed:", err);
+        }finally{
+            setLoading(false);
+        }
+    };
+
+
+    const handleChange = (e) =>{
+        const file = e.target.file?.[0];
+
+        if(file){
+            const formData = new FormData()
+            formData.append("image", file);
+            plantInfo(formData);
+        }
+    };
 
     return (
             <div className='relative w-full min-h-screen flex flex-col items-center md:bg-center md:bg-cover' style={{backgroundImage: `url(${homegb})`}}>

@@ -23,7 +23,7 @@ const PlantIdentification = () => {
         <img src={desktop} alt="desktop" className='fixed inset-0 -z-10 w-full md:flex hidden' />
         <img src={mobile} alt="phone" className='fixed inset-0 -z-10 h-full object-cover flex md:hidden' />
         
-        <div className='relative z-50 w-full h-screen border-2 border-black rounded-3xl md:p-4 p-2 flex flex-col items-center'>
+        <div className='relative z-50 w-full h-screen border-2 border-black rounded-3xl md:p-4 p-2 flex flex-col gap-3 items-center'>
 
             {/*  Header section for identified plant with minimal information.  */}
             <div className='w-full md:h-[50%] h-fit flex md:flex-row flex-col items-center md:gap-6 gap-3'>
@@ -85,6 +85,46 @@ const PlantIdentification = () => {
 
             </div>
 
+            <div className=' w-full md:h-[50%] h-fit flex md:flex-row flex-col items-center md:gap-6 gap-3'>
+                {/*  detection information  */}
+                <div className='shrink-0 w-[30%] h-full rounded-2xl flex flex-col p-3 bg-white'>
+                    <div className='w-full h-full bg-[#E8F5E9] p-2 rounded-2xl'>
+
+                        <h1 className='shrink-0 pl-4 text-2xl font-["nunito"] font-semibold'>
+                            Detection Info
+                        </h1>
+
+                        <ul className='w-[90%] flex-1 border flex flex-col items-center'>
+                            
+                            <li className='text-xl font-semibold font-["nunito] text-[#285943] flex items-center'>
+                                <h1 className='border p-2'>
+                                    Detected Organ
+                                </h1>
+                                <p className='ml-8 font-normal text-gray-500'>Leaf</p>
+                            </li>
+
+                            <li className='text-xl font-semibold font-["nunito] text-[#285943] flex'>
+                                Confidence Score
+                                <p className='ml-8 font-normal text-gray-500'>92%</p>
+                            </li>
+
+                            <li className='text-xl font-semibold font-["nunito] text-[#285943] flex'>
+                                Source
+                                <p className='ml-8 font-normal text-gray-500'>PlantNet</p>
+                            </li>
+
+                            <li className='text-xl font-semibold font-["nunito] text-[#285943] flex'>
+                               Scan Date
+                                <p className='ml-8 font-normal text-gray-500'>Sep 12, 2025</p>
+                            </li>
+
+
+                        </ul>
+
+                    </div>
+
+                </div>
+            </div>
         </div>
         
     </section>
