@@ -15,8 +15,9 @@ import microscope from '../assets/Desktop_image/microscope.png'
 import other from '../assets/Desktop_image/other.png'
 import camera from '../assets/Desktop_image/camera.png'
 import plants from '../assets/Desktop_image/2dplants.png'
+import sticker4 from '../assets/Desktop_image/sticker4.png'
 
-const PlantIdentification = () => {
+const PlantIdentification = (plantDetails) => {
   return (
     <section className='relative w-full min-h-screen overflow-y-scroll md:overflow-hidden scrollbar-none md:p-6 p-3'>
         
@@ -28,8 +29,10 @@ const PlantIdentification = () => {
             {/*  Header section for identified plant with minimal information.  */}
             <div className='w-full md:h-[50%] h-fit flex md:flex-row flex-col items-center md:gap-6 gap-3'>
                 {/*  Plant image  */}
-                <div className='shrink-0 md:w-[40%] w-full md:h-full h-70 bg-amber-50 rounded-2xl'>
+                <div className='shrink-0 md:w-[40%] w-full md:h-full h-70 bg-white flex items-center justify-center rounded-2xl p-2'>
+                    <div className='bg-[#E8F5E9] w-full h-full rounded-2xl'>
 
+                    </div>
                 </div>
 
                 {/*  Plant basic information */}
@@ -85,36 +88,44 @@ const PlantIdentification = () => {
 
             </div>
 
-            <div className=' w-full md:h-[50%] h-fit flex md:flex-row flex-col items-center md:gap-6 gap-3'>
+            <div className='relative w-full md:h-[50%] h-fit flex md:flex-row flex-col items-center md:gap-6 gap-3'>
                 {/*  detection information  */}
-                <div className='shrink-0 w-[30%] h-full rounded-2xl flex flex-col p-3 bg-white'>
+                {/* <img src={sticker4} alt="plant banner" className='absolute md:flex hidden w-[30%] -top-54' /> */}
+                <div className='shrink-0 w-[30%] h-[75%] rounded-2xl flex flex-col p-3 bg-white'>
+                    
                     <div className='w-full h-full bg-[#E8F5E9] p-2 rounded-2xl'>
 
-                        <h1 className='shrink-0 pl-4 text-2xl font-["nunito"] font-semibold'>
+                        <h1 className='shrink-0 pl-4 text-2xl mt-2 font-["nunito"] font-semibold'>
                             Detection Info
                         </h1>
 
-                        <ul className='w-[90%] flex-1 border flex flex-col items-center'>
+                        <ul className='w-[90%] flex-1 mt-2 flex flex-col items-center'>
                             
-                            <li className='text-xl font-semibold font-["nunito] text-[#285943] flex items-center'>
-                                <h1 className='border p-2'>
+                            <li className='text-xl font-semibold font-["nunito] text-[#285943] flex items-center w-full pl-2'>
+                                <h1 className='p-2 min-w-[50%]'>
                                     Detected Organ
                                 </h1>
                                 <p className='ml-8 font-normal text-gray-500'>Leaf</p>
                             </li>
 
-                            <li className='text-xl font-semibold font-["nunito] text-[#285943] flex'>
-                                Confidence Score
+                            <li className='text-xl font-semibold font-["nunito] text-[#285943] flex items-center w-full pl-2'>
+                                <h1 className='p-2 min-w-[50%]'>
+                                    Confidence Score
+                                </h1>
                                 <p className='ml-8 font-normal text-gray-500'>92%</p>
                             </li>
 
-                            <li className='text-xl font-semibold font-["nunito] text-[#285943] flex'>
-                                Source
+                            <li className='text-xl font-semibold font-["nunito] text-[#285943] flex items-center w-full pl-2'>
+                                <h1 className='p-2 min-w-[50%]'>
+                                    Source
+                                </h1>
                                 <p className='ml-8 font-normal text-gray-500'>PlantNet</p>
                             </li>
 
-                            <li className='text-xl font-semibold font-["nunito] text-[#285943] flex'>
-                               Scan Date
+                            <li className='text-xl font-semibold font-["nunito] text-[#285943] flex items-center w-full pl-2'>
+                                <h1 className='p-2 min-w-[50%]'>
+                               S    can Date
+                                </h1>
                                 <p className='ml-8 font-normal text-gray-500'>Sep 12, 2025</p>
                             </li>
 

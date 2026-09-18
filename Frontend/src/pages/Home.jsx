@@ -39,10 +39,10 @@ const Home = () => {
 
         <section className='w-screen h-screen overflow-x-hidden overflow-y-auto scrollbar-none'>
             
-              <Homepage />
+              <Homepage setIsPlant={setIsPlant} setPlantDetails={setPlantDetails} />
               <MiddleHomepage />
               <HomeFooter/>
-              {/* <PlantIdentification /> */}
+              <PlantIdentification plantDetails={plantDetails} />
 
         </section>
     </>

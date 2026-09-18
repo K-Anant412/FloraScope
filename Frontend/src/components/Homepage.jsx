@@ -12,7 +12,7 @@ import { plantService } from '../service/api';
 import homegb from '../assets/Desktop_image/homebg.png'
 import phone_bg from '../assets/Phone_image/bg_phone.png'
 
-const Homepage = () => {
+const Homepage = ({setIsPlant, setPlantDetails}) => {
 
     const plantImageRef = useRef(null);
     const handleButtonClick = () => {
@@ -47,6 +47,16 @@ const Homepage = () => {
             }
             
             setPlant(newPlant);
+            setPlantDetails(newPlant)
+            setIsPlant(true);
+            console.log("Identify: ",newPlant);
+
+            const topAlts = (rawAlts || []).slice(0, 3).map((item) => ({
+                name: item.primary_common_name || item.scientific_name,
+                scientificName: item.scientific_name,
+                confidence: item.confidence_percentage,
+            }));
+            setAlternatives(topAlts);
 
         }catch(err){
             console.log("Idendification failed:", err);
@@ -54,7 +64,6 @@ const Homepage = () => {
             setLoading(false);
         }
     };
-
 
     const handleChange = (e) =>{
         const file = e.target.file?.[0];
@@ -91,8 +100,12 @@ const Homepage = () => {
                         <p className='text-gray-600 font-["nunito"] md:w-[60%] md:pl-4 md:text-xl '>
                             Take a photo, identify your plant, and get personalized care tips. Your green companion for a healthier, happier graden.
                         </p>
+                        
+                        <input type="file" ref={plantImageRef} onChange={handleChange} accept='image/*' className='hidden' />
 
-                        <button className='flex relative md:left-5 items-center justify-center w-fit h-fit md:p-2 px-4 py-2 border text-xl md:text-2xl gap-2 rounded-3xl md:px-6 font-bold md:pb-3 bg-[#4F9D4D] text-white transition-all duration-300 cursor-pointer hover:bg-[#3b7739] border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]'>
+                        <button
+                            onClick={handleButtonClick} 
+                            className='flex relative md:left-5 items-center justify-center w-fit h-fit md:p-2 px-4 py-2 border text-xl md:text-2xl gap-2 rounded-3xl md:px-6 font-bold md:pb-3 bg-[#4F9D4D] text-white transition-all duration-300 cursor-pointer hover:bg-[#3b7739] border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]'>
                             <FaCameraRetro />
                                 Start Identifying 
                             <FaArrowRight className='relative top-1 md:flex hidden' />
