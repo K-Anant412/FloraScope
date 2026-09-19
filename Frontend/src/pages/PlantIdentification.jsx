@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 // Icons
 import { FiShare2 } from "react-icons/fi";
@@ -13,11 +13,15 @@ import plant from '../assets/Desktop_image/plant.png'
 import family from '../assets/Desktop_image/family.png'
 import microscope from '../assets/Desktop_image/microscope.png'
 import other from '../assets/Desktop_image/other.png'
-import camera from '../assets/Desktop_image/camera.png'
 import plants from '../assets/Desktop_image/2dplants.png'
-import sticker4 from '../assets/Desktop_image/sticker4.png'
 
-const PlantIdentification = (plantDetails) => {
+const PlantIdentification = ({plantDetails}) => {
+
+  useEffect(() => {
+    console.log("Plant: ", plantDetails);
+  }, [plantDetails])
+    
+
   return (
     <section className='relative w-full min-h-screen overflow-y-scroll md:overflow-hidden scrollbar-none md:p-6 p-3'>
         
@@ -40,7 +44,7 @@ const PlantIdentification = (plantDetails) => {
 
                     {/*  Plant title  */}
                     <h1 className='w-full h-fit md:p-4 p-2 text-3xl md:text-5xl text-[#2b532a] font-["Caveat_Brush"] flex items-center'>
-                        Money Plant
+                        {plantDetails.primaryName}
                         <div className='shrink-0 w-[50%] flex  items-end justify-end gap-4 relative -right-40'>
                         <FiShare2 className='text-3xl text-[#4F9D4D] transition-all duration-300 hover:text-[#3e7b3c]' />
                         <AiOutlineLike className='text-3xl text-[#4F9D4D] transition-all duration-300 hover:text-[#3e7b3c]' />
@@ -54,7 +58,9 @@ const PlantIdentification = (plantDetails) => {
                                 <img src={microscope} alt="microscope" className='w-full object-cover' />
                             </div>
                             Scientific Name
-                            <p className='text-xl h-full flex items-center pt-1 ml-4 text-gray-500'>Money Plant</p>
+                            <p className='text-xl h-full flex items-center pt-1 ml-4 text-gray-500'>
+                                {plantDetails.scientificName}
+                            </p>
                         </li>
 
                         <li className='w-full text-2xl font-semibold font-["nunito"] h-fit p-1 flex items-center'>
@@ -62,7 +68,9 @@ const PlantIdentification = (plantDetails) => {
                                 <img src={plant} alt="microscope" className='w-full object-cover' />
                             </div>
                             Full Name
-                            <p className='text-xl h-full flex items-center pt-1 ml-4 text-gray-500'>Money Plant</p>
+                            <p className='text-xl h-full flex items-center pt-1 ml-4 text-gray-500'>
+                                {plantDetails.fullName}
+                            </p>
                         </li>
 
                         <li className='w-full text-2xl font-semibold font-["nunito"] h-fit p-1 flex items-center'>
@@ -70,7 +78,9 @@ const PlantIdentification = (plantDetails) => {
                                 <img src={family} alt="microscope" className='w-full object-cover' />
                             </div>
                             Family
-                            <p className='text-xl h-full flex items-center pt-1 ml-4 text-gray-500'>Money Plant</p>
+                            <p className='text-xl h-full flex items-center pt-1 ml-4 text-gray-500'>
+                                {plantDetails.family}
+                            </p>
                         </li>
 
                         <li className='w-full text-2xl font-semibold font-["nunito"] h-fit p-1 flex items-center'>
@@ -78,7 +88,12 @@ const PlantIdentification = (plantDetails) => {
                                 <img src={other} alt="microscope" className='w-full object-cover' />
                             </div>
                             Other Names
-                            <p className='text-xl h-full flex items-center pt-1 ml-4 text-gray-500'>Money Plant</p>
+                            <p className='text-xl h-full flex items-center pt-1 ml-4 text-gray-500'>
+                                {plantDetails.otherNames.length > 0
+                                ? plantDetails.otherNames.join(", ")
+                                : "No other names available"
+                                }
+                            </p>
                         </li>
                         
                     </ul>
@@ -105,26 +120,31 @@ const PlantIdentification = (plantDetails) => {
                                 <h1 className='p-2 min-w-[50%]'>
                                     Detected Organ
                                 </h1>
-                                <p className='ml-8 font-normal text-gray-500'>Leaf</p>
+                                <p className='ml-8 font-normal text-gray-500'>
+                                    {plantDetails.detectedOrgan}
+                                </p>
                             </li>
 
                             <li className='text-xl font-semibold font-["nunito] text-[#285943] flex items-center w-full pl-2'>
                                 <h1 className='p-2 min-w-[50%]'>
                                     Confidence Score
                                 </h1>
-                                <p className='ml-8 font-normal text-gray-500'>92%</p>
+                                <p className='ml-8 font-normal text-gray-500'>
+                                    {plantDetails.confidence}
+                                </p>
                             </li>
 
                             <li className='text-xl font-semibold font-["nunito] text-[#285943] flex items-center w-full pl-2'>
                                 <h1 className='p-2 min-w-[50%]'>
                                     Source
                                 </h1>
-                                <p className='ml-8 font-normal text-gray-500'>PlantNet</p>
+                                <p className='ml-8 font-normal text-gray-500'>
+                                    PlantNet</p>
                             </li>
 
                             <li className='text-xl font-semibold font-["nunito] text-[#285943] flex items-center w-full pl-2'>
                                 <h1 className='p-2 min-w-[50%]'>
-                               S    can Date
+                               Scan Date
                                 </h1>
                                 <p className='ml-8 font-normal text-gray-500'>Sep 12, 2025</p>
                             </li>

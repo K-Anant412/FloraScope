@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import HeroSection from '../components/HeroSection'
-import Middle from '../components/Middle'
 import Profile from '../pages/Profile'
 import Homepage from '../components/Homepage'
 import MiddleHomepage from '../components/MiddleHomepage'
@@ -16,33 +14,12 @@ const Home = () => {
 
   return (
     <>
-        <section className='hidden z-50 w-full h-full flex-col items-center overflow-x-hidden overflow-y-auto scrollbar-none bg-[#E8F5E9]'>
-            {/*  ---Navbar--- */}
-            
-          <div className='w-full min-h-full h-fit md:p-10 flex flex-col items-center'>
-            {!userProfile ? (
-              <>
-                <HeroSection setIsPlant={setIsPlant} setPlantDetails={setPlantDetails} />
-                <Middle />
-                { isPlant && 
-                  <PlantInfo plantDetails={plantDetails} /> 
-                }
-              </>
-            ) : (
-              <Profile />
-            )
-            }
-
-          </div>
-
-        </section>
-
         <section className='w-screen h-screen overflow-x-hidden overflow-y-auto scrollbar-none'>
             
               <Homepage setIsPlant={setIsPlant} setPlantDetails={setPlantDetails} />
               <MiddleHomepage />
               <HomeFooter/>
-              <PlantIdentification plantDetails={plantDetails} />
+              {/* <PlantIdentification plantDetails={plantDetails} /> */}
 
         </section>
     </>

@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext } from 'react'
 import { plantService } from '../service/api';
 import { AuthContext } from '../context/AuthContext';
 import ProfileImg from '../assets/Desktop_image/profile.jpg'
-import PlantCard from '../components/PlantCard';
 import { MdAlternateEmail } from "react-icons/md";
 import { TbLogout } from "react-icons/tb";
 
