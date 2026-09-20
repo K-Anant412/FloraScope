@@ -8,8 +8,8 @@ import './App.css'
 
 function App() {
 
-  //  background color: #E8F5E9
-  //  Primary color: #4F9D4D
+  //  background-----> #E8F5E9
+  //  Primary light green color: #4F9D4D
   //  Secondary color: #A8D58D
   //  Accent color: #F8E7A2
   //  Dark color: #285943

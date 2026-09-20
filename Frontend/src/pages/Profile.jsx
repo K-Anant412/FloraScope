@@ -10,6 +10,8 @@ import { IoCalendarClearOutline } from "react-icons/io5";
 import camera from '../assets/Desktop_image/camera.png'
 import profile from '../assets/Desktop_image/profile_image.jpg'
 import banner from '../assets/Desktop_image/profile_banner.png'
+import plant from '../assets/Desktop_image/plant.png'
+import microscope from '../assets/Desktop_image/microscope.png'
 
 const Profile = () => {
   
@@ -56,12 +58,12 @@ const Profile = () => {
   
 
   return (
-    <section className='w-full h-full flex items-center justify-center md:p-6 bg-[#E8F5E9]'>
+    <section className='w-full h-full flex items-center justify-center bg-[#E8F5E9]'>
 
-      <div className='w-full h-full border border-black rounded-3xl flex flex-col items-center overflow-hidden'>
+      <div className='w-full h-full border border-black flex flex-col items-center overflow-hidden md:gap-6 p-3'>
 
         {/*  Header section for profile image, name, edit option */}
-        <div className='w-full h-[35%] flex items-center md:pl-10 md:p-4 gap-5 bg-center bg-cover' style={{backgroundImage: `url(${banner})`}}>
+        <div className='w-full h-[35%] flex items-center md:pl-10 md:p-4 gap-5 bg-center bg-cover rounded-3xl border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]' style={{backgroundImage: `url(${banner})`}}>
 
           {/*  profile image  */}
           <div className='h-55 w-55 shrink-0 rounded-[50%] relative bg-center bg-cover border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]' style={{backgroundImage:`url(${profile})`}}>
@@ -94,6 +96,35 @@ const Profile = () => {
 
         </div>
 
+        {/*  total scans, favorite plants, care guides */}
+        <div className='w-fit h-fit flex items-center gap-20 relative -left-78 rounded-3'>
+
+          {/*  Tags */}
+          <div className='w-60 h-30 bg-[#4F9D4D] rounded-3xl flex relative items-center justify-end gap-3'>
+            <img src={camera} alt="plant" className='h-[60%]  object-fit absolute left-0 top-4.5 flex items-center justify-center' />
+            <h1 className='w-[70%] p-2 flex flex-col items-center text-2xl font-bold font-["nunito"]' >
+              Total Scans
+              <p className='w-full pl-3 font-extrabold'>15</p>
+            </h1>
+          </div>
+
+          <div className='w-60 h-30 bg-[#4F9D4D] rounded-3xl flex relative items-center justify-end gap-3'>
+            <img src={plant} alt="plant" className='h-[60%]  object-fit absolute left-0 top-4.5 flex items-center justify-center' />
+            <h1 className='w-[70%] p-2 flex flex-col items-center text-2xl font-bold font-["nunito"]' >
+              Liked Scans
+              <p className='w-full pl-3 font-extrabold'>8</p>
+            </h1>
+          </div>
+
+          <div className='w-60 h-30 bg-[#4F9D4D] rounded-3xl flex relative items-center justify-end gap-3'>
+            <img src={microscope} alt="plant" className='h-[60%]  object-fit absolute left-0 top-4.5 flex items-center justify-center' />
+            <h1 className='w-[70%] p-2 flex flex-col items-center text-2xl font-bold font-["nunito"]' >
+              Care Guides
+              <p className='w-full pl-3 font-extrabold'>15</p>
+            </h1>
+          </div>
+
+        </div>
       </div>
 
     </section>

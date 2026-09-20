@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import Profile from '../pages/Profile'
 import Homepage from '../components/Homepage'
 import MiddleHomepage from '../components/MiddleHomepage'
 import HomeFooter from '../components/HomeFooter'
 import PlantIdentification from './PlantIdentification'
 import PlantInfo from './PlantInfo'
+import Profile from '../pages/Profile'
 
 const Home = () => {
 
@@ -18,8 +18,9 @@ const Home = () => {
             
               <Homepage setIsPlant={setIsPlant} setPlantDetails={setPlantDetails} />
               <MiddleHomepage />
-              <HomeFooter/>
+              <HomeFooter />
               {/* <PlantIdentification plantDetails={plantDetails} /> */}
+              <Profile />
 
         </section>
     </>
