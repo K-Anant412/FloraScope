@@ -4,6 +4,12 @@ import { useForm } from 'react-hook-form';
 import { useNavigate, Link } from 'react-router-dom';
 import { authService } from '../service/api';
 
+// images
+import mdbg from '../assets/Auth_image/mdbg.png';
+import smbg from '../assets/Auth_image/smbg.jpg';
+import md_sticker from '../assets/Auth_image/mdbg_front.png';
+import sm_sticker from '../assets/Auth_image/smbg_front.png';
+
 const AuthPage = () => {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -46,7 +52,7 @@ const AuthPage = () => {
         <div
           className="absolute inset-0 hidden md:block bg-center bg-cover"
           style={{
-            backgroundImage: "url('/Desktop_image/desktop_bg.png')",
+            backgroundImage: `url(${mdbg})`,
           }}
         />
 
@@ -54,7 +60,7 @@ const AuthPage = () => {
         <div
           className="absolute inset-0 block md:hidden bg-center bg-cover"
           style={{
-            backgroundImage: "url('/Phone_image/phone_bg.jpg')",
+            backgroundImage: `url(${smbg})`,
           }}
         />
             <form onSubmit={handleSubmit(onSubmit)} className='relative z-30 w-full h-full overflow-hidden flex items-center justify-center md:pl-20 p-5'>
@@ -198,14 +204,14 @@ const AuthPage = () => {
         <div
           className="absolute inset-0 hidden md:block z-40 bg-center bg-cover pointer-events-none"
           style={{
-            backgroundImage: "url('/Desktop_image/desktop_bg_sticker.png')",
+            backgroundImage: `url(${md_sticker})`,
           }}
         />
 
         <div
           className="absolute inset-0 block md:hidden z-40 bg-center bg-cover pointer-events-none"
           style={{
-            backgroundImage: "url('/Phone_image/phone_bg_sticker.png')",
+            backgroundImage: `url(${sm_sticker})`,
           }}
         />
     </>

@@ -22,6 +22,8 @@ const Home = () => {
               {/* <PlantIdentification plantDetails={plantDetails} /> */}
               <Profile />
 
+              { isPlant && <PlantIdentification plantDetails={plantDetails} />}
+
         </section>
     </>
   )

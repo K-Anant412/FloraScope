@@ -19,6 +19,7 @@ const PlantIdentification = ({plantDetails}) => {
 
   useEffect(() => {
     console.log("Plant: ", plantDetails);
+    console.log(plantDetails);
   }, [plantDetails])
     
 

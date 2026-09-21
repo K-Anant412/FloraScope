@@ -66,7 +66,7 @@ const Homepage = ({setIsPlant, setPlantDetails}) => {
     };
 
     const handleChange = (e) =>{
-        const file = e.target.file?.[0];
+        const file = e.target.files?.[0];
 
         if(file){
             const formData = new FormData()
