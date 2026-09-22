@@ -19,10 +19,10 @@ const Home = () => {
               <Homepage setIsPlant={setIsPlant} setPlantDetails={setPlantDetails} />
               <MiddleHomepage />
               <HomeFooter />
-              {/* <PlantIdentification plantDetails={plantDetails} /> */}
-              <Profile />
+              <PlantIdentification />
+              {/* <Profile />
 
-              { isPlant && <PlantIdentification plantDetails={plantDetails} />}
+              { isPlant && <PlantIdentification plantDetails={plantDetails} />} */}
 
         </section>
     </>
