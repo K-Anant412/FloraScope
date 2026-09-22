@@ -16,10 +16,10 @@ const Home = () => {
     <>
         <section className='w-screen h-screen overflow-x-hidden overflow-y-auto scrollbar-none'>
             
+              {isPlant && <PlantIdentification plantDetails={plantDetails} setIsPlant={setIsPlant} isPlant={isPlant} />}
               <Homepage setIsPlant={setIsPlant} setPlantDetails={setPlantDetails} />
               <MiddleHomepage />
               <HomeFooter />
-              <PlantIdentification />
               {/* <Profile />
 
               { isPlant && <PlantIdentification plantDetails={plantDetails} />} */}

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 // Icons
 import { FiShare2 } from "react-icons/fi";
 import { AiOutlineLike } from "react-icons/ai";
+import { MdOutlineCancel } from "react-icons/md";
 
 // Images
 import desktop from '../assets/Desktop_image/plant_info_desktop_view.png';
@@ -17,16 +18,26 @@ import other from '../assets/Desktop_image/other.png';
 import plants from '../assets/Desktop_image/threeplants.png';
 import border from '../assets/Desktop_image/border.png';
 
-const PlantIdentification = ({plantDetails}) => {
+const PlantIdentification = ({plantDetails, setIsPlant, isPlant}) => {
 
   useEffect(() => {
     console.log("Plant: ", plantDetails);
-    console.log(plantDetails);
   }, [plantDetails])
     
+  const handleCancel = () =>{
+        setIsPlant((prev) => !prev)
+        console.log("Change:", isPlant);
+  };
 
   return (
     <section className='relative w-full min-h-screen overflow-y-scroll md:overflow-hidden scrollbar-none md:p-6 p-3'>
+
+        <button
+            onClick={handleCancel}
+            className='w-10 h-10 absolute right-3 top-6 rounded-[50%] bg-red-400 z-30 transition-all duration-300 hover:bg-red-500 cursor-pointer'
+        >
+            <MdOutlineCancel className='w-full h-full text-white' />
+        </button>
         
         <img src={desktop} alt="desktop" className='fixed inset-0 -z-10 w-full md:flex hidden' />
         <img src={mobile} alt="phone" className='fixed inset-0 -z-10 h-full object-cover flex md:hidden' />
@@ -40,7 +51,7 @@ const PlantIdentification = ({plantDetails}) => {
                         <div className='relative md:h-full min-h-80 flex-1 bg-[#E8F5E9] md:rounded-3xl rounded-2xl flex flex-col md:gap-2 gap-3 p-3 md:p-6'>
                             {/*  Plant title  */}
                             <h1 className='w-full h-fit flex items-center text-2xl md:text-4xl font-bold md:font-semibold font-["Fredoka"] text-[#2b532a] mb-2'>
-                                Golden trumpet
+                                {plantDetails.primaryName}
                             </h1>
                                 <ul className='w-full h-fit flex flex-col gap-1 md:gap-3'>
                                     {/*  Scientific Name  */}
@@ -48,31 +59,39 @@ const PlantIdentification = ({plantDetails}) => {
                                         <h1 className='md:w-[20%]'>
                                             Scientific Name:
                                         </h1>
-                                        <p className='text-xl md:text-2xl relative -top-2 md:top-0 text-[#2b532a]'>golden rose example text</p> 
+                                        <p className='text-xl md:text-2xl relative -top-2 md:top-0 text-[#2b532a]'>
+                                            {plantDetails.scientificName}
+                                        </p> 
                                     </li>
                                     {/*  Full Name  */}
                                     <li className='w-full md:text-2xl text-[18px] md:gap-3 font-["nunito"] font-semibold text-gray-500 flex flex-col md:flex-row md:items-center '>
                                         <h1 className='md:w-[20%]'>
                                             Full Name:
                                         </h1>
-                                        <p className='text-xl md:text-2xl relative -top-2 md:top-0 text-[#2b532a]'>golden rose example text</p> 
+                                        <p className='text-xl md:text-2xl relative -top-2 md:top-0 text-[#2b532a]'>
+                                           {plantDetails.fullName}
+                                        </p> 
                                     </li>
                                     {/* Family info */}
                                     <li className='w-full md:text-2xl text-[18px] md:gap-3 font-["nunito"] font-semibold text-gray-500 flex flex-col md:flex-row md:items-center '>
                                         <h1 className='md:w-[20%]'>
                                             Family:
                                         </h1>
-                                        <p className='text-xl md:text-2xl relative -top-2 md:top-0 text-[#2b532a]'>golden rose example text</p> 
+                                        <p className='text-xl md:text-2xl relative -top-2 md:top-0 text-[#2b532a]'>
+                                            {plantDetails.family}
+                                        </p> 
                                     </li>
                                     {/*  Other names */}
                                     <li className='w-full md:text-2xl text-[18px] md:gap-3 font-["nunito"] font-semibold text-gray-500 flex flex-col md:flex-row '>
                                         <h1 className='md:w-[20%] shrink-0'>
                                             Other Names:
                                         </h1>
-                                        <div className='h-fit flex flex-col'>
-                                            <p className='text-xl md:text-2xl relative -top-2 md:top-0 text-[#2b532a]'>golden rose example text</p> 
-                                            <p className='text-xl md:text-2xl relative -top-2 md:top-0 text-[#2b532a]'>golden rose example text</p> 
-                                        </div>
+                                            <p className='text-xl md:text-2xl relative -top-2 md:top-0 text-[#2b532a]'>
+                                                {plantDetails.otherNames.length > 0
+                                                ? plantDetails.otherNames.join(", ")
+                                                : "No other names available"
+                                                }
+                                            </p> 
                                     </li>
 
 
@@ -97,7 +116,7 @@ const PlantIdentification = ({plantDetails}) => {
                                     Detected Organ:
                                 </h1>
                                 <p className='text-xl md:text-2xl relative -top-2 md:top-0 text-[#2b532a]'>
-                                    Leaf
+                                   {plantDetails.detectedOrgan}
                                 </p> 
                             </li>
 
@@ -106,7 +125,7 @@ const PlantIdentification = ({plantDetails}) => {
                                     Confidence Score:
                                 </h1>
                                 <p className='text-xl md:text-2xl relative -top-2 md:top-0 text-[#2b532a]'>
-                                    98%
+                                    {plantDetails.confidence}
                                 </p> 
                             </li>
 
