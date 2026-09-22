@@ -12,7 +12,7 @@ import { plantService } from '../service/api';
 import homegb from '../assets/Desktop_image/homebg.png'
 import phone_bg from '../assets/Phone_image/bg_phone.png'
 
-const Homepage = ({setIsPlant, setPlantDetails}) => {
+const Homepage = ({setIsPlant, setPlantDetails, setPlantImage}) => {
 
     const plantImageRef = useRef(null);
     const handleButtonClick = () => {
@@ -21,6 +21,7 @@ const Homepage = ({setIsPlant, setPlantDetails}) => {
 
     const [plant, setPlant] = useState(null);
     const [alternatives, setAlternatives] = useState([]);
+    const [uploadedImage, setUploadedImage] = useState(null);
     const [loading, setLoading] = useState(false);
     const [userProfile, setUserProfile] = useState(false);
 
@@ -69,6 +70,10 @@ const Homepage = ({setIsPlant, setPlantDetails}) => {
         const file = e.target.files?.[0];
 
         if(file){
+            const imageUrl = URL.createObjectURL(file);
+            setUploadedImage(imageUrl);
+            setPlantImage(imageUrl)
+
             const formData = new FormData()
             formData.append("image", file);
             plantInfo(formData);

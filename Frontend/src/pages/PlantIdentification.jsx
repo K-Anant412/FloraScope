@@ -18,7 +18,7 @@ import other from '../assets/Desktop_image/other.png';
 import plants from '../assets/Desktop_image/threeplants.png';
 import border from '../assets/Desktop_image/border.png';
 
-const PlantIdentification = ({plantDetails, setIsPlant, isPlant}) => {
+const PlantIdentification = ({plantDetails, setIsPlant, isPlant, plantImage}) => {
 
   useEffect(() => {
     console.log("Plant: ", plantDetails);
@@ -45,7 +45,7 @@ const PlantIdentification = ({plantDetails, setIsPlant, isPlant}) => {
         <div className='w-full h-screen py-3 flex items-center flex-col gap-5 overflow-y-auto scrollbar-none'>
             {/*  Plant image and basic info  */}
             <div className='shrink-0 w-full md:h-[50%] object-center flex md:gap-10 gap-5 md:flex-row flex-col'>
-                <img src={test} alt="identified plant" className='shrink-0 md:w-[30%] w-full md:h-full h-60 object-cover md:rounded-3xl rounded-2xl border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]' />
+                <img src={plantImage} alt="identified plant" className='shrink-0 md:w-[30%] w-full md:h-full h-60 object-cover md:rounded-3xl rounded-2xl border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]' />
                 
                     <div className='relative md:h-full flex-1 p-2 bg-white md:rounded-3xl rounded-2xl  border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]'>
                         <div className='relative md:h-full min-h-80 flex-1 bg-[#E8F5E9] md:rounded-3xl rounded-2xl flex flex-col md:gap-2 gap-3 p-3 md:p-6'>
