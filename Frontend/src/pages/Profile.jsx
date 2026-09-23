@@ -50,29 +50,39 @@ const Profile = () => {
         </div>
 
         {/*  Profile intro section contains total scans, plants identified, favorite plants */}
-        <div className='relative w-full h-fit md:h-120 border-2 md:p-4 p-2 flex md:flex-row flex-col gap-4 overflow-y-auto scrollbar-none'>
-          <div className='md:w-[20%] h-full border-2 rounded-2xl flex flex-col items-center md:gap-4 gap-2 p-1'>
+        <div className='relative w-full h-fit md:h-120 md:p-4 flex md:flex-row flex-col gap-4 overflow-y-auto scrollbar-none'>
+          {/*  Left side  */}
+          <div className='shrink-0 md:w-[20%] h-full rounded-2xl flex flex-col items-center md:gap-4 gap-2 p-1'>
+            {/*  Tags  */}
             <div className='w-full md:h-25 border rounded-4xl flex items-center p-2 md:p-4 bg-white'>
-              <img src={camera} alt="camera" className='md:h-23 relative -left-5' />
-              <h1 className='relative -left-6 text-2xl font-["nunito"] font-bold'>
+              <img src={camera} alt="camera" className='md:h-23 relative md:-left-5' />
+              <h1 className='relative md:-left-6 text-2xl font-["nunito"] font-bold'>
                 Total Scans:
-                <p className='font-semibold text-xl'>120</p>
+                <p className='font-semibold text-xl text-gray-500'>120</p>
               </h1>
             </div>
             <div className='w-full md:h-25 border rounded-4xl flex items-center p-2 md:p-4 bg-white'>
-              <img src={camera} alt="camera" className='md:h-23 relative -left-5' />
-              <h1 className='relative -left-6 text-2xl font-["nunito"] font-bold'>
-                Total Scans:
-                <p className='font-semibold text-xl'>120</p>
+              <img src={plant} alt="camera" className='md:h-23 relative md:-left-5' />
+              <h1 className='relative md:-left-6 text-2xl font-["nunito"] font-bold'>
+                Favorites:
+                <p className='font-semibold text-xl text-gray-500'>12</p>
               </h1>
             </div>
             <div className='w-full md:h-25 border rounded-4xl flex items-center p-2 md:p-4 bg-white'>
-              <img src={camera} alt="camera" className='md:h-23 relative -left-5' />
-              <h1 className='relative -left-6 text-2xl font-["nunito"] font-bold'>
-                Total Scans:
-                <p className='font-semibold text-xl'>120</p>
+              <img src={microscope} alt="camera" className='md:h-23 relative md:-left-5 -top-1' />
+              <h1 className='relative md:-left-6 text-2xl font-["nunito"] font-bold'>
+                Care Guides:
+                <p className='font-semibold text-xl text-gray-500'>20</p>
               </h1>
             </div>
+            
+            <button className='w-full md:h-20 border h-15 rounded-4xl flex items-center justify-center md:text-3xl text-2xl font-["Fredoka"] md:font-extrabold font-semibold transition-all duration-200 bg-red-400 text-white hover:bg-red-500 cursor-pointer'>
+              Log-Out
+            </button>
+          </div>
+
+          {/*  Right side-- Only visible for md*/}
+          <div className='md:flex hidden shrink-0 h-full flex-1 border-2 rounded-4xl bg-white'>
 
           </div>
         </div>
