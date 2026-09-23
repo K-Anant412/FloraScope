@@ -25,10 +25,10 @@ const Profile = () => {
 
   return (
     <section className='w-full min-h-screen bg-[#E8F5E9]'>
-      <div className='w-full h-screen border-2 border-black flex flex-col md:p-0 p-3 '>
+      <div className='w-full h-screen border-2 border-black flex flex-col md:p-0 p-3 md:gap-8 gap-4'>
 
         {/*  Profile header  */}
-        <div className='relative w-full md:h-60 h-fit md:rounded-0 rounded-2xl bg-white flex md:flex-row flex-col items-center md:p-5 p-2.5'>
+        <div className='relative w-full md:h-60 h-fit md:rounded-none rounded-2xl bg-white flex md:flex-row flex-col items-center md:p-5 p-2.5'>
           {/*  Profile Image  */}
           <div className='shrink-0 md:w-40 w-25 md:h-40 h-25 border-2 rounded-[50%] bg-center bg-cover' style={{backgroundImage: `url(${profile})`}}>
 
@@ -45,6 +45,34 @@ const Profile = () => {
             <h1 className='w-full pl-2 h-fit md:text-2xl text-xl font-["nunito"] flex items-center font-semibold'>
               -12 Sep, 2026
             </h1>
+
+          </div>
+        </div>
+
+        {/*  Profile intro section contains total scans, plants identified, favorite plants */}
+        <div className='relative w-full h-fit md:h-120 border-2 md:p-4 p-2 flex md:flex-row flex-col gap-4 overflow-y-auto scrollbar-none'>
+          <div className='md:w-[20%] h-full border-2 rounded-2xl flex flex-col items-center md:gap-4 gap-2 p-1'>
+            <div className='w-full md:h-25 border rounded-4xl flex items-center p-2 md:p-4 bg-white'>
+              <img src={camera} alt="camera" className='md:h-23 relative -left-5' />
+              <h1 className='relative -left-6 text-2xl font-["nunito"] font-bold'>
+                Total Scans:
+                <p className='font-semibold text-xl'>120</p>
+              </h1>
+            </div>
+            <div className='w-full md:h-25 border rounded-4xl flex items-center p-2 md:p-4 bg-white'>
+              <img src={camera} alt="camera" className='md:h-23 relative -left-5' />
+              <h1 className='relative -left-6 text-2xl font-["nunito"] font-bold'>
+                Total Scans:
+                <p className='font-semibold text-xl'>120</p>
+              </h1>
+            </div>
+            <div className='w-full md:h-25 border rounded-4xl flex items-center p-2 md:p-4 bg-white'>
+              <img src={camera} alt="camera" className='md:h-23 relative -left-5' />
+              <h1 className='relative -left-6 text-2xl font-["nunito"] font-bold'>
+                Total Scans:
+                <p className='font-semibold text-xl'>120</p>
+              </h1>
+            </div>
 
           </div>
         </div>
