@@ -35,4 +35,10 @@ export const plantService = {
     plantCareDetails: ( id ) => API.get('/plant/care', {params: { id }})
 }
 
+export const userService = {
+    getUserData: () => API.get('/user/get_user_info'),
+    getProfile: () => API.get('/user/user_profile'),
+    deleteUser: () => API.delete('/user/remove_user')
+}
+
 export default API;

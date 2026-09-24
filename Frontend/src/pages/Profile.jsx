@@ -2,6 +2,9 @@ import React, { useEffect, useState, useContext } from 'react'
 import { plantService } from '../service/api';
 import { AuthContext } from '../context/AuthContext';
 
+// Service imports
+import { userService } from '../service/api';
+
 // icons
 import { IoMailOpenOutline } from "react-icons/io5";
 import { IoCalendarClearOutline } from "react-icons/io5";
@@ -16,12 +19,33 @@ import microscope from '../assets/Desktop_image/microscope.png'
 const Profile = () => {
 
   const [click, setClick] = useState(false);
+  const [userData, setUserData] = useState(null);
+  const [userHistory, setUserHistory] = useState(null);
 
-  // useEffect(() => {
-  //   const user = localStorage.getItem('user');
-  //   if(!user) return;
-  //   console.log(user);
-  // }, [click])
+  useEffect(() => {
+    const user = localStorage.getItem('user');
+    if(!user) return;
+    console.log(user);
+  }, [])
+
+  const handleProfile = async() =>{
+    try {
+      const user = await userService.getUserData();
+      const user_history = await userService.getProfile();
+
+      if(!user){
+        alert("User not logged-in");
+        return;
+      }
+
+      setUserData(user.data.data)
+      console.log("User Data: ", user.data.data);
+      console.log("Profile: ", user_history.data.data);
+      
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 
   return (
     <section className='w-full min-h-screen bg-[#E8F5E9]'>
@@ -76,7 +100,9 @@ const Profile = () => {
               </h1>
             </div>
             
-            <button className='w-full md:h-20 border h-15 rounded-4xl flex items-center justify-center md:text-3xl text-2xl border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)] font-["Fredoka"] md:font-extrabold font-semibold transition-all duration-200 bg-red-400 text-white hover:bg-red-500 cursor-pointer'>
+            <button 
+              onClick={handleProfile}
+              className='w-full md:h-20 border h-15 rounded-4xl flex items-center justify-center md:text-3xl text-2xl border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)] font-["Fredoka"] md:font-extrabold font-semibold transition-all duration-200 bg-red-400 text-white hover:bg-red-500 cursor-pointer'>
               Log-Out
             </button>
           </div>
