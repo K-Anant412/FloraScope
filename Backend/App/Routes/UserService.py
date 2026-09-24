@@ -77,4 +77,35 @@ def user_history():
     except Exception as e:
         return error_response(str(e))
 
-
+@user_route.route("/remove_user", methods=["DELETE"])
+@jwt_required()
+def remove_user():
+    """
+    Removed user
+    ---
+    tags:
+        - Remove user
+    security:
+        - Bearer: []
+    responses:
+        200:
+            description: user found successfully
+        404:
+            description: user not found
+    """
+    try:
+        user = User.query.get(int(get_jwt_identity()))
+        
+        if not user:
+            return error_response(
+                message="User not found",
+                status_code=404
+            )
+        db.session.delete(user)
+        db.session.commit()
+        
+        return success_response(
+            message="User removed"
+        )
+    except Exception as e:
+        return error_response(str(e))
