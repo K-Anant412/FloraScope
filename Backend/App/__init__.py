@@ -84,4 +84,7 @@ def create_app(config_name="development"):
     from App.Routes.Service import service_route
     app.register_blueprint(service_route, url_prefix="/api/plant")
     
+    from App.Routes.UserService import user_route
+    app.register_blueprint(user_route, url_prefix="/api/user")
+    
     return app
