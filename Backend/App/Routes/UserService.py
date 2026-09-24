@@ -46,3 +46,35 @@ def show_user_details():
     except Exception as e:
         return error_response(str(e))
 
+@user_route.route("/user_profile", methods=["GET"])
+@jwt_required()
+def user_history():
+    """
+    Get details
+    ---
+    tags:
+        - User details
+    security:
+        - Bearer: []
+    responses:
+        200:
+            description: Details of the current user
+    """
+    try:
+        user = User.query.get(int(get_jwt_identity()))
+        if not user:
+            return error_response("User not found", status_code=404)
+        
+        return success_response(
+            message="User profile fetched successfully",
+            data={
+                "user": user.to_dict(),
+                "scans": [scan.to_dict() for scan in user.scans],
+                "favorites": [plant.to_dict() for plant in Plant.query.filter_by(is_favorite=True).all()]
+            }
+        )
+        
+    except Exception as e:
+        return error_response(str(e))
+
+

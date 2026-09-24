@@ -18,6 +18,15 @@ class User(db.Model):
     scans = db.relationship(
         "Scan_history", backref="user", lazy=True, cascade="all, delete-orphan"
     )
+    
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "email": self.email,
+            "is_active": self.is_active,
+            "created_at": self.created_at.isoformat() if self.created_at else None,
+        }
 
 
 class Plant(db.Model):
@@ -36,6 +45,7 @@ class Plant(db.Model):
     pet_toxicity_description = db.Column(db.Text)
     human_toxicity_description = db.Column(db.Text)
     medicinal_uses = db.Column(db.Text)
+    is_favorite = db.Column(db.Boolean, default=False, server_default=db.text("0"), nullable=False)
 
     scan = db.relationship(
         "Scan_history", backref="plant", lazy=True, cascade="all, delete-orphan"
@@ -44,6 +54,17 @@ class Plant(db.Model):
     care = db.relationship(
         "Plant_care", backref="plant", lazy=True, cascade="all, delete-orphan"
     )
+    
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "scientific_name": self.scientific_name,
+            "common_name": self.common_name,
+            "image_url": self.image_url,
+            "family": self.family,
+            "description": self.description,
+            "is_favorite": self.is_favorite,
+        }
 
 
 class Scan_history(db.Model):
@@ -61,6 +82,13 @@ class Scan_history(db.Model):
     scan_timestamp = db.Column(
         db.DateTime, default=lambda: datetime.now(timezone.utc), nullable=False
     )
+    
+    def to_dict(self):
+        return {
+            "scan_id": self.id,
+            "scanned_at": self.scan_timestamp.isoformat() if self.scan_timestamp else None,
+            "plant": self.plant.to_dict() if self.plant else None,
+        }
 
 
 class Plant_care(db.Model):
