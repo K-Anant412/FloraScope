@@ -533,3 +533,47 @@ def get_plant_care_details(id):
 
     except Exception as e:
         return error_response(str(e))
+
+
+@service_route.route("/plant/<int:plant_id>/favorite", methods=["PUT"])
+@jwt_required()
+def toggle_favorite(plant_id):
+    """
+    Toggle Favorite Status for a Plant by ID
+    ---
+    tags:
+      - Plant
+    security:
+      - Bearer: []
+    parameters:
+      - in: path
+        name: plant_id
+        type: integer
+        required: true
+        description: Unique identifier of the plant
+    responses:
+      200:
+        description: Plant favorite status updated successfully
+      404:
+        description: Plant not found
+      500:
+        description: Internal server error
+    """
+    try:
+        plant = Plant.query.get(plant_id)
+
+        if not plant:
+            return error_response(message="Plant not found.", status_code=404)
+
+        # Toggle the boolean flag
+        plant.is_favorite = not plant.is_favorite
+        db.session.commit()
+
+        return success_response(
+            message=f"Plant {'added to' if plant.is_favorite else 'removed from'} favorites.",
+            data=plant.to_dict(),
+        )
+
+    except Exception as e:
+        db.session.rollback()
+        return error_response(str(e))
