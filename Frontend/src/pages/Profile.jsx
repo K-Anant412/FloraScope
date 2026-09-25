@@ -18,33 +18,66 @@ import microscope from '../assets/Desktop_image/microscope.png'
 
 const Profile = () => {
 
-  const [click, setClick] = useState(false);
   const [userData, setUserData] = useState(null);
   const [userHistory, setUserHistory] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const user = localStorage.getItem('user');
-    if(!user) return;
-    console.log(user);
+    
+    let isMounted = true;
+
+    const handleProfile = async() =>{
+      try {
+        setIsLoading(true);
+        const user = await userService.getProfile();
+        
+        if(!user || !user.data){
+          console.log("User not found");
+          
+          return;
+        }
+
+          const Profile = user.data.data ?? user.data;
+          // setUserData(Profile);
+          setUserHistory(Profile);
+          const formattedCreatedAt = Profile.user?.created_at
+            ? new Date(Profile.user.created_at).toLocaleDateString("en-GB", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+              })
+            : "N/A";
+
+            console.log(Profile.user.name);
+            
+          const result = {
+            "name": Profile.user.name,
+            "email": Profile.user.email,
+            "created_at": formattedCreatedAt
+          };
+          setUserData(result)
+          
+      } catch (error) {
+        console.log(error.message);
+      }finally{
+        if(isMounted) setIsLoading(false);
+      }
+      
+    }
+
+    handleProfile();
+
+    return () =>{
+      isMounted = false;
+    };
   }, [])
 
-  const handleProfile = async() =>{
-    try {
-      const user = await userService.getUserData();
-      const user_history = await userService.getProfile();
-
-      if(!user){
-        alert("User not logged-in");
-        return;
-      }
-
-      setUserData(user.data.data)
-      console.log("User Data: ", user.data.data);
-      console.log("Profile: ", user_history.data.data);
-      
-    } catch (error) {
-      console.log(error.message);
-    }
+  if (isLoading) {
+    return (
+      <div className="w-full min-h-screen flex items-center justify-center bg-[#E8F5E9]">
+        <p className="text-xl font-semibold">Loading profile...</p>
+      </div>
+    );
   }
 
   return (
@@ -61,13 +94,13 @@ const Profile = () => {
           <div className='shrink-0 md:w-full md:h-full relative md:top-0 -top-4 md:p-4 p-2 flex flex-col justify-center'>
 
             <h1 className='w-full p-2 h-fit md:text-3xl text-[24px] font-["nunito"] font-extrabold flex items-center justify-center md:items-start md:justify-normal'>
-              User Name
+              {userData.name}
             </h1>
             <h1 className='w-full pl-2 h-fit md:text-2xl text-xl font-["nunito"] flex items-center font-semibold'>
-              -user412@gmail.com
+              -{userData.email}
             </h1>
             <h1 className='w-full pl-2 h-fit md:text-2xl text-xl font-["nunito"] flex items-center font-semibold'>
-              -12 Sep, 2026
+              -{userData.created_at}
             </h1>
 
           </div>
@@ -101,7 +134,6 @@ const Profile = () => {
             </div>
             
             <button 
-              onClick={handleProfile}
               className='w-full md:h-20 border h-15 rounded-4xl flex items-center justify-center md:text-3xl text-2xl border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)] font-["Fredoka"] md:font-extrabold font-semibold transition-all duration-200 bg-red-400 text-white hover:bg-red-500 cursor-pointer'>
               Log-Out
             </button>
