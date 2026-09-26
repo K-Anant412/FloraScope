@@ -5,6 +5,7 @@ from App.Utils.Response import (
     plant_identification_response,
     fetch_wikipedia_details,
     fetch_perenual_details,
+    create_care_guide,
 )
 from flask import request, Blueprint
 from flask_jwt_extended import jwt_required, get_jwt_identity
@@ -81,7 +82,6 @@ def identify():
         raw_api_data = response.json()
         formatted_response, status_code = plant_identification_response(raw_api_data)
         best_match = formatted_response["data"]["best_match"]
-        # formatted_data = formatted_response[0]["data"]
         if not best_match:
             return error_response(
                 message="No plant could be identified.", status_code=404
@@ -113,31 +113,10 @@ def identify():
                 human_toxicity_level=(
                     "Toxic" if perenual_info.get("poisonous_to_humans") else "Non-toxic"
                 ),
+                perenual_species_id=perenual_info.get("id"),
             )
             db.session.add(plant)
             db.session.flush()
-
-        care = Plant_care.query.filter_by(plant_id=plant.id).first()
-        if not care:
-            sunlight = perenual_info.get("sunlight", [])
-            care = Plant_care(
-                plant_id=plant.id,
-                sunlight_requirement=(
-                    ", ".join(sunlight) if isinstance(sunlight, list) else str(sunlight)
-                ),
-                soil_type=(
-                    ", ".join(perenual_info.get("soil", []))
-                    if perenual_info.get("soil")
-                    else None
-                ),
-                watering_frequency=(
-                    7 if perenual_info.get("watering") == "Average" else 14
-                ),
-                watering_unit="days",
-                min_temp=perenual_info.get("hardiness", {}).get("min"),
-                max_temp=perenual_info.get("hardiness", {}).get("max"),
-            )
-            db.session.add(care)
 
         scan = Scan_history(
             user_id=current_user_id,
@@ -468,68 +447,20 @@ def get_plant_care_details(id):
             return error_response(message="Scan history not found.")
 
         plant = Plant.query.get(id)
+
         if not plant:
             return error_response(message="Plant not found.")
+        
+        species_id = plant.perenual_species_id
+        if not species_id:
+            return error_response(message="species_id is not exist 404")
 
-        care = Plant_care.query.filter_by(plant_id=id).first()
+        print("Id is here>>>>>>",species_id)
+        care_guide = create_care_guide(species_id=species_id)
+        if not care_guide:
+            return error_response(message="Plant is dead now. RIP")
 
-        response_data = {
-            "plant_id": plant.id,
-            "common_name": plant.common_name or "Unknown Plant",
-            "scientific_name": plant.scientific_name or "N/A",
-            "image_url": plant.image_url,
-            "scan_details": {
-                "scan_id": scan.id,
-                "identified_name": scan.identified_name or plant.common_name,
-                "confidence_score": (
-                    round(scan.confidence_score, 2)
-                    if scan.confidence_score is not None
-                    else 0.0
-                ),
-                "scan_timestamp": (
-                    scan.scan_timestamp.isoformat() if scan.scan_timestamp else None
-                ),
-                "identification_status": scan.identification_status,
-            },
-            "care_instructions": {
-                "watering_frequency": (
-                    care.watering_frequency
-                    if (care and care.watering_frequency is not None)
-                    else 1
-                ),
-                "watering_unit": (
-                    care.watering_unit if (care and care.watering_unit) else "day"
-                ),
-                "sunlight_requirement": (
-                    care.sunlight_requirement
-                    if (care and care.sunlight_requirement)
-                    else "Moderate indirect sunlight"
-                ),
-                "soil_type": (
-                    care.soil_type
-                    if (care and care.soil_type)
-                    else "Well-draining potting mix"
-                ),
-                "temperature_range": {
-                    "min_temp": (
-                        care.min_temp if (care and care.min_temp is not None) else 18.0
-                    ),
-                    "max_temp": (
-                        care.max_temp if (care and care.max_temp is not None) else 28.0
-                    ),
-                    "unit": "°C",
-                },
-                "humidity": (
-                    care.humidity if (care and care.humidity is not None) else 50.0
-                ),
-            },
-            "toxicity": {
-                "pet": plant.pet_toxicity_level or "Unknown",
-                "human": plant.human_toxicity_level or "Unknown",
-            },
-        }
-
-        return success_response(message="Plant care data.", data=response_data)
+        return success_response(message="Take care of your plant:", data=care_guide)
 
     except Exception as e:
         return error_response(str(e))
