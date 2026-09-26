@@ -108,24 +108,59 @@ def fetch_wikipedia_details(scientific_name, common_name=None):
             continue
     return {}
 
+# def fetch_perenual_details(scientific_name):
+#     """Fetches care guidelines and toxicity info from Perenual API."""
+#     api_key = os.getenv("PERENUAL_API_KEY")
+#     if not api_key:
+#         return {}
+
+#     search_url = f"https://perenual.com/api/v2/species-list?key={api_key}&q={scientific_name}"
+#     try:
+#         search_res = requests.get(search_url, timeout=5).json()
+#         data_list = search_res.get("data", [])
+#         print("Data Is-->", data_list)
+#         if not data_list:
+#             return {}
+        
+#     except requests.RequestException:
+#         return {}
 def fetch_perenual_details(scientific_name):
-    """Fetches care guidelines and toxicity info from Perenual API."""
+    """Fetch Perenual species information using scientific name."""
+
     api_key = os.getenv("PERENUAL_API_KEY")
+
     if not api_key:
         return {}
 
-    search_url = f"https://perenual.com/api/v2/species-list?key={api_key}&q={scientific_name}"
+    search_url = (
+        f"https://perenual.com/api/v2/species-list"
+        f"?key={api_key}&q={scientific_name}"
+    )
+
     try:
-        search_res = requests.get(search_url, timeout=5).json()
+        response = requests.get(search_url, timeout=5)
+        response.raise_for_status()
+
+        search_res = response.json()
+
         data_list = search_res.get("data", [])
-        print("Data Is-->", data_list)
+
+        print("Perenual Data --->", data_list)
+
         if not data_list:
             return {}
 
-        species_id = data_list[0].get("id")
-        details_url = f"https://perenual.com/api/v2/species/details/{species_id}?key={api_key}"
-        return requests.get(details_url, timeout=5).json()
-    except requests.RequestException:
+        species = data_list[0]
+
+        return {
+            "id": species.get("id"),
+            "common_name": species.get("common_name"),
+            "scientific_name": species.get("scientific_name", []),
+            "family": species.get("family"),
+        }
+
+    except requests.RequestException as e:
+        print("Perenual API Error:", e)
         return {}
     
 def create_care_guide(species_id):
@@ -134,11 +169,16 @@ def create_care_guide(species_id):
         api_key=os.getenv("PERENUAL_API_KEY")
         if not api_key:
             return {}
+        print("From Function>>>>>>",species_id)
         details_url = f"https://perenual.com/api/v2/species/details/{species_id}?key={api_key}"
-        response = requests.get(details_url, timeout=5).json()
+        
+        response = requests.get(details_url, timeout=5)
+        print(response.status_code)
+        print(response.text)
         response.raise_for_status()
 
         data = response.json()
+        print("Take this: ",data)
         
         return {
             "watering": {

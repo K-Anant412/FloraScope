@@ -4,6 +4,7 @@ import MiddleHomepage from '../components/MiddleHomepage'
 import HomeFooter from '../components/HomeFooter'
 import PlantIdentification from './PlantIdentification'
 import Profile from '../pages/Profile'
+import PlantCare from './PlantCare'
 
 const Home = () => {
 
@@ -24,6 +25,7 @@ const Home = () => {
                   <MiddleHomepage />
                   <HomeFooter />
                   <Profile />
+                  <PlantCare />
                 </>
               
               }
