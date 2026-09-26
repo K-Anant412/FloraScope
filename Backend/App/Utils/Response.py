@@ -108,7 +108,6 @@ def fetch_wikipedia_details(scientific_name, common_name=None):
             continue
     return {}
 
-
 def fetch_perenual_details(scientific_name):
     """Fetches care guidelines and toxicity info from Perenual API."""
     api_key = os.getenv("PERENUAL_API_KEY")
@@ -119,11 +118,96 @@ def fetch_perenual_details(scientific_name):
     try:
         search_res = requests.get(search_url, timeout=5).json()
         data_list = search_res.get("data", [])
+        print("Data Is-->", data_list)
         if not data_list:
             return {}
 
         species_id = data_list[0].get("id")
         details_url = f"https://perenual.com/api/v2/species/details/{species_id}?key={api_key}"
         return requests.get(details_url, timeout=5).json()
+    except requests.RequestException:
+        return {}
+    
+def create_care_guide(species_id):
+    "Create the care guide"
+    try:
+        api_key=os.getenv("PERENUAL_API_KEY")
+        if not api_key:
+            return {}
+        details_url = f"https://perenual.com/api/v2/species/details/{species_id}?key={api_key}"
+        response = requests.get(details_url, timeout=5).json()
+        response.raise_for_status()
+
+        data = response.json()
+        
+        return {
+            "watering": {
+                "frequency": data.get("watering"),
+                "benchmark": {
+                    "value": data.get("watering_general_benchmark", {}).get("value"),
+                    "unit": data.get("watering_general_benchmark", {}).get("unit")
+                }
+            },
+
+            "sunlight": data.get("sunlight", []),
+
+            "soil": data.get("soil", []),
+
+            "hardiness": {
+                "min": data.get("hardiness", {}).get("min"),
+                "max": data.get("hardiness", {}).get("max")
+            },
+
+            "pruning": {
+                "months": data.get("pruning_month", []),
+                "amount": data.get("pruning_count", {}).get("amount"),
+                "interval": data.get("pruning_count", {}).get("interval")
+            },
+
+            "propagation": data.get("propagation", []),
+
+            "attracts": data.get("attracts", []),
+
+            "pests": data.get("pest_susceptibility", []),
+
+            "flowering": {
+                "flowers": data.get("flowers"),
+                "season": data.get("flowering_season")
+            },
+
+            "fruiting": {
+                "fruits": data.get("fruits"),
+                "edible": data.get("edible_fruit"),
+                "season": data.get("fruiting_season")
+            },
+
+            "harvesting": {
+                "season": data.get("harvest_season"),
+                "method": data.get("harvest_method")
+            },
+
+            "growth": {
+                "rate": data.get("growth_rate"),
+                "maintenance": data.get("maintenance"),
+                "care_level": data.get("care_level")
+            },
+
+            "characteristics": {
+                "leaf": data.get("leaf"),
+                "flowers": data.get("flowers"),
+                "cones": data.get("cones"),
+                "drought_tolerant": data.get("drought_tolerant"),
+                "salt_tolerant": data.get("salt_tolerant"),
+                "thorny": data.get("thorny"),
+                "invasive": data.get("invasive"),
+                "rare": data.get("rare"),
+                "tropical": data.get("tropical"),
+                "cuisine": data.get("cuisine"),
+                "medicinal": data.get("medicinal"),
+                "edible_leaf": data.get("edible_leaf"),
+                "edible_fruit": data.get("edible_fruit")
+            }
+        }
+
     except requests.RequestException:
         return {}
