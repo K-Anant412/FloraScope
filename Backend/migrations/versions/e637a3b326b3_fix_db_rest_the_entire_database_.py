@@ -1,8 +1,8 @@
-"""changing previous table structure.
+"""Fix(DB): Rest the entire database structure.
 
-Revision ID: 36999845a3d5
+Revision ID: e637a3b326b3
 Revises: 
-Create Date: 2026-08-19 20:32:36.067483
+Create Date: 2026-09-26 09:28:15.377719
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '36999845a3d5'
+revision = 'e637a3b326b3'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -30,9 +30,14 @@ def upgrade():
     sa.Column('pet_toxicity_description', sa.Text(), nullable=True),
     sa.Column('human_toxicity_description', sa.Text(), nullable=True),
     sa.Column('medicinal_uses', sa.Text(), nullable=True),
+    sa.Column('is_favorite', sa.Boolean(), server_default=sa.text('0'), nullable=False),
+    sa.Column('perenual_species_id', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('scientific_name')
     )
+    with op.batch_alter_table('plant', schema=None) as batch_op:
+        batch_op.create_index(batch_op.f('ix_plant_perenual_species_id'), ['perenual_species_id'], unique=True)
+
     op.create_table('user',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('name', sa.String(length=150), nullable=False),
@@ -47,16 +52,46 @@ def upgrade():
 
     op.create_table('plant_care',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
-    sa.Column('plant_id', sa.Integer(), nullable=True),
-    sa.Column('sunlight_requirement', sa.String(length=300), nullable=True),
-    sa.Column('watering_frequency', sa.Integer(), nullable=True),
-    sa.Column('watering_unit', sa.String(length=30), nullable=True),
-    sa.Column('soil_type', sa.String(length=300), nullable=True),
-    sa.Column('min_temp', sa.Float(), nullable=True),
-    sa.Column('max_temp', sa.Float(), nullable=True),
-    sa.Column('humidity', sa.Float(), nullable=True),
+    sa.Column('plant_id', sa.Integer(), nullable=False),
+    sa.Column('watering', sa.String(length=50), nullable=True),
+    sa.Column('watering_benchmark', sa.String(length=50), nullable=True),
+    sa.Column('watering_benchmark_unit', sa.String(length=30), nullable=True),
+    sa.Column('sunlight_requirement', sa.Text(), nullable=True),
+    sa.Column('soil_type', sa.Text(), nullable=True),
+    sa.Column('hardiness_min', sa.Float(), nullable=True),
+    sa.Column('hardiness_max', sa.Float(), nullable=True),
+    sa.Column('pruning_months', sa.Text(), nullable=True),
+    sa.Column('pruning_amount', sa.Float(), nullable=True),
+    sa.Column('pruning_interval', sa.String(length=50), nullable=True),
+    sa.Column('propagation', sa.Text(), nullable=True),
+    sa.Column('attracts', sa.Text(), nullable=True),
+    sa.Column('pest_susceptibility', sa.Text(), nullable=True),
+    sa.Column('flowering_season', sa.String(length=100), nullable=True),
+    sa.Column('fruiting_season', sa.String(length=100), nullable=True),
+    sa.Column('harvest_season', sa.String(length=100), nullable=True),
+    sa.Column('harvest_method', sa.String(length=100), nullable=True),
+    sa.Column('growth_rate', sa.String(length=50), nullable=True),
+    sa.Column('maintenance', sa.String(length=50), nullable=True),
+    sa.Column('care_level', sa.String(length=50), nullable=True),
+    sa.Column('flowers', sa.Boolean(), nullable=True),
+    sa.Column('cones', sa.Boolean(), nullable=True),
+    sa.Column('fruits', sa.Boolean(), nullable=True),
+    sa.Column('leaf', sa.Boolean(), nullable=True),
+    sa.Column('edible_fruit', sa.Boolean(), nullable=True),
+    sa.Column('edible_leaf', sa.Boolean(), nullable=True),
+    sa.Column('medicinal', sa.Boolean(), nullable=True),
+    sa.Column('drought_tolerant', sa.Boolean(), nullable=True),
+    sa.Column('salt_tolerant', sa.Boolean(), nullable=True),
+    sa.Column('thorny', sa.Boolean(), nullable=True),
+    sa.Column('invasive', sa.Boolean(), nullable=True),
+    sa.Column('rare', sa.Boolean(), nullable=True),
+    sa.Column('tropical', sa.Boolean(), nullable=True),
+    sa.Column('cuisine', sa.Boolean(), nullable=True),
+    sa.Column('created_at', sa.DateTime(), nullable=True),
+    sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['plant_id'], ['plant.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('plant_id')
     )
     op.create_table('scan_history',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
@@ -82,5 +117,8 @@ def downgrade():
         batch_op.drop_index(batch_op.f('ix_user_email'))
 
     op.drop_table('user')
+    with op.batch_alter_table('plant', schema=None) as batch_op:
+        batch_op.drop_index(batch_op.f('ix_plant_perenual_species_id'))
+
     op.drop_table('plant')
     # ### end Alembic commands ###
