@@ -46,13 +46,14 @@ class Plant(db.Model):
     human_toxicity_description = db.Column(db.Text)
     medicinal_uses = db.Column(db.Text)
     is_favorite = db.Column(db.Boolean, default=False, server_default=db.text("0"), nullable=False)
+    perenual_species_id = db.Column( db.Integer, unique=True, nullable=True, index=True )
 
     scan = db.relationship(
         "Scan_history", backref="plant", lazy=True, cascade="all, delete-orphan"
     )
 
     care = db.relationship(
-        "Plant_care", backref="plant", lazy=True, cascade="all, delete-orphan"
+        "Plant_care", backref="plant", lazy=True, cascade="all, delete-orphan", uselist=False
     )
     
     def to_dict(self):
@@ -90,18 +91,67 @@ class Scan_history(db.Model):
             "plant": self.plant.to_dict() if self.plant else None,
         }
 
-
 class Plant_care(db.Model):
-    """Plant care tips"""
+
+    """Plant care guide information fetched from Perenual."""
 
     __tablename__ = "plant_care"
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    plant_id = db.Column(db.Integer, db.ForeignKey("plant.id"))
-    sunlight_requirement = db.Column(db.String(300))
-    watering_frequency = db.Column(db.Integer)
-    watering_unit = db.Column(db.String(30), default="days")
-    soil_type = db.Column(db.String(300))
-    min_temp = db.Column(db.Float)
-    max_temp = db.Column(db.Float)
-    humidity = db.Column(db.Float)
+    id = db.Column(
+        db.Integer,
+        primary_key=True,
+        autoincrement=True
+    )
+
+    plant_id = db.Column(
+        db.Integer,
+        db.ForeignKey("plant.id"),
+        unique=True,
+        nullable=False
+    )
+
+    watering = db.Column(db.String(50))
+    watering_benchmark = db.Column(db.String(50))
+    watering_benchmark_unit = db.Column(db.String(30))
+    sunlight_requirement = db.Column(db.Text)
+    soil_type = db.Column(db.Text)
+    hardiness_min = db.Column(db.Float)
+    hardiness_max = db.Column(db.Float)
+    pruning_months = db.Column(db.Text)
+    pruning_amount = db.Column(db.Float)
+    pruning_interval = db.Column(db.String(50))
+    propagation = db.Column(db.Text)
+    attracts = db.Column(db.Text)
+    pest_susceptibility = db.Column(db.Text)
+    flowering_season = db.Column(db.String(100))
+    fruiting_season = db.Column(db.String(100))
+    harvest_season = db.Column(db.String(100))
+    harvest_method = db.Column(db.String(100))
+    growth_rate = db.Column(db.String(50))
+    maintenance = db.Column(db.String(50))
+    care_level = db.Column(db.String(50))
+    flowers = db.Column(db.Boolean)
+    cones = db.Column(db.Boolean)
+    fruits = db.Column(db.Boolean)
+    leaf = db.Column(db.Boolean)
+    edible_fruit = db.Column(db.Boolean)
+    edible_leaf = db.Column(db.Boolean)
+    medicinal = db.Column(db.Boolean)
+    drought_tolerant = db.Column(db.Boolean)
+    salt_tolerant = db.Column(db.Boolean)
+    thorny = db.Column(db.Boolean)
+    invasive = db.Column(db.Boolean)
+    rare = db.Column(db.Boolean)
+    tropical = db.Column(db.Boolean)
+    cuisine = db.Column(db.Boolean)
+
+    created_at = db.Column(
+        db.DateTime,
+        default=db.func.current_timestamp()
+    )
+
+    updated_at = db.Column(
+        db.DateTime,
+        default=db.func.current_timestamp(),
+        onupdate=db.func.current_timestamp()
+    )
