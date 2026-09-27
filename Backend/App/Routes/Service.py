@@ -7,6 +7,7 @@ from App.Utils.Response import (
     fetch_perenual_details,
     create_care_guide,
 )
+from App.Routes.PlantCare import get_plant_care
 from flask import request, Blueprint
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from dotenv import load_dotenv
@@ -455,7 +456,6 @@ def get_plant_care_details(id):
         if not species_id:
             return error_response(message="species_id is not exist 404")
 
-        print("Id is here>>>>>>",species_id)
         care_guide = create_care_guide(species_id=species_id)
         if not care_guide:
             return error_response(message="Plant is dead now. RIP")
@@ -508,3 +508,13 @@ def toggle_favorite(plant_id):
     except Exception as e:
         db.session.rollback()
         return error_response(str(e))
+
+try:
+    
+    result = get_plant_care(
+        scientific_name="Kleinia petraea"
+    )
+    print("Data Found: ", result)
+except Exception as e:
+     print(error_response(str(e)))
+
