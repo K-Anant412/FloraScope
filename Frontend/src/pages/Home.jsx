@@ -5,6 +5,7 @@ import HomeFooter from '../components/HomeFooter'
 import PlantIdentification from './PlantIdentification'
 import Profile from '../pages/Profile'
 import PlantCare from './PlantCare'
+import Gallery from './Gallery'
 
 const Home = () => {
 
@@ -12,6 +13,22 @@ const Home = () => {
   const [plantDetails, setPlantDetails] = useState([]);
   const [plantImage, setPlantImage] = useState(null);
   const [userProfile, setUserProfile] = useState(false);
+
+  useEffect(() => {
+    const user = localStorage.getItem('user');
+
+    if(!user){
+      return <>
+        <h1 className='w-screen h-screen md:text-4xl text-2xl font-bold font-["nunito"] bg-[#E8F5E9]'>
+          Please Login / Register First
+        </h1>
+      </>
+    }
+    setUserProfile(user)
+    console.log("Current User: ", user);
+    
+  }, [])
+  
 
   return (
     <>
@@ -24,8 +41,9 @@ const Home = () => {
                   <Homepage setIsPlant={setIsPlant} setPlantDetails={setPlantDetails} setPlantImage={setPlantImage} />
                   <MiddleHomepage />
                   <HomeFooter />
-                  <Profile />
-                  <PlantCare />
+                  {/* <Profile /> */}
+                  {/* <PlantCare /> */}
+                  <Gallery />
                 </>
               
               }

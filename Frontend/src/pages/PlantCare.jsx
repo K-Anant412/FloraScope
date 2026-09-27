@@ -5,29 +5,29 @@ import { plantService } from '../service/api'
 
 const PlantCare = () => {
 
-    const [data, setData] = useState(null)
+    // const [data, setData] = useState(null)
 
-    useEffect(() => {
-      const fetchData = async()=>{
-        try {
-            const response = await plantService.plantCareDetails(2);
+    // useEffect(() => {
+    //   const fetchData = async()=>{
+    //     try {
+    //         const response = await plantService.plantCareDetails(2);
             
-            if(!response){
-                console.log("Error in API call 110");
-                return;
-            }
+    //         if(!response){
+    //             console.log("Error in API call 110");
+    //             return;
+    //         }
 
-            console.log("Success data: ", response.data.data);
+    //         console.log("Success data: ", response.data.data);
             
 
-        } catch (error) {
-            console.log("Error Message:", error.message);
+    //     } catch (error) {
+    //         console.log("Error Message:", error.message);
             
-        }
+    //     }
 
-      };
-      fetchData();
-    }, [])
+    //   };
+    //   fetchData();
+    // }, [])
     
 
     return (
