@@ -1,3 +1,4 @@
+from App.Routes.PlantCare import get_plant_care
 import os
 import requests
 
@@ -108,22 +109,6 @@ def fetch_wikipedia_details(scientific_name, common_name=None):
             continue
     return {}
 
-# def fetch_perenual_details(scientific_name):
-#     """Fetches care guidelines and toxicity info from Perenual API."""
-#     api_key = os.getenv("PERENUAL_API_KEY")
-#     if not api_key:
-#         return {}
-
-#     search_url = f"https://perenual.com/api/v2/species-list?key={api_key}&q={scientific_name}"
-#     try:
-#         search_res = requests.get(search_url, timeout=5).json()
-#         data_list = search_res.get("data", [])
-#         print("Data Is-->", data_list)
-#         if not data_list:
-#             return {}
-        
-#     except requests.RequestException:
-#         return {}
 def fetch_perenual_details(scientific_name):
     """Fetch Perenual species information using scientific name."""
 
@@ -163,52 +148,54 @@ def fetch_perenual_details(scientific_name):
         print("Perenual API Error:", e)
         return {}
     
-def create_care_guide(species_id):
+def create_care_guide(scientific_name):
     "Create the care guide"
     try:
-        api_key=os.getenv("PERENUAL_API_KEY")
-        if not api_key:
-            return {}
-        print("From Function>>>>>>",species_id)
-        details_url = f"https://perenual.com/api/v2/species/details/{species_id}?key={api_key}"
+        if not scientific_name:
+            return error_response(
+                message="provide scintific name."
+            )
         
-        response = requests.get(details_url, timeout=5)
-        print(response.status_code)
-        print(response.text)
-        response.raise_for_status()
+        plant_data = get_plant_care(scientific_name=scientific_name)
 
-        data = response.json()
-        print("Take this: ",data)
-        
-        return {
+        if not plant_data:
+            return error_response(
+                message="API error",
+                status_code=400
+            )
+            
+        data = plant_data.get("data", {}).get("care", {})
+
+        result = {
             "watering": {
                 "frequency": data.get("watering"),
                 "benchmark": {
-                    "value": data.get("watering_general_benchmark", {}).get("value"),
-                    "unit": data.get("watering_general_benchmark", {}).get("unit")
+                    "value": data.get("watering_benchmark"),
+                    "unit": data.get("watering_benchmark_unit")
                 }
             },
 
-            "sunlight": data.get("sunlight", []),
 
-            "soil": data.get("soil", []),
+            "sunlight": data.get("sunlight_requirement"),
+
+            "soil": data.get("soil_type"),
 
             "hardiness": {
-                "min": data.get("hardiness", {}).get("min"),
-                "max": data.get("hardiness", {}).get("max")
+                "min": data.get("hardiness_min"),
+                "max": data.get("hardiness_max")
             },
 
             "pruning": {
-                "months": data.get("pruning_month", []),
-                "amount": data.get("pruning_count", {}).get("amount"),
-                "interval": data.get("pruning_count", {}).get("interval")
+                "months": data.get("pruning_months"),
+                "amount": data.get("pruning_amount"),
+                "interval": data.get("pruning_interval")
             },
 
-            "propagation": data.get("propagation", []),
+            "propagation": data.get("propagation"),
 
-            "attracts": data.get("attracts", []),
+            "attracts": data.get("attracts"),
 
-            "pests": data.get("pest_susceptibility", []),
+            "pests": data.get("pest_susceptibility"),
 
             "flowering": {
                 "flowers": data.get("flowers"),
@@ -249,5 +236,10 @@ def create_care_guide(species_id):
             }
         }
 
+        return success_response(
+            message="Plant data found",
+            data=result
+        )
     except requests.RequestException:
         return {}
+    
