@@ -451,16 +451,22 @@ def get_plant_care_details(id):
 
         if not plant:
             return error_response(message="Plant not found.")
+
+        scientific_name = plant.scientific_name
+        if not scientific_name:
+            return error_response("Plant not identified yet.")
         
-        species_id = plant.perenual_species_id
-        if not species_id:
-            return error_response(message="species_id is not exist 404")
+        response = create_care_guide(scientific_name=scientific_name)
+        if not response:
+            return error_response(
+                message="API error.",
+                status_code=400
+            )
 
-        care_guide = create_care_guide(species_id=species_id)
-        if not care_guide:
-            return error_response(message="Plant is dead now. RIP")
-
-        return success_response(message="Take care of your plant:", data=care_guide)
+        return success_response(
+            message="Take care of your plant:",
+            data=response
+        )
 
     except Exception as e:
         return error_response(str(e))
@@ -509,12 +515,10 @@ def toggle_favorite(plant_id):
         db.session.rollback()
         return error_response(str(e))
 
+
 try:
-    
-    result = get_plant_care(
-        scientific_name="Kleinia petraea"
-    )
+
+    result = get_plant_care(scientific_name="Kleinia petraea")
     print("Data Found: ", result)
 except Exception as e:
-     print(error_response(str(e)))
-
+    print(error_response(str(e)))
