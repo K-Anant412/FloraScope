@@ -34,6 +34,12 @@ import { NavLink } from 'react-router-dom';
                   >
                   Uploads
                 </NavLink>
+                <NavLink
+                  to='/gallery'
+                  className='min-w-20 h-fit py-1 flex items-center justify-center text-[18px] font-["nunito"] px-2 border rounded-2xl border-white font-bold text-gray-600 transition-all duration-150 hover:text-gray-700 hover:border-gray-200 hover:bg-[#E8F5E9]'
+                  >
+                  Gallery
+                </NavLink>
                 <li
                   onClick={handleProfile} 
                   className='min-w-20 h-fit py-1 flex items-center justify-center text-[18px] font-["nunito"] px-2 border rounded-2xl border-white font-bold text-gray-600 transition-all duration-150 hover:text-gray-700 hover:border-gray-200 hover:bg-[#E8F5E9]'
@@ -43,7 +49,7 @@ import { NavLink } from 'react-router-dom';
                 
               </ul>
 
-              <div className='hidden shrink-0 h-fit p-2 w-[72%] md:flex items-center justify-end gap-3'>
+              <div className=' hidden shrink-0 h-fit p-2 w-[65%] md:flex items-center justify-end gap-3'>
                 <NavLink
                   to='/login' 
                   className='h-fit min-w-20 border flex items-center justify-center text-[19px] font-["nunito"] font-bold text-gray-700 rounded-2xl transition-all duration-200 hover:bg-gray-200'
