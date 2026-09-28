@@ -1,12 +1,16 @@
 import React from 'react'
-import footer from '../assets/Desktop_image/footer.png'
-import wp from '../assets/Desktop_image/wp.png'
+
+// Images
+import footer2 from '../assets/Desktop_image/footer2.jpg';
+import footer from '../assets/Desktop_image/footer.png';
+import wp from '../assets/Desktop_image/wp.png';
+// Icons
 import { SiOverleaf } from "react-icons/si";
 import { IoSearch } from "react-icons/io5";
 
 const HomeFooter = () => {
   return (
-        <div className='z-50 w-full p-3 min-h-screen bg-[#E8F5E9] flex flex-col md:p-10 md:gap-4 relative md:top-0 -top-25 pt-3'>
+        <div className='z-50 w-full p-3 min-h-screen flex flex-col md:p-10 md:gap-4 relative md:top-0 -top-25 pt-3 bg-center bg-cover' style={{backgroundImage: `url(${footer2})`}}>
 
               <div className='shrink-0 md:p-4 md:px-50 w-full md:h-60  rounded-3xl flex md:flex-row flex-col items-center m:gap-50 gap-4 p-5 bg-center bg-cover' style={{backgroundImage: `url(${footer})`}}>
 
@@ -21,13 +25,13 @@ const HomeFooter = () => {
 
               </div>
 
-                <img src={wp} alt="image" className='flex w-full absolute top-68 left-0 md:w-40 md:left-50' />
+                <img src={wp} alt="image" className='flex md:w-full absolute top-85 left-16 w-40 md:left-250 md:top-75 md:hidden' />
                 
-                <h1 className='shrink-0 w-full flex md:w-fit h-full md:p-2 py-6 text-3xl font-semibold font-["Fredoka"] items-center justify-center text-gray-600 relative md:top-10 '>
+                <h1 className='shrink-0 w-full flex h-full md:p-2 py-6 text-3xl md:text-8xl font-semibold font-["Fredoka"] items-center justify-center text-gray-600 relative md:top-10 '>
                     Fl
-                    <SiOverleaf className='text-[26px] text-gray-700' />
+                    <SiOverleaf className='md:text-7xl text-[26px] text-gray-700' />
                     raSc
-                    <IoSearch className='text-[24px] text-gray-700 relative top-1 font-extrabold rotate-90'/>
+                    <IoSearch className='md:text-7xl text-[26px] text-gray-700 relative top-1 font-extrabold rotate-90'/>
                     pe
                 </h1>
 
