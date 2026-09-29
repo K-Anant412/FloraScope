@@ -22,7 +22,6 @@ function App() {
           <Route path="/" element={<Home/>} />
           <Route path="/login" element={<AuthPage/>} />
           <Route path="/register" element={<AuthPage/>} />
-          
           <Route path="/gallery" element={<Gallery/>}/>
           <Route path='*' element={<Navigate to="/" replace />} />
         </Routes> 
