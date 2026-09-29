@@ -41,9 +41,7 @@ const Home = () => {
                   <Homepage setIsPlant={setIsPlant} setPlantDetails={setPlantDetails} setPlantImage={setPlantImage} />
                   <MiddleHomepage />
                   <HomeFooter />
-                  {/* <Profile /> */}
-                  {/* <PlantCare /> */}
-                  <Gallery />
+                  <PlantCare />
                 </>
               
               }

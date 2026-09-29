@@ -204,18 +204,26 @@ def show_all_plants():
     """
     try:
         data = Plant.query.all()
+        results = db.session.execute(
+            db.select(
+                Plant.id,
+                Plant.common_name,
+                Plant.scientific_name,
+                Scan_history.scan_timestamp
+            ).join(Scan_history, Plant.id == Scan_history.plant_id)
+        ).all()
 
         if not data:
             return error_response(message="No data found.", status_code=404)
 
         plants = []
-        for plant in data:
+        for plant in results:
             plants.append(
                 {
                     "id": plant.id,
                     "name": plant.common_name,
                     "scientific_name": plant.scientific_name,
-                    "description": plant.description,
+                    "scanned_at": plant.scan_timestamp,
                 }
             )
 
@@ -516,9 +524,9 @@ def toggle_favorite(plant_id):
         return error_response(str(e))
 
 
-try:
+# try:
 
-    result = get_plant_care(scientific_name="Kleinia petraea")
-    print("Data Found: ", result)
-except Exception as e:
-    print(error_response(str(e)))
+#     result = get_plant_care(scientific_name="Kleinia petraea")
+#     print("Data Found: ", result)
+# except Exception as e:
+#     print(error_response(str(e)))
