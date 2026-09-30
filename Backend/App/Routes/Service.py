@@ -464,6 +464,13 @@ def get_plant_care_details(id):
         if not scientific_name:
             return error_response("Plant not identified yet.")
         
+        care_exist = Plant_care.query.filter_by(plant_id=plant.id).first()
+        if care_exist:
+            return success_response(
+                message="Care already exist",
+                data=care_exist,
+            )
+                
         response = create_care_guide(scientific_name=scientific_name)
         if not response:
             return error_response(
@@ -475,6 +482,7 @@ def get_plant_care_details(id):
             message="Take care of your plant:",
             data=response
         )
+        
 
     except Exception as e:
         return error_response(str(e))
