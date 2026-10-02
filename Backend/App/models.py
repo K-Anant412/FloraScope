@@ -18,7 +18,7 @@ class User(db.Model):
     scans = db.relationship(
         "Scan_history", backref="user", lazy=True, cascade="all, delete-orphan"
     )
-    
+
     def to_dict(self):
         return {
             "id": self.id,
@@ -45,17 +45,23 @@ class Plant(db.Model):
     pet_toxicity_description = db.Column(db.Text)
     human_toxicity_description = db.Column(db.Text)
     medicinal_uses = db.Column(db.Text)
-    is_favorite = db.Column(db.Boolean, default=False, server_default=db.text("0"), nullable=False)
-    perenual_species_id = db.Column( db.Integer, unique=True, nullable=True, index=True )
+    is_favorite = db.Column(
+        db.Boolean, default=False, server_default=db.text("0"), nullable=False
+    )
+    perenual_species_id = db.Column(db.Integer, unique=True, nullable=True, index=True)
 
     scan = db.relationship(
         "Scan_history", backref="plant", lazy=True, cascade="all, delete-orphan"
     )
 
     care = db.relationship(
-        "Plant_care", backref="plant", lazy=True, cascade="all, delete-orphan", uselist=False
+        "Plant_care",
+        backref="plant",
+        lazy=True,
+        cascade="all, delete-orphan",
+        uselist=False,
     )
-    
+
     def to_dict(self):
         return {
             "id": self.id,
@@ -83,31 +89,26 @@ class Scan_history(db.Model):
     scan_timestamp = db.Column(
         db.DateTime, default=lambda: datetime.now(timezone.utc), nullable=False
     )
-    
+
     def to_dict(self):
         return {
             "scan_id": self.id,
-            "scanned_at": self.scan_timestamp.isoformat() if self.scan_timestamp else None,
+            "scanned_at": (
+                self.scan_timestamp.isoformat() if self.scan_timestamp else None
+            ),
             "plant": self.plant.to_dict() if self.plant else None,
         }
 
-class Plant_care(db.Model):
 
-    """Plant care guide information fetched from Perenual."""
+class Plant_care(db.Model):
+    """Plant care guide information generated from researched plant data."""
 
     __tablename__ = "plant_care"
 
-    id = db.Column(
-        db.Integer,
-        primary_key=True,
-        autoincrement=True
-    )
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 
     plant_id = db.Column(
-        db.Integer,
-        db.ForeignKey("plant.id"),
-        unique=True,
-        nullable=False
+        db.Integer, db.ForeignKey("plant.id"), unique=True, nullable=False
     )
 
     watering = db.Column(db.String(50))
@@ -145,13 +146,52 @@ class Plant_care(db.Model):
     tropical = db.Column(db.Boolean)
     cuisine = db.Column(db.Boolean)
 
-    created_at = db.Column(
-        db.DateTime,
-        default=db.func.current_timestamp()
-    )
+    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
     updated_at = db.Column(
         db.DateTime,
         default=db.func.current_timestamp(),
-        onupdate=db.func.current_timestamp()
+        onupdate=db.func.current_timestamp(),
     )
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "plant_id": self.plant_id,
+            "watering": self.watering,
+            "watering_benchmark": self.watering_benchmark,
+            "watering_benchmark_unit": self.watering_benchmark_unit,
+            "sunlight_requirement": self.sunlight_requirement,
+            "soil_type": self.soil_type,
+            "hardiness_min": self.hardiness_min,
+            "hardiness_max": self.hardiness_max,
+            "pruning_months": self.pruning_months,
+            "pruning_amount": self.pruning_amount,
+            "pruning_interval": self.pruning_interval,
+            "propagation": self.propagation,
+            "attracts": self.attracts,
+            "pest_susceptibility": self.pest_susceptibility,
+            "flowering_season": self.flowering_season,
+            "fruiting_season": self.fruiting_season,
+            "harvest_season": self.harvest_season,
+            "harvest_method": self.harvest_method,
+            "growth_rate": self.growth_rate,
+            "maintenance": self.maintenance,
+            "care_level": self.care_level,
+            "flowers": self.flowers,
+            "cones": self.cones,
+            "fruits": self.fruits,
+            "leaf": self.leaf,
+            "edible_fruit": self.edible_fruit,
+            "edible_leaf": self.edible_leaf,
+            "medicinal": self.medicinal,
+            "drought_tolerant": self.drought_tolerant,
+            "salt_tolerant": self.salt_tolerant,
+            "thorny": self.thorny,
+            "invasive": self.invasive,
+            "rare": self.rare,
+            "tropical": self.tropical,
+            "cuisine": self.cuisine,
+            "created_at": self.created_at.isoformat() if self.created_at else None,
+            "updated_at": self.updated_at.isoformat() if self.updated_at else None,
+        }
