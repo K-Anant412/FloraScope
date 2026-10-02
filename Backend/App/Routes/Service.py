@@ -280,6 +280,47 @@ def show_plant_details(id):
 
     except Exception as e:
         return error_response(str(e))
+    
+
+@service_route.route("/plant_care/<int:id>", methods=["GET"])
+def show_plant_care(id):
+    """
+    Get care information about a plant
+    ---
+    tags:
+        - Plant care
+
+    parameters:
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: Plant id for care information
+
+    responses:
+        200:
+            description: Plant care information
+        400:
+            description: Plant care information not found
+        500:
+            description: Internal server error
+    """
+
+    try:
+        care = Plant_care.query.filter_by(plant_id=id).first()
+
+        if not care:
+            return error_response(
+                message="No care information found for this plant."
+            )
+
+        return success_response(
+            message="Plant care information",
+            data=care.to_dict()
+        )
+
+    except Exception as e:
+        return error_response(str(e))
 
 
 @service_route.route("/plant_history/<int:id>", methods=["GET"])
@@ -468,7 +509,7 @@ def get_plant_care_details(id):
         if care_exist:
             return success_response(
                 message="Care already exist",
-                data=care_exist,
+                data=care_exist.to_dict(),
             )
                 
         response = create_care_guide(scientific_name=scientific_name)
@@ -478,13 +519,80 @@ def get_plant_care_details(id):
                 status_code=400
             )
 
+        raw_data = response[0] if isinstance(response, (list, tuple)) else response
+        
+        care_payload = raw_data.get("data", raw_data) if isinstance(raw_data, dict) else {}
+        if not care_payload:
+            return error_response(
+                message="Invalid care guide data received.",
+                status_code=500
+            )
+        characteristics = care_payload.get("characteristics") or {}
+        flowering = care_payload.get("flowering") or {}
+        fruiting = care_payload.get("fruiting") or {}
+        growth = care_payload.get("growth") or {}
+        hardiness = care_payload.get("hardiness") or {}
+        harvesting = care_payload.get("harvesting") or {}
+        pruning = care_payload.get("pruning") or {}
+        watering = care_payload.get("watering") or {}
+        watering_benchmark = watering.get("benchmark") or {}
+
+        # Instantiate model
+        new_care = Plant_care(
+            plant_id=plant.id,
+            # Watering
+            watering=watering.get("frequency"),
+            watering_benchmark=watering_benchmark.get("value"),
+            watering_benchmark_unit=watering_benchmark.get("unit"),
+            # Environment & Soil
+            sunlight_requirement=care_payload.get("sunlight"),
+            soil_type=care_payload.get("soil"),
+            hardiness_min=float(hardiness["min"]) if hardiness.get("min") is not None else None,
+            hardiness_max=float(hardiness["max"]) if hardiness.get("max") is not None else None,
+            # Pruning & Maintenance
+            pruning_months=pruning.get("months"),
+            pruning_amount=float(pruning["amount"]) if pruning.get("amount") is not None else None,
+            pruning_interval=pruning.get("interval"),
+            growth_rate=growth.get("rate"),
+            maintenance=growth.get("maintenance"),
+            care_level=growth.get("care_level"),
+            # Propagation & Pests
+            propagation=care_payload.get("propagation"),
+            attracts=care_payload.get("attracts"),
+            pest_susceptibility=care_payload.get("pests"),
+            # Seasons
+            flowering_season=flowering.get("season"),
+            fruiting_season=fruiting.get("season"),
+            harvest_season=harvesting.get("season"),
+            harvest_method=harvesting.get("method"),
+            # Characteristics & Booleans
+            flowers=flowering.get("flowers", characteristics.get("flowers")),
+            fruits=fruiting.get("fruits"),
+            cones=characteristics.get("cones"),
+            leaf=characteristics.get("leaf"),
+            edible_fruit=fruiting.get("edible", characteristics.get("edible_fruit")),
+            edible_leaf=characteristics.get("edible_leaf"),
+            medicinal=characteristics.get("medicinal"),
+            drought_tolerant=characteristics.get("drought_tolerant"),
+            salt_tolerant=characteristics.get("salt_tolerant"),
+            thorny=characteristics.get("thorny"),
+            invasive=characteristics.get("invasive"),
+            rare=characteristics.get("rare"),
+            tropical=characteristics.get("tropical"),
+            cuisine=characteristics.get("cuisine"),
+        )
+
+        db.session.add(new_care)
+        db.session.commit()
+        
         return success_response(
             message="Take care of your plant:",
-            data=response
+            data=new_care.to_dict()
         )
         
 
     except Exception as e:
+        db.session.rollback()
         return error_response(str(e))
 
 
@@ -530,11 +638,3 @@ def toggle_favorite(plant_id):
     except Exception as e:
         db.session.rollback()
         return error_response(str(e))
-
-
-# try:
-
-#     result = get_plant_care(scientific_name="Kleinia petraea")
-#     print("Data Found: ", result)
-# except Exception as e:
-#     print(error_response(str(e)))
