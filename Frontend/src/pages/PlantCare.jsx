@@ -7,6 +7,16 @@ import { plantService } from '../service/api'
 
 const PlantCare = () => {
 
+    const [plantCareData, setPlantCareData] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+      const fetchData = async() => {
+        const response = await plantService.plantCareDetails();
+      }
+    }, [third])
+    
+
     return (
         <section className='w-full min-h-screen bg-[#E8F5E9] md:p-4 p-2'>
             {/*  Plant care info */}
