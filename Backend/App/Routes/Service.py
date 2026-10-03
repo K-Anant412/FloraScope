@@ -323,6 +323,46 @@ def show_plant_care(id):
         return error_response(str(e))
 
 
+@service_route.route("/plant_care", methods=["GET"])
+def show_all_plant_care():
+    """
+    Get care information for all plants
+
+    ---
+    tags:
+        - Plant care
+
+    responses:
+        200:
+            description: All plant care information
+        400:
+            description: No plant care data found
+        500:
+            description: Internal server error
+    """
+
+    try:
+        care_data = Plant_care.query.all()
+
+        if not care_data:
+            return error_response(
+                message="No plant care information found."
+            )
+
+        plants = []
+
+        for care in care_data:
+            plants.append(care.to_dict())
+
+        return success_response(
+            message="Plant care information",
+            data=plants
+        )
+
+    except Exception as e:
+        return error_response(str(e))
+
+
 @service_route.route("/plant_history/<int:id>", methods=["GET"])
 def show_plant_history(id):
     """
