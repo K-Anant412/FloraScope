@@ -209,7 +209,9 @@ def show_all_plants():
                 Plant.id,
                 Plant.common_name,
                 Plant.scientific_name,
-                Scan_history.scan_timestamp
+                Plant.image_url,
+                Plant.is_favorite,
+                Scan_history.scan_timestamp,
             ).join(Scan_history, Plant.id == Scan_history.plant_id)
         ).all()
 
@@ -224,6 +226,8 @@ def show_all_plants():
                     "name": plant.common_name,
                     "scientific_name": plant.scientific_name,
                     "scanned_at": plant.scan_timestamp,
+                    "image": plant.image_url,
+                    "favorite": plant.is_favorite,
                 }
             )
 
@@ -264,15 +268,29 @@ def show_plant_details(id):
         for info in data:
             plant.append(
                 {
-                    "scan_id": info.id,
-                    "identified_name": info.identified_name,
-                    "confidence_score": info.confidence_score,
-                    "image_path": info.plant.image_url if info.plant else None,
-                    "scan_timestamp": info.scan_timestamp,
-                    "common_name": info.plant.common_name if info.plant else None,
-                    "scientific_name": (
-                        info.plant.scientific_name if info.plant else None
+                    "identify_name": info.identified_name,
+                    "score": info.confidence_score,
+                    "scan": (
+                        info.scan_timestamp.isoformat()
                     ),
+                    "id": info.plant.id,
+                    "name": info.plant.common_name,
+                    "scientific": info.plant.scientific_name,
+                    "image": info.plant.image_url,
+                    "family": info.plant.family,
+                    "disc": info.plant.description,
+                    "pet_toxicity_level": info.plant.pet_toxicity_level ,
+                    "human_toxicity_level": (
+                        info.plant.human_toxicity_level 
+                    ),
+                    "pet_toxicity_description": (
+                        info.plant.pet_toxicity_description 
+                    ),
+                    "human_toxicity_description": (
+                        info.plant.human_toxicity_description 
+                    ),
+                    "medicinal_uses": info.plant.medicinal_uses ,
+                    "is_favorite": info.plant.is_favorite ,
                 }
             )
 
@@ -280,7 +298,7 @@ def show_plant_details(id):
 
     except Exception as e:
         return error_response(str(e))
-    
+
 
 @service_route.route("/plant_care/<int:id>", methods=["GET"])
 def show_plant_care(id):
@@ -310,14 +328,9 @@ def show_plant_care(id):
         care = Plant_care.query.filter_by(plant_id=id).first()
 
         if not care:
-            return error_response(
-                message="No care information found for this plant."
-            )
+            return error_response(message="No care information found for this plant.")
 
-        return success_response(
-            message="Plant care information",
-            data=care.to_dict()
-        )
+        return success_response(message="Plant care information", data=care.to_dict())
 
     except Exception as e:
         return error_response(str(e))
@@ -345,19 +358,14 @@ def show_all_plant_care():
         care_data = Plant_care.query.all()
 
         if not care_data:
-            return error_response(
-                message="No plant care information found."
-            )
+            return error_response(message="No plant care information found.")
 
         plants = []
 
         for care in care_data:
             plants.append(care.to_dict())
 
-        return success_response(
-            message="Plant care information",
-            data=plants
-        )
+        return success_response(message="Plant care information", data=plants)
 
     except Exception as e:
         return error_response(str(e))
@@ -544,28 +552,26 @@ def get_plant_care_details(id):
         scientific_name = plant.scientific_name
         if not scientific_name:
             return error_response("Plant not identified yet.")
-        
+
         care_exist = Plant_care.query.filter_by(plant_id=plant.id).first()
         if care_exist:
             return success_response(
                 message="Care already exist",
                 data=care_exist.to_dict(),
             )
-                
+
         response = create_care_guide(scientific_name=scientific_name)
         if not response:
-            return error_response(
-                message="API error.",
-                status_code=400
-            )
+            return error_response(message="API error.", status_code=400)
 
         raw_data = response[0] if isinstance(response, (list, tuple)) else response
-        
-        care_payload = raw_data.get("data", raw_data) if isinstance(raw_data, dict) else {}
+
+        care_payload = (
+            raw_data.get("data", raw_data) if isinstance(raw_data, dict) else {}
+        )
         if not care_payload:
             return error_response(
-                message="Invalid care guide data received.",
-                status_code=500
+                message="Invalid care guide data received.", status_code=500
             )
         characteristics = care_payload.get("characteristics") or {}
         flowering = care_payload.get("flowering") or {}
@@ -587,11 +593,17 @@ def get_plant_care_details(id):
             # Environment & Soil
             sunlight_requirement=care_payload.get("sunlight"),
             soil_type=care_payload.get("soil"),
-            hardiness_min=float(hardiness["min"]) if hardiness.get("min") is not None else None,
-            hardiness_max=float(hardiness["max"]) if hardiness.get("max") is not None else None,
+            hardiness_min=(
+                float(hardiness["min"]) if hardiness.get("min") is not None else None
+            ),
+            hardiness_max=(
+                float(hardiness["max"]) if hardiness.get("max") is not None else None
+            ),
             # Pruning & Maintenance
             pruning_months=pruning.get("months"),
-            pruning_amount=float(pruning["amount"]) if pruning.get("amount") is not None else None,
+            pruning_amount=(
+                float(pruning["amount"]) if pruning.get("amount") is not None else None
+            ),
             pruning_interval=pruning.get("interval"),
             growth_rate=growth.get("rate"),
             maintenance=growth.get("maintenance"),
@@ -624,12 +636,10 @@ def get_plant_care_details(id):
 
         db.session.add(new_care)
         db.session.commit()
-        
+
         return success_response(
-            message="Take care of your plant:",
-            data=new_care.to_dict()
+            message="Take care of your plant:", data=new_care.to_dict()
         )
-        
 
     except Exception as e:
         db.session.rollback()

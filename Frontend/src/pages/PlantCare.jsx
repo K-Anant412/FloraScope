@@ -5,6 +5,7 @@ import test from '../assets/Desktop_image/test2.jpg';
 import spiral from '../assets/Phone_image/spiral.png';
 import sticky from '../assets/Phone_image/sticky.png';
 import cat from '../assets/Desktop_image/catpot.png';
+import pot from '../assets/Desktop_image/potting.png';
 
 // Services
 import { plantService } from '../service/api'
@@ -16,8 +17,8 @@ import { IoWaterOutline } from "react-icons/io5";
 
 const PlantCare = () => {
 
-    // const [plantCareData, setPlantCareData] = useState(null);
-    // const [isLoading, setIsLoading] = useState(true);
+    const [plantCareData, setPlantCareData] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
     const [infoPage, setInfoPage] = useState("care");
 
     // useEffect(() => {
@@ -201,16 +202,193 @@ const PlantCare = () => {
                         {/*  Cultivatio */}
                         { infoPage === "cultivation"
                             &&
-                            <div className='w-full h-full bg-amber-100'> 
+                            <div className='w-full h-full bg-white flex flex-col items-center gap-3 p-4 '> 
+                                
+                                <div className='shrink-0 w-full h-fit p-2 border rounded-2xl bg-[#E8F5E9] flex items-center'>
+                                    {/*  Growth  */}
+                                    <div className='w-[40%] h-full flex flex-col gap-1 border-r-4 border-dotted border-gray-400'>
+                                        <h1 className='text-2xl font-["nunito"] pb-1 font-bold text-[#2b532a] w-full pt-2 pl-3 flex items-center gap-2'>
+                                            Growing
+                                        </h1>
+                                        <h1 className='pl-3 text-xl max-w-[90%] h-fit font-semibold flex gap-2 '>
+                                            Growth rate:
+                                            <p className='text-gray-600'>moderate to fast</p>
+                                        </h1>
+                                        <h1 className='pl-3 text-xl max-w-[90%] h-fit font-semibold flex gap-2 '>
+                                            Hardiness minimum:
+                                            <p className='text-gray-600'>5</p>
+                                        </h1>
+                                        <h1 className='pl-3 text-xl max-w-[90%] h-fit font-semibold flex gap-2 '>
+                                            Hardiness maximum:
+                                            <p className='text-gray-600'>not found</p>
+                                        </h1>
+                                        
+                                    </div> 
 
+                                    {/*  Pruning  */}
+                                    <div className='w-[40%] h-full flex flex-col gap-1 pl-3'>
+                                        <h1 className='text-2xl font-["nunito"] pb-1 font-bold text-[#2b532a] w-full pt-2 pl-3 flex items-center gap-2'>
+                                            Pruning
+                                        </h1>
+                                        <h1 className='pl-3 text-xl max-w-[90%] h-fit font-semibold flex gap-2 '>
+                                            Pruning months:
+                                            <p className='text-gray-600'>February-March</p>
+                                        </h1>
+                                        <h1 className='pl-3 text-xl max-w-[90%] h-fit font-semibold flex gap-2 '>
+                                            Pruning amount:
+                                            <p className='text-gray-600'>not found</p>
+                                        </h1>
+                                        <h1 className='pl-3 text-xl max-w-[90%] h-fit font-semibold flex gap-2 '>
+                                            Pruning interval:
+                                            <p className='text-gray-600'>as needed</p>
+                                        </h1>
+                                    </div>
+                                </div>
+
+                                <div className='w-full flex-1 p-2 border rounded-2xl bg-[#E8F5E9] flex items-center relative'>
+
+                                    <img 
+                                        className='w-100 absolute bottom-5 right-10 '
+                                        src={pot} 
+                                        alt="" 
+                                    />
+
+                                    {/*  Harvesting  */}
+                                    <div className='w-[65%] h-full flex flex-col gap-2  drop-shadow-[0_12px_12px_rgba(0,0,0,0.4)]'>
+                                        <h1 className='text-2xl font-["nunito"] pb-1 font-bold text-[#2b532a] w-full pt-2 pl-3 flex items-center gap-2'>
+                                            Harvesting
+                                        </h1>
+                                        <h1 className='pl-3 text-xl max-w-[90%] h-fit font-semibold flex gap-2 '>
+                                            Flowering season:
+                                            <p className='text-gray-600'>Late summer to fall (August to October)</p>
+                                        </h1>
+                                        <h1 className='pl-3 text-xl max-w-[90%] h-fit font-semibold flex gap-2 '>
+                                            Fruiting season:
+                                            <p className='text-gray-600'>Spring (April to May)</p>
+                                        </h1>
+                                        <h1 className='pl-3 text-xl max-w-[90%] h-fit font-semibold flex gap-2 '>
+                                            Harvest season:
+                                            <p className='text-gray-600'>Fall (September to October)</p>
+                                        </h1>
+                                        <h1 className='pl-3 text-xl max-w-[90%] h-fit font-semibold flex gap-2 '>
+                                            Harvest method:
+                                            <p className='text-gray-600'>Hand picking</p>
+                                        </h1>
+                                        <h1 className='pl-3 text-xl max-w-[90%] h-fit font-semibold flex gap-2 '>
+                                            Propagation:
+                                            <p className='text-gray-600'>Stem or leaf cuttings</p>
+                                        </h1>
+                                    </div> 
+                                </div>
                             </div>
                         }
 
                         {/*  Characteristics */}
+                        {/* 
+                            Plant Details
+
+Characteristics
+
+- Flowers
+- Cones
+
+- Fruits
+- Leaf
+
+- Thorny
+- Tropical
+
+- Rare
+- Invasive
+
+Wildlife / ecosystem
+- Attracts
+- Pest susceptibility
+Uses
+- Edible fruit
+- Edible leaf
+- Medicinal
+- Cuisine
+Safety
+From your Plant table:
+- Pet toxicity level
+- Pet toxicity description
+- Human toxicity level
+- Human toxicity description
+
+                        
+                        
+                        */}
                         { infoPage === "details"
                             &&
-                            <div className='w-full h-full bg-amber-200'> 
+                            <div className='w-full h-full bg-white flex flex-col p-4'> 
+                               {/*  Characteristics  */}
+                               <div className='w-fit h-fit min-h-40 border rounded-2xl bg-[#E8F5E9] flex flex-col'>
+                                    <h1 className='w-full h-fit text-2xl text-[#2b532a] font-bold pt-3 pl-6'>
+                                      Characteristics  
+                                    </h1>
 
+                                    <div className='w-full h-fit flex items-start p-3'>
+
+                                        <div className='w-fit h-fit flex flex-col items-center gap-3 border-r-4 border-dotted p-2 pr-6'>
+                                            <h1 className='text-xl max-w-[90%] h-fit font-semibold flex gap-2 '>
+                                                Flowers:
+                                                <p className='text-gray-600'>true</p>
+                                            </h1>
+                                            <h1 className='text-xl max-w-[90%] h-fit font-semibold flex gap-2 '>
+                                                Cones:
+                                                <p className='text-gray-600'>true</p>
+                                            </h1>
+                                        </div>
+
+                                        <div className='w-fit h-fit flex flex-col items-center gap-3 border-r-4 border-dotted p-2 pr-6'>
+                                            <h1 className='text-xl max-w-[90%] h-fit font-semibold flex gap-2 '>
+                                                Fruits:
+                                                <p className='text-gray-600'>true</p>
+                                            </h1>
+                                            <h1 className='text-xl max-w-[90%] h-fit font-semibold flex gap-2 '>
+                                                Leaf:
+                                                <p className='text-gray-600'>true</p>
+                                            </h1>
+                                        </div>
+
+                                        <div className='w-fit h-fit flex flex-col items-center gap-3 border-r-4 border-dotted p-2 pr-6'>
+                                            <h1 className='text-xl max-w-[90%] h-fit font-semibold flex gap-2 '>
+                                                Thorny:
+                                                <p className='text-gray-600'>true</p>
+                                            </h1>
+                                            <h1 className='text-xl max-w-[90%] h-fit font-semibold flex gap-2 '>
+                                                Tropical:
+                                                <p className='text-gray-600'>true</p>
+                                            </h1>
+                                        </div>
+
+                                        <div className='w-fit h-fit flex flex-col items-center gap-3 p-2 pr-6'>
+                                            <h1 className='text-xl max-w-[90%] h-fit font-semibold flex gap-2 '>
+                                                Rare:
+                                                <p className='text-gray-600'>true</p>
+                                            </h1>
+                                            <h1 className='text-xl max-w-[90%] h-fit font-semibold flex gap-2 '>
+                                                Invasive:
+                                                <p className='text-gray-600'>true</p>
+                                            </h1>
+                                        </div>
+
+                                    </div>
+                               </div>
+
+                               {/*  Wildlife / Ecosystem  */}
+                               <h1 className='pl-3 text-xl w-fit p-3 rounded-2xl bg-[#E8F5E9] h-fit font-semibold flex gap-2 mt-3 border'>
+                                     Attracts: 
+                                    <p className='text-gray-600'>Hand picking, bees</p>
+                                </h1>
+                               <h1 className='pl-3 text-xl w-fit p-3 rounded-2xl bg-[#E8F5E9] h-fit font-semibold flex gap-2 mt-3 border'>
+                                     Pest susceptibility: 
+                                    <p className='text-gray-600'>Aphids, spider mites, whiteflies, hibiscus mealybug</p>
+                                </h1>
+
+                                {/*  Uses  */}
+                                
                             </div>
                         }
 

@@ -42,7 +42,6 @@ const Home = () => {
                   <MiddleHomepage />
                   <HomeFooter />
                   <PlantCare />
-                  {/* <Gallery/> */}
                 </>
               
               }
