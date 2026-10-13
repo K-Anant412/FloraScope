@@ -11,22 +11,13 @@ import mobile from '../assets/Phone_image/plant_info_phone_view.jpg';
 import test from '../assets/Desktop_image/care.jpg';
 
 // PNGs
-import plant from '../assets/Desktop_image/plant.png';
-import family from '../assets/Desktop_image/family.png';
-import microscope from '../assets/Desktop_image/microscope.png';
-import other from '../assets/Desktop_image/other.png';
 import plants from '../assets/Desktop_image/threeplants.png';
 import border from '../assets/Desktop_image/border.png';
 
 const PlantIdentification = ({plantDetails, setIsPlant, isPlant, plantImage}) => {
 
-  useEffect(() => {
-    console.log("Plant: ", plantDetails);
-  }, [plantDetails])
-    
   const handleCancel = () =>{
         setIsPlant((prev) => !prev)
-        console.log("Change:", isPlant);
   };
 
   return (

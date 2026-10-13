@@ -30,7 +30,6 @@ import cat from '../assets/Desktop_image/cat.png';
 const Gallery = () => {
 
     const [PlantData, setPlantData] = useState([]);
-    const [favorites, setFavorites] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [toggleWindow, setToggleWindow] = useState(false);
     const [currentTab, setCurrentTab] = useState("all");
@@ -51,13 +50,7 @@ const Gallery = () => {
             }
 
             setPlantData(response.data.data)
-                const favorite_plants = [];
-                PlantData.forEach(plant => {
-                    if(plant.favorite){
-                      favorite_plants.push(plant);  
-                    }
-                    setFavorites(favorite_plants)
-                });
+
         } catch (error) {
             console.log(error.message);
         } finally {
@@ -192,11 +185,6 @@ const Gallery = () => {
                             
                         </ul>
 
-                        <input 
-                            type="text" 
-                            placeholder='Enter plant name'
-                            className='w-[35%] h-[80%] border-2  absolute right-10 rounded-3xl px-5 font-semibold text text-gray-700 text-xl'
-                        />
                     </div>
 
                     <div className='border-2 w-full h-full rounded-3xl p-6 grid grid-cols-3 gap-4 overflow-y-auto scrollbar-none'>
@@ -216,6 +204,26 @@ const Gallery = () => {
                                 ))}
                             </>
                         }
+
+                        {
+                            currentTab == "liked"
+                            &&
+                            <>
+                                {uniquePlants
+                                .filter(plant => plant.favorite)
+                                .map((plant)=> (
+                                    <div
+                                        key={plant.id} 
+                                        onClick={()=>handlePlantClick(plant)}
+                                        className='w-80 cursor-pointer h-60 border-2 rounded-2xl bg-cover bg-center p-3 flex flex-col items-end justify-end' style={{backgroundImage:`url(${plant.image})`}}>
+                                        <h1 className='w-fit h-fit p-1 border flex items-center justify-center rounded-2xl text-xl bg-[#E8F5E9] px-2 font-semibold text-gray-600'>
+                                            {plant.name}
+                                        </h1>  
+                                    </div> 
+                                ))}
+                            </>
+                        }
+
                     </div>
                 </div>
             </div>
@@ -245,12 +253,12 @@ const Gallery = () => {
                 </p>
             </div>
 
-            {/*  Search  */}
+             {/* Search 
             <input 
                 type="text"
                 placeholder='Enter plant name' 
                 className='w-[90%] h-fit p-2 pl-4 border rounded-3xl bg-white'   
-            />
+            /> */}
 
             {/*  Tabs  */}
             <div className='shrink-0 w-[90%] flex items-center justify-around'>
@@ -272,45 +280,17 @@ const Gallery = () => {
             <div className='w-full flex-1 min-h-0 overflow-x-hidden overflow-y-auto scrollbar-none flex flex-col p-3 gap-3 bg-center bg-cover'>
 
                 {/*  Plants  */}
-                <div className='shrink-0 w-full h-40 border rounded-xl overflow-hidden p-2 flex items-center justify-center bg-[#a7d58da4] backdrop-blur-4xl border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]'>
-                    <div className='w-full h-full overflow-hidden rounded-xl'>
-                        <img 
-                            src={test}
-                            alt="plant" 
-                            className='w-full object-cover'
-                        />
-                    </div>
-                </div>
-
-                <div className='shrink-0 w-full h-40 border rounded-xl overflow-hidden p-2 flex items-center justify-center bg-[#a7d58da4] backdrop-blur-4xl border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]'>
-                    <div className='w-full h-full overflow-hidden rounded-xl'>
-                        <img 
-                            src={test}
-                            alt="plant" 
-                            className='w-full object-cover'
-                        />
-                    </div>
-                </div>
-
-                <div className='shrink-0 w-full h-40 border rounded-xl overflow-hidden p-2 flex items-center justify-center bg-[#a7d58da4] backdrop-blur-4xl border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]'>
-                    <div className='w-full h-full overflow-hidden rounded-xl'>
-                        <img 
-                            src={test}
-                            alt="plant" 
-                            className='w-full object-cover'
-                        />
-                    </div>
-                </div>
-
-                <div className='shrink-0 w-full h-40 border rounded-xl overflow-hidden p-2 flex items-center justify-center bg-[#a7d58da4] backdrop-blur-4xl border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]'>
-                    <div className='w-full h-full overflow-hidden rounded-xl'>
-                        <img 
-                            src={test}
-                            alt="plant" 
-                            className='w-full object-cover'
-                        />
-                    </div>
-                </div>
+                {uniquePlants.map(
+                    (plant) => {
+                        <div
+                            key={plant.id} 
+                            className='shrink-0 w-full h-40 border rounded-xl overflow-hidden p-2 flex items-center justify-center bg-[#a7d58da4] backdrop-blur-4xl border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]'>
+                            <div className='w-full h-full overflow-hidden rounded-xl bg-center bg-cover' style={{backgroundImage:`url(${plant.image})`}}>
+                                
+                            </div>
+                        </div>
+                    }
+                )}
             </div>
         </section>
         </>

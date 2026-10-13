@@ -676,7 +676,6 @@ def toggle_favorite(plant_id):
         if not plant:
             return error_response(message="Plant not found.", status_code=404)
 
-        # Toggle the boolean flag
         plant.is_favorite = not plant.is_favorite
         db.session.commit()
 

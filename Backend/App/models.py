@@ -192,6 +192,6 @@ class Plant_care(db.Model):
             "rare": self.rare,
             "tropical": self.tropical,
             "cuisine": self.cuisine,
-            "created_at": self.created_at.isoformat() if self.created_at else None,
-            "updated_at": self.updated_at.isoformat() if self.updated_at else None,
+            "created_at": self.created_at.isoformat(),
+            "updated_at": self.updated_at.isoformat(),
         }

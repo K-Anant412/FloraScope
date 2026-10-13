@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import Homepage from '../components/Homepage'
-import MiddleHomepage from '../components/MiddleHomepage'
-import HomeFooter from '../components/HomeFooter'
-import PlantIdentification from './PlantIdentification'
-import Profile from '../pages/Profile'
-import PlantCare from './PlantCare'
-import Gallery from './Gallery'
+import Homepage from '../components/Homepage';
+import MiddleHomepage from '../components/MiddleHomepage';
+import HomeFooter from '../components/HomeFooter';
+import PlantIdentification from './PlantIdentification';
+import PlantCare from './PlantCare';
 
 const Home = () => {
 
@@ -13,6 +11,7 @@ const Home = () => {
   const [plantDetails, setPlantDetails] = useState([]);
   const [plantImage, setPlantImage] = useState(null);
   const [userProfile, setUserProfile] = useState(false);
+  const [isCare, setIsCare] = useState(false);
 
   useEffect(() => {
     const user = localStorage.getItem('user');
@@ -25,7 +24,6 @@ const Home = () => {
       </>
     }
     setUserProfile(user)
-    console.log("Current User: ", user);
     
   }, [])
   
@@ -36,12 +34,23 @@ const Home = () => {
             
               {
                 isPlant?
-                <PlantIdentification plantDetails={plantDetails} setIsPlant={setIsPlant} isPlant={isPlant} plantImage={plantImage} /> :
+                <PlantIdentification 
+                  plantDetails={plantDetails} 
+                  setIsPlant={setIsPlant} 
+                  isPlant={isPlant} 
+                  plantImage={plantImage} 
+                /> 
+                :isCare ?
+                <PlantCare 
+                  plantDetails={plantDetails}
+                  setIsCare={setIsCare}
+                  isPlant={isPlant}
+                />
+                :
                 <>
                   <Homepage setIsPlant={setIsPlant} setPlantDetails={setPlantDetails} setPlantImage={setPlantImage} />
                   <MiddleHomepage />
                   <HomeFooter />
-                  <PlantCare />
                 </>
               
               }
