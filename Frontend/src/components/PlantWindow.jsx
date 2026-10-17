@@ -1,25 +1,20 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 //  Service
 import { plantService } from '../service/api';
 
 //  Icons
-import { SlLike } from "react-icons/sl";
-import { IoMdShareAlt } from "react-icons/io";
-import { MdFavorite } from "react-icons/md";
-import { SiOverleaf } from "react-icons/si";
-import { IoSearch } from "react-icons/io5";
 import { MdOutlineCancel } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
 
 //  Images
 import pot from '../assets/Desktop_image/plant_pot.png';
 import polar from '../assets/Desktop_image/polar.png';
-import spiral from '../assets/Desktop_image/spiral.png';
 
 const PlantWindow = ({plant, onClose}) => {
-
     const [isFavorite, setIsFavorite] = useState(false);
+    const navigate = useNavigate();
 
     if (!plant) return null;
 
@@ -44,7 +39,29 @@ const PlantWindow = ({plant, onClose}) => {
             }
         }
     
-    
+    // const handleCare = async() =>{
+    //     try {
+    //         const ifExist = await plantService.plantCareSearch(plant.id);
+    //         let careData;
+
+    //         if(ifExist?.success){
+    //             careData = ifExist.data.data;
+    //         }else{
+    //             const newSearch = await plantService.plantCareDetails(plant.scientific);
+                
+    //             if(!newSearch?.success){
+    //                 alert("Unable to fetch plant care details");
+    //                 return;
+    //             }
+
+    //             careData = newSearch.data.data;
+    //         }
+
+    //         onCare(careData);
+    //     } catch (error) {
+    //         console.log(error.message);
+    //     }
+    // }
 
     return (
         <>
@@ -91,8 +108,11 @@ const PlantWindow = ({plant, onClose}) => {
                                 <MdOutlineCancel className='text-4xl text-white' />
                             </button>
 
-                            <button className='z-30 cursor-pointer transition-all duration-200 hover:bg-[#cef9d1] w-fit h-fit text-xl border rounded-3xl px-3 pt-1.5 bg-[#E8F5E9] flex items-center justify-center font-bold pb-2 text-[#285943] absolute bottom-4 right-4'>
-                                Create Care Guide
+                            <button
+                                onClick={() => navigate(`/plants/${plant.id}/care`)}
+                                 
+                                className='z-30 cursor-pointer transition-all duration-200 hover:bg-[#cef9d1] w-fit h-fit text-xl border rounded-3xl px-3 pt-1.5 bg-[#E8F5E9] flex items-center justify-center font-bold pb-2 text-[#285943] absolute bottom-4 right-4'>
+                                Care Guide
                             </button>
 
                             <button className='z-30 cursor-pointer transition-all duration-200 hover:bg-red-500 w-fit h-fit pt-1.5 pb-2 px-3 flex items-center gap-1 text-xl rounded-3xl bg-red-400  font-bold text-white absolute bottom-4 right-55'>
@@ -154,7 +174,7 @@ const PlantWindow = ({plant, onClose}) => {
                             </div>
                         </div>
                     </div>
-                </div>
+            </div>
         </>
   )
 }

@@ -11,7 +11,9 @@ const Home = () => {
   const [plantDetails, setPlantDetails] = useState([]);
   const [plantImage, setPlantImage] = useState(null);
   const [userProfile, setUserProfile] = useState(false);
+
   const [isCare, setIsCare] = useState(false);
+  const [careDetails, setCareDetails] = useState(null);
 
   useEffect(() => {
     const user = localStorage.getItem('user');
@@ -27,6 +29,10 @@ const Home = () => {
     
   }, [])
   
+  const handleCareData = (data) =>{
+    setCareDetails(data);
+    setIsCare(true);
+  }
 
   return (
     <>
@@ -42,9 +48,10 @@ const Home = () => {
                 /> 
                 :isCare ?
                 <PlantCare 
-                  plantDetails={plantDetails}
+                  plantDetails={careDetails}
                   setIsCare={setIsCare}
-                  isPlant={isPlant}
+                  plantImage={plantImage}
+                  isCare={isCare}
                 />
                 :
                 <>

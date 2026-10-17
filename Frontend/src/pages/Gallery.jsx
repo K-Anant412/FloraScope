@@ -27,7 +27,7 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import navbar from '../assets/Desktop_image/navbar.png';
 import cat from '../assets/Desktop_image/cat.png';
 
-const Gallery = () => {
+const Gallery = ({onCare}) => {
 
     const [PlantData, setPlantData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -59,8 +59,6 @@ const Gallery = () => {
       }
       fetchData();
     }, [])
-    
-    console.log("Plant Data: ", PlantData);
 
     const handlePlantClick = async(plant) => {
         try {

@@ -33,6 +33,7 @@ export const plantService = {
     plantRemoveHistory: () => API.delete('/plant/remove_history'),
     plantRemoveById: ( id ) => API.delete('/plant/remove_history_byid', {params: { id }}),
     plantCareDetails: ( id ) => API.get(`/plant/care/${id}`),
+    plantCareSearch: (id) => API.get(`/plant/plant_care/${id}`),
     plantFavorite: (plant_id) => API.put(`/plant/${plant_id}/favorite`),
 }
 
