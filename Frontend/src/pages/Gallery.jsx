@@ -85,20 +85,20 @@ const Gallery = ({onCare}) => {
         <section className='w-full max-h-screen bg-[#E8F5E9] p-2 md:p-0 flex-col items-center overflow-y-auto scrollbar-none relative md:flex hidden'>
 
 
-        {
-            toggleWindow
-            &&
-            windowData
-            &&
-            <PlantWindow
-                plant={windowData}
-                onClose={() =>{
-                    setToggleWindow(false);
-                    setWindowData(null);
-                }
-                }
-            />
-        }
+            {
+                toggleWindow
+                &&
+                windowData
+                &&
+                <PlantWindow
+                    plant={windowData}
+                    onClose={() =>{
+                        setToggleWindow(false);
+                        setWindowData(null);
+                    }
+                    }
+                />
+            }
 
             <NavLink
                 to="/"
@@ -228,10 +228,27 @@ const Gallery = ({onCare}) => {
         </section>
 
         <section className='w-full h-screen bg-[#E8F5E9] flex md:hidden flex-col items-center rlative gap-2 relative'>
+            
+            {
+                toggleWindow
+                &&
+                windowData
+                &&
+                <PlantWindow
+                    plant={windowData}
+                    onClose={() =>{
+                        setToggleWindow(false);
+                        setWindowData(null);
+                    }
+                    }
+                />
+            }
 
-            <button className='w-fit h-fit py-1 px-1.5 font-bold absolute right-4 top-4 rounded-2xl text-gray-700 border'>
+            <NavLink
+                to="/"
+                className='w-fit h-fit py-1 px-3 border absolute bottom-3 left-3 z-50 rounded-3xl text-xl md:flex hidden items-center justify-center pb-1 bg-white font-bold border-[#285943] text-gray-700 font-["nunito"] '>
                 back
-            </button>
+            </NavLink>
 
             {/*  Top section  */}
             <div className=' w-full h-fit bg-white pb-4 relative bg-center bg-cover' >
@@ -251,13 +268,6 @@ const Gallery = ({onCare}) => {
                 </p>
             </div>
 
-             {/* Search 
-            <input 
-                type="text"
-                placeholder='Enter plant name' 
-                className='w-[90%] h-fit p-2 pl-4 border rounded-3xl bg-white'   
-            /> */}
-
             {/*  Tabs  */}
             <div className='shrink-0 w-[90%] flex items-center justify-around'>
 
@@ -275,20 +285,22 @@ const Gallery = ({onCare}) => {
             </div>
 
             {/*  Plants  */}
-            <div className='w-full flex-1 min-h-0 overflow-x-hidden overflow-y-auto scrollbar-none flex flex-col p-3 gap-3 bg-center bg-cover'>
+            <div className='w-full flex-1 h-screen min-h-0 overflow-x-hidden overflow-y-auto scrollbar-none flex flex-col p-3 gap-3 bg-center bg-cover'>
 
                 {/*  Plants  */}
-                {uniquePlants.map(
-                    (plant) => {
-                        <div
-                            key={plant.id} 
-                            className='shrink-0 w-full h-40 border rounded-xl overflow-hidden p-2 flex items-center justify-center bg-[#a7d58da4] backdrop-blur-4xl border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]'>
-                            <div className='w-full h-full overflow-hidden rounded-xl bg-center bg-cover' style={{backgroundImage:`url(${plant.image})`}}>
-                                
-                            </div>
-                        </div>
-                    }
-                )}
+                {uniquePlants.map((plant)=> (
+                                    <div
+                                        key={plant.id} 
+                                        onClick={()=>handlePlantClick(plant)}
+                                        className='shrink-0 w-full cursor-pointer h-40 border-2 rounded-2xl bg-cover bg-center p-3 flex flex-col items-end justify-end' style={{backgroundImage:`url(${plant.image})`}}>
+                                        <h1 className='w-fit h-fit p-1 border flex items-center justify-center rounded-2xl text-xl bg-[#E8F5E9] px-2 font-semibold text-gray-600'>
+                                            {plant.name}
+                                        </h1>  
+                                    </div>
+                                ))}
+                
+                
+
             </div>
         </section>
         </>
