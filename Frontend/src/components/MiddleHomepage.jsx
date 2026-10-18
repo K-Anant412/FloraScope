@@ -13,7 +13,7 @@ import features_phone from '../assets/Phone_image/features_phome.png'
 
 const MiddleHomepage = () => {
   return (
-        <div className='relative md:top-0 -top-25 w-full min-h-screen bg-[#E8F5E9] flex flex-col md:p-10 p-3 gap-4'>
+        <div className='relative z-20 md:top-0 w-full min-h-screen bg-[#E8F5E9] flex flex-col md:p-10 p-3 gap-4'>
 
               <h1 className='shrink-0 w-full flex flex-col text-3xl md:text-4xl font-["nunito"] font-bold text-[#2b532a]'>
                 Our Features

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
+
 
 //  Service
 import { plantService } from '../service/api';
@@ -11,6 +12,7 @@ import { RiDeleteBinLine } from "react-icons/ri";
 //  Images
 import pot from '../assets/Desktop_image/plant_pot.png';
 import polar from '../assets/Desktop_image/polar.png';
+import bg from '../assets/Phone_image/bgcare.jpg';
 
 const PlantWindow = ({plant, onClose}) => {
     const [isFavorite, setIsFavorite] = useState(false);
@@ -67,7 +69,7 @@ const PlantWindow = ({plant, onClose}) => {
         <>
             <div 
                 onClick={onClose}
-                className='top-0 left-0 absolute z-50 w-full h-full flex items-center justify-center bg-black/70'>
+                className='top-0 left-0 absolute z-50 w-full h-full md:flex hidden items-center justify-center bg-black/70'>
                     {/*  Plant that selected */}
                     <div className='w-250 h-150 border border-white rounded-2xl bg-white flex relative overflow-hidden shadow-[0_5px_15px_rgba(43,83,42,0.12)]'>
                         {/*  plant image  */}
@@ -175,6 +177,70 @@ const PlantWindow = ({plant, onClose}) => {
                         </div>
                     </div>
             </div>
+
+            <section className='md:hidden flex flex-col items-center p-2 gap-4 w-full min-h-screen overflow-y-auto scrollbar-none bg-center bg-cover relative' style={{backgroundImage:`url(${bg})`}}>
+                    {/*  Plant image and name  */}
+                    <div className='relative w-full h-60 shrink-0 flex flex-col items-end justify-end border-4 p-2 border-white rounded-3xl bg-white shadow-2xl bg-center bg-cover' style={{backgroundImage:`url(${plant.image})`}}>
+                      <h1 className='w-fit max-w-[98%] truncate absolute -bottom-5 right-2 flex h-fit text-xl font-["nunito"] font-bold items-center justify-center pt-1.5 text-gray-600 px-3 py-1 rounded-3xl border bg-[#A8D58D]'>
+                        {plant.name}
+                      </h1>
+                    </div>
+            
+            
+                  <div className="w-full relative flex-1 flex overflow-x-auto overflow-y-hidden scrollbar-none snap-x snap-mandatory">
+                    {/*  first card  */}
+                    <div className="w-full shrink-0 snap-start flex flex-col gap-3 p-1">
+                      {/*  description  */}
+                      <div className='w-full min-h-20 max-h-70 border rounded-3xl p-2 pl-3 bg-white'>
+                        {plant.disc}
+                      </div>
+            
+                      <h1 className='w-fit min-h-10 border px-2 pb-1.5 py-1 flex rounded-2xl bg-[#A8D58D] text-[17px] font-semibold gap-1 items-center justify-start leading-tight'>
+                          Scientific Name:
+                          <p className='font-bold text-gray-600'>
+                            {plant.scientific}
+                          </p>
+                        </h1>
+            
+                      {/*  basic info  */}
+                      <div className='w-full min-h-10 flex items-center justify-start gap-3'>
+                        <h1 className='w-fit h-full border px-2 py-1 pb-1.5 rounded-2xl bg-[#A8D58D] text-[17px] font-semibold flex flex-col items-center justify-center leading-tight'>
+                          Scan Date:
+                          <p className='font-bold text-gray-600'>
+                            {formattedDate}
+                          </p>
+                        </h1>
+            
+                        <h1 className='w-fit h-full border px-2 py-1 pb-1.5 rounded-2xl bg-[#A8D58D] text-[17px] font-semibold flex flex-col items-center justify-center leading-tight'>
+                          Confidence Score:
+                          <p className='font-bold text-gray-600'>
+                            {plant.score}%
+                          </p>
+                        </h1>
+                      </div>
+            
+                      <div className='w-full h-fit flex items-center gap-4'>
+            
+                        <button className='w-fit h-fit p-1.5 bg-[#cef9d1] px-2 border text-xl rounded-4xl font-semibold text-gray-800'>
+                           Create Care Guide
+                        </button>
+            
+                        <button className='w-fit h-fit p-1.5 px-2 bg-red-400 text-white border text-xl rounded-4xl font-semibold'>
+                          Remove
+                        </button>
+            
+                      </div>
+                    </div>
+            
+                  </div>
+                  
+                <NavLink
+                    to="/gallery"
+                    className='w-fit h-fit py-1 px-3 border absolute bottom-3 left-3 z-50 rounded-3xl text-xl flex items-center justify-center pb-1 bg-white font-bold border-[#285943] text-gray-700 font-["nunito"] '>
+                    back
+                </NavLink>
+            
+            </section>
         </>
   )
 }

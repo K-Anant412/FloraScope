@@ -10,7 +10,7 @@ import { IoSearch } from "react-icons/io5";
 
 const HomeFooter = () => {
   return (
-        <div className='z-40 w-full p-3 min-h-screen flex flex-col md:p-10 md:gap-4 relative md:top-0 -top-25 pt-3 bg-center bg-cover' style={{backgroundImage: `url(${footer2})`}}>
+        <div className='z-20 w-full p-3 min-h-screen flex flex-col md:p-10 md:gap-4 relative md:top-0 pt-3 bg-center bg-cover' style={{backgroundImage: `url(${footer2})`}}>
 
               <div className='shrink-0 md:p-4 md:px-50 w-full md:h-60  rounded-3xl flex md:flex-row flex-col items-center m:gap-50 gap-4 p-5 bg-center bg-cover' style={{backgroundImage: `url(${footer})`}}>
 

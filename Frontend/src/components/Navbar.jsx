@@ -3,7 +3,11 @@ import { SiOverleaf } from "react-icons/si";
 import { IoSearch } from "react-icons/io5";
 import { CiMenuKebab } from "react-icons/ci";
 import { NavLink } from 'react-router-dom';
+
 import { IoMdQrScanner } from "react-icons/io";
+import { MdOutlineCamera } from "react-icons/md";
+
+import camera from '../assets/Desktop_image/camera.png';
 
   const Navbar = ({setUserProfile}) => {
     const [isMenu, setIsMenu] = useState(false);
@@ -95,13 +99,40 @@ import { IoMdQrScanner } from "react-icons/io";
 
         </nav>
 
-        <nav className='w-full h-17 border-2 md:hidden flex items-center justify-center gap-5 fixed bottom-0 bg-white z-50'> 
-                <button className='h-15 border w-15 flex items-center justify-center rounded-[50%]  shadow-2xl'>
-                  <IoMdQrScanner className='text-4xl font-bold' />
+        <nav className='w-[30%] fixed h-15 mb-2 md:hidden flex items-center justify-start bottom-0 right-0 rounded-l-4xl bg-[#4F9D4D] shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)] z-50'> 
+                <button className='h-full w-15 flex items-center justify-center rounded-[50%] shadow-2xl bg-center bg-fit'>
+                  <MdOutlineCamera className='text-6xl text-white' />
                 </button>
-                <button>
+
+                <button
+                  onClick={()=>setIsMenu(!isMenu)} 
+                  className='h-full w-fit text-2xl ml-2 text-white'>
                   <CiMenuKebab />
                 </button>
+
+              {
+                isMenu
+                && 
+                <div className='w-30 h-fit right-0 bottom-15 rounded-l-3xl bg-white p-2 flex flex-col gap-1 absolute'>
+                  <NavLink
+                    to='/gallery' 
+                    className='w-full text-[17px] flex items-center justify-center font-medium font-["nunito"] text-gray-600'
+                  >
+                    Gallery
+                  </NavLink>
+                  <button 
+                    onClick={handleProfile}
+                    className='w-full text-[17px] flex items-center justify-center font-medium font-["nunito"] text-gray-600'
+                  >
+                    Account
+                  </button>
+                  <button 
+                    className='w-full text-[17px] flex items-center justify-center font-medium font-["nunito"] text-gray-600'
+                  >
+                    SingUp
+                  </button>
+                </div>
+                }
         </nav>
       </>
     )
