@@ -1,10 +1,8 @@
 import React from 'react'
 
-import { FaArrowRight } from "react-icons/fa";
+
 
 import test from '../assets/Desktop_image/test1.jpg';
-import bg from '../assets/Phone_image/bgcare.jpg';
-
 const CarePhone = () => {
   return (
     <section className='md:hidden flex p-1 gap-1 items-center w-full h-screen overflow-x-auto overflow-y-hidden scrollbar-none bg-center bg-cover relative snap-x snap-mandatory' style={{backgroundImage:`url(${bg})`}}>

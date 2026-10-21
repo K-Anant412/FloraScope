@@ -83,6 +83,8 @@ const PlantCare = () => {
                 plantName={plantInfo[0].name}
                 scanDate={plantInfo[0].scan}
                 score={plantInfo[0].score}
+                plantScientificName={plantInfo[0].scientific}
+                disc={plantInfo[0].disc}
             />
         </>
     )

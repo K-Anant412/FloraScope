@@ -221,7 +221,9 @@ const PlantWindow = ({plant, onClose}) => {
             
                       <div className='w-full h-fit flex items-center gap-4'>
             
-                        <button className='w-fit h-fit p-1.5 bg-[#cef9d1] px-2 border text-xl rounded-4xl font-semibold text-gray-800'>
+                        <button 
+                            onClick={() => navigate(`/plants/${plant.id}/care`)}
+                            className='w-fit h-fit p-1.5 bg-[#cef9d1] px-2 border text-xl rounded-4xl font-semibold text-gray-800'>
                            Create Care Guide
                         </button>
             
