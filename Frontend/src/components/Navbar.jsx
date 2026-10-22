@@ -120,12 +120,12 @@ import camera from '../assets/Desktop_image/camera.png';
                   >
                     Gallery
                   </NavLink>
-                  <button 
-                    onClick={handleProfile}
+                  <NavLink 
+                    to='/profile'
                     className='w-full text-[17px] flex items-center justify-center font-medium font-["nunito"] text-gray-600'
                   >
                     Account
-                  </button>
+                  </NavLink>
                   <button 
                     className='w-full text-[17px] flex items-center justify-center font-medium font-["nunito"] text-gray-600'
                   >

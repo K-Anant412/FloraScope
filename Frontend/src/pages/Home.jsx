@@ -5,6 +5,7 @@ import HomeFooter from '../components/HomeFooter';
 import PlantIdentification from './PlantIdentification';
 import PlantCare from './PlantCare';
 import CarePhone from '../components/CarePhone';
+import Profile from './Profile';
 
 const Home = () => {
 
@@ -59,6 +60,7 @@ const Home = () => {
                   <Homepage setIsPlant={setIsPlant} setPlantDetails={setPlantDetails} setPlantImage={setPlantImage} />
                   <MiddleHomepage />
                   <HomeFooter />
+                  <Profile />
                 </>
               
               }

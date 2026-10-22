@@ -578,54 +578,76 @@ const CareGuide = ({careDetails, onClose, plantImage, plantName, scanDate, score
     
             <div className='w-[85%] relative -left-4.5 h-fit border rounded-2xl overflow-hidden bg-white/40 backdrop-blur-sm pb-4 font-["nunito"]'>
               <h1 className='w-fit h-fit border px-4 py-1 rounded-br-xl text-xl font-["nunito"] font-semibold text-[#2b532a] bg-linear-to-l from-[#E8F5E9] via-[#a2d2a7] to-[#86c48a]'>Attracts:</h1>
-              <p className='pl-2 font-medium'>Aphids, spider mites, whiteflies, hibiscus mealybug, Butterflies, hummingbirds</p>
+                <p className='pl-2 font-medium'>
+                    {careDetails.pest_susceptibility ? careDetails.pest_susceptibility : "not attracts any pest"}
+                </p>
             </div>
     
             <div className='w-[95%] relative h-fit border rounded-2xl gap-y-4 overflow-hidden bg-white/40 backdrop-blur-sm p-4 font-["nunito"] grid grid-cols-2'>
             
               <h1 className='w-full h-fit flex items-center gap-2 text-[18px] font-["nunito"] font-bold'>
                 Fruits:
-                <p className='font-medium text-gray-700'>true</p>
+                <p className='font-medium text-gray-700'>
+                    {careDetails.fruits? "true" : "false"}
+                </p>
               </h1>
               <h1 className='w-full h-fit flex items-center gap-2 text-[18px] font-["nunito"] font-bold'>
                 Flowers:
-                <p className='font-medium text-gray-700'>true</p>
+                <p className='font-medium text-gray-700'>
+                    {careDetails.flowers? "true" : "false"}
+                </p>
               </h1>
     
               <h1 className='w-full h-fit flex items-center gap-2 text-[18px] font-["nunito"] font-bold'>
                 Cones:
-                <p className='font-medium text-gray-700'>true</p>
+                <p className='font-medium text-gray-700'>
+                    {careDetails.cones? "true" : "false"}
+                </p>
               </h1>
               <h1 className='w-full h-fit flex items-center gap-2 text-[18px] font-["nunito"] font-bold'>
                 Leafs:
-                <p className='font-medium text-gray-700'>true</p>
+                <p className='font-medium text-gray-700'>
+                    {careDetails.leaf? "true" : "false"}
+                </p>
               </h1>
     
               <h1 className='w-full h-fit flex items-center gap-2 text-[18px] font-["nunito"] font-bold'>
                 Edible:
-                <p className='font-medium text-gray-700'>true</p>
+                <p className='font-medium text-gray-700'>
+                    {careDetails.edible? "true" : "false"}
+                </p>
               </h1>
               <h1 className='w-full h-fit flex items-center gap-2 text-[18px] font-["nunito"] font-bold'>
                 Thorny:
-                <p className='font-medium text-gray-700'>true</p>
+                <p className='font-medium text-gray-700'>
+                    {careDetails.thorny? "true" : "false"}
+                </p>
               </h1>
     
               <h1 className='w-full h-fit flex items-center gap-2 text-[18px] font-["nunito"] font-bold'>
                 Invasive:
-                <p className='font-medium text-gray-700'>true</p>
+                <p className='font-medium text-gray-700'>
+                    {careDetails.invasive? "true" : "false"}
+                </p>
               </h1>
               <h1 className='w-full h-fit flex items-center gap-2 text-[18px] font-["nunito"] font-bold'>
                 Rare:
-                <p className='font-medium text-gray-700'>true</p>
+                <p className='font-medium text-gray-700'>
+                    {careDetails.rare? "true" : "false"}
+                </p>
               </h1>
     
               <h1 className='w-full h-fit flex items-center gap-2 text-[18px] font-["nunito"] font-bold'>
                 Tropical:
-                <p className='font-medium text-gray-700'>true</p>
+                <p className='font-medium text-gray-700'>
+                    {careDetails.tropical? "true" : "false"}
+                </p>
               </h1>
               <h1 className='w-full h-fit flex items-center gap-2 text-[18px] font-["nunito"] font-bold'>
                 Cuisine:
-                <p className='font-medium text-gray-700'>true</p>
+                <p className='font-medium text-gray-700'>
+                    {careDetails.cuisine? "true" : "false"}
+                </p>
               </h1>
     
             </div>

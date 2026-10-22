@@ -13,7 +13,7 @@ import { IoCalendarClearOutline } from "react-icons/io5";
 // images
 import camera from '../assets/Desktop_image/camera.png'
 import profile from '../assets/Desktop_image/profile_image.jpg'
-import banner from '../assets/Desktop_image/profile_banner.png'
+import banner from '../assets/Desktop_image/bannermd.png'
 import plant from '../assets/Desktop_image/plant.png'
 import microscope from '../assets/Desktop_image/microscope.png'
 
@@ -99,89 +99,114 @@ const Profile = () => {
   }
 
   return (
-    <section className='w-full min-h-screen bg-[#E8F5E9]'>
-      <div className='w-full h-screen border-2 border-black flex flex-col md:p-0 p-3 md:gap-8 gap-4'>
+    // <section className='w-full min-h-screen bg-[#E8F5E9]'>
+    //   <div className='w-full h-screen border-2 border-black flex flex-col md:p-0 p-3 md:gap-8 gap-4'>
 
-        {/*  Profile header  */}
-        <div className='relative border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)] w-full md:h-60 h-fit md:rounded-none rounded-2xl bg-white flex md:flex-row flex-col items-center md:p-5 p-2.5'>
-          {/*  Profile Image  */}
-          <div className='shrink-0 md:w-40 w-25 md:h-40 h-25 border-2 rounded-[50%] bg-center bg-cover' style={{backgroundImage: `url(${profile})`}}>
+    //     {/*  Profile header  */}
+    //     <div className='relative border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)] w-full md:h-60 h-fit md:rounded-none rounded-2xl flex md:flex-row flex-col items-center md:p-5 p-2.5 bg-center bg-cover' style={{backgroundImage:`url(${banner})`}}>
+    //       {/*  Profile Image  */}
+    //       <div className='shrink-0 md:w-40 w-25 md:h-40 h-25 border-2 rounded-[50%] bg-center bg-cover' style={{backgroundImage: `url(${profile})`}}>
 
-          </div>
-          {/*  User name, email, account date */}
-          <div className='shrink-0 md:w-full md:h-full relative md:top-0 -top-4 md:p-4 p-2 flex flex-col justify-center'>
+    //       </div>
+    //       {/*  User name, email, account date */}
+    //       <div className='shrink-0 md:w-full md:h-full relative md:top-0 -top-4 md:p-4 p-2 flex flex-col justify-center text-white'>
 
-            <h1 className='w-full p-2 h-fit md:text-3xl text-[24px] font-["nunito"] font-extrabold flex items-center justify-center md:items-start md:justify-normal'>
-              {userData.name}
-            </h1>
-            <h1 className='w-full pl-2 h-fit md:text-2xl text-xl font-["nunito"] flex items-center font-semibold'>
-              -{userData.email}
-            </h1>
-            <h1 className='w-full pl-2 h-fit md:text-2xl text-xl font-["nunito"] flex items-center font-semibold'>
-              -{userData.created_at}
-            </h1>
+    //         <h1 className='w-full p-2 h-fit md:text-3xl text-[24px] font-["nunito"] font-extrabold flex items-center justify-center md:items-start md:justify-normal'>
+    //           {userData.name}
+    //         </h1>
+    //         <h1 className='w-full pl-2 h-fit md:text-2xl text-xl font-["nunito"] flex items-center font-semibold'>
+    //           {userData.email}
+    //         </h1>
+    //         <h1 className='w-full pl-2 h-fit md:text-2xl text-xl font-["nunito"] flex items-center font-semibold'>
+    //           {userData.created_at}
+    //         </h1>
 
-          </div>
-        </div>
+    //       </div>
+    //     </div>
 
-        {/*  Profile intro section contains total scans, plants identified, favorite plants */}
-        <div className='relative w-full h-fit md:h-120 md:p-4 flex md:flex-row flex-col gap-4 overflow-y-auto scrollbar-none'>
-          {/*  Left side  */}
-          <div className='shrink-0 md:w-[20%] h-full rounded-2xl flex flex-col items-center md:gap-4 gap-2 p-1'>
-            {/*  Tags  */}
-            <div className='w-full md:h-25 border rounded-4xl flex items-center p-2 md:p-4 bg-white border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]'>
-              <img src={camera} alt="camera" className='md:h-23 relative md:-left-5' />
-              <h1 className='text-[#285943] relative md:-left-6 text-2xl font-["nunito"] font-bold'>
-                Total Scans:
-                <p className='font-semibold text-xl text-gray-500'>
-                  {tags.scans.length}
-                </p>
-              </h1>
-            </div>
-            <div className='w-full md:h-25 border rounded-4xl flex items-center p-2 md:p-4 bg-white border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]'>
-              <img src={plant} alt="camera" className='md:h-23 relative md:-left-5' />
-              <h1 className='text-[#285943] relative md:-left-6 text-2xl font-["nunito"] font-bold'>
-                Favorites:
-                <p className='font-semibold text-xl text-gray-500'>
-                  {tags.favorites.length}
-                </p>
-              </h1>
-            </div>
-            <div className='w-full md:h-25 border rounded-4xl flex items-center p-2 md:p-4 bg-white border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]'>
-              <img src={microscope} alt="camera" className='md:h-23 relative md:-left-5 -top-1' />
-              <h1 className='text-[#285943] relative md:-left-6 text-2xl font-["nunito"] font-bold'>
-                Care Guides:
-                <p className='font-semibold text-xl text-gray-500'>20</p>
-              </h1>
-            </div>
+    //     {/*  Profile intro section contains total scans, plants identified, favorite plants */}
+    //     <div className='relative w-full h-fit md:h-120 md:p-4 flex md:flex-row flex-col gap-4 overflow-y-auto scrollbar-none'>
+    //       {/*  Left side  */}
+    //       <div className='shrink-0 md:w-[20%] h-full rounded-2xl flex flex-col items-center md:gap-4 gap-2 p-1'>
+    //         {/*  Tags  */}
+    //         <div className='w-full md:h-25 border rounded-4xl flex items-center p-2 md:p-4 bg-white border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]'>
+    //           <img src={camera} alt="camera" className='md:h-23 relative md:-left-5' />
+    //           <h1 className='text-[#285943] relative md:-left-6 text-2xl font-["nunito"] font-bold'>
+    //             Total Scans:
+    //             <p className='font-semibold text-xl text-gray-500'>
+    //               {tags.scans.length}
+    //             </p>
+    //           </h1>
+    //         </div>
+    //         <div className='w-full md:h-25 border rounded-4xl flex items-center p-2 md:p-4 bg-white border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]'>
+    //           <img src={plant} alt="camera" className='md:h-23 relative md:-left-5' />
+    //           <h1 className='text-[#285943] relative md:-left-6 text-2xl font-["nunito"] font-bold'>
+    //             Favorites:
+    //             <p className='font-semibold text-xl text-gray-500'>
+    //               {tags.favorites.length}
+    //             </p>
+    //           </h1>
+    //         </div>
+    //         <div className='w-full md:h-25 border rounded-4xl flex items-center p-2 md:p-4 bg-white border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]'>
+    //           <img src={microscope} alt="camera" className='md:h-23 relative md:-left-5 -top-1' />
+    //           <h1 className='text-[#285943] relative md:-left-6 text-2xl font-["nunito"] font-bold'>
+    //             Care Guides:
+    //             <p className='font-semibold text-xl text-gray-500'>20</p>
+    //           </h1>
+    //         </div>
             
-            <button 
-              className='w-full md:h-20 border h-15 rounded-4xl flex items-center justify-center md:text-3xl text-2xl border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)] font-["Fredoka"] md:font-extrabold font-semibold transition-all duration-200 bg-red-400 text-white hover:bg-red-500 cursor-pointer'>
-              Log-Out
-            </button>
-          </div>
+    //         <button 
+    //           className='w-full md:h-20 border h-15 rounded-4xl flex items-center justify-center md:text-3xl text-2xl border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)] font-["Fredoka"] md:font-extrabold font-semibold transition-all duration-200 bg-red-400 text-white hover:bg-red-500 cursor-pointer'>
+    //           Log-Out
+    //         </button>
+    //       </div>
 
-          {/*  Right side-- Only visible for md*/}
-          <div className='md:flex hidden shrink-0 overflow-hidden h-full flex-1 border-2 rounded-4xl bg-white flex-col border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]'>
-            <h1 className='shrink-0 bg-[#A8D58D]  text-[#285943] w-full h-fit text-2xl font-["nunito"] font-bold p-2 px-4 border-b-2'>
-              Recent Scan's
-            </h1>
-            {/*  Recent scan records  */}
-            <div className='w-full flex-1 p-3 px-6 flex items-center justify-around gap-10 overflow-x-auto scrollbar-none'>
+    //       {/*  Right side-- Only visible for md*/}
+    //       <div className='md:flex hidden shrink-0 overflow-hidden h-full flex-1 border-2 rounded-4xl bg-white flex-col border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]'>
+    //         <h1 className='shrink-0 bg-[#A8D58D]  text-[#285943] w-full h-fit text-2xl font-["nunito"] font-bold p-2 px-4 border-b-2'>
+    //           Recent Scan's
+    //         </h1>
+    //         {/*  Recent scan records  */}
+    //         <div className='w-full flex-1 p-3 px-6 flex items-center justify-around gap-10 overflow-x-auto scrollbar-none'>
               
-            {recentScans?.map((item)=>(
-                <RecentCard
-                  key={item.scan_id}
-                  plantName={item.plant?.common_name || item.plant?.scientific_name}
-                  plantImage={item.plant?.image_url}
-                  scanDate={formatDate(item.scanned_at)}
-                />
-            ))}
+    //         {recentScans?.map((item)=>(
+    //             <RecentCard
+    //               key={item.scan_id}
+    //               plantName={item.plant?.common_name || item.plant?.scientific_name}
+    //               plantImage={item.plant?.image_url}
+    //               scanDate={formatDate(item.scanned_at)}
+    //             />
+    //         ))}
 
-            </div>
-          </div>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </section>
+    <section className='w-full min-h-0 h-screen bg-[#E8F5E9] md:flex hidden items-center gap-10 p-10'>
+
+      {/*  Left user info section  */}
+      <div className='relative shrink-0 w-[35%] h-full bg-white border rounded-l-3xl p-4 py-10 flex flex-col gap-5 items-center shadow-2xl'> 
+        <div className='h-full w-10 border absolute bg-[#285943c9] right-0 top-0'></div>
+        {/*  User image  */}
+        <div className='w-70 h-70 border rounded-[50%] bg-center bg-cover' style={{backgroundImage: `url(${profile})`}}>
+
         </div>
+
+        <h1 className='w-fit h-fit border px-3 py-1.5 font-["nunito"] font-bold text-2xl'>
+          User name aca
+        </h1>
+        <h1 className='w-fit h-fit border px-3 py-1.5 font-["nunito"] font-bold text-2xl'>
+          user@example.com
+        </h1>
+
+
       </div>
+
+      <div className='relative shrink-0 h-full flex-1 border bg-white rounded-r-3xl shadow-2xl p-4 py-10'>
+      <div className='h-full w-10 border absolute bg-[#285943c9] left-0 top-0'></div>
+      </div>
+
     </section>
   )
 }

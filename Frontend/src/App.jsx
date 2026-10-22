@@ -3,6 +3,7 @@ import AuthPage from './pages/AuthPage';
 import Home from './pages/Home';
 import Gallery from './pages/Gallery';
 import PlantCare from './pages/PlantCare';
+import Profile from './pages/Profile';
 
 import { Route, Routes, Navigate } from 'react-router-dom';
 import './App.css'
@@ -24,6 +25,7 @@ function App() {
           <Route path="/login" element={<AuthPage/>} />
           <Route path="/register" element={<AuthPage/>} />
           <Route path="/gallery" element={<Gallery/>}/>
+          <Route path="/profile" element={<Profile/>}/>
           <Route path="/plants/:plantId/care" element={<PlantCare/>}/>
           <Route path='*' element={<Navigate to="/" replace />} />
         </Routes> 
