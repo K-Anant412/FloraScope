@@ -3,7 +3,9 @@ import { FaCameraRetro } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa";
 import { GoDotFill } from "react-icons/go";
 import { FaLeaf } from "react-icons/fa6";
+import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
+import Swal from 'sweetalert2';
 
 //  Service imports
 import { plantService } from '../service/api';
@@ -14,9 +16,29 @@ import phone_bg from '../assets/Phone_image/bg_phone.png'
 
 const Homepage = ({setIsPlant, setPlantDetails, setPlantImage}) => {
 
+    const user = localStorage.getItem('user');
     const plantImageRef = useRef(null);
+    const navigate = useNavigate();
+
     const handleButtonClick = () => {
-        plantImageRef.current?.click();
+        if(user){
+            plantImageRef.current?.click();
+        }else{
+            Swal.fire({
+            icon: 'warning',
+            title: 'Sign Up Required',
+            text: 'Please sign up or log in to start identifying plants.',
+            confirmButtonText: 'Go to Sign Up',
+            showCancelButton: true,
+            cancelButtonText: 'Cancel',
+            confirmButtonColor: '#2e7d32',
+            }).then((result) => {
+            if (result.isConfirmed) {
+                navigate('/register')
+            }
+            });
+        }
+
     };
 
     const [plant, setPlant] = useState(null);
@@ -66,61 +88,92 @@ const Homepage = ({setIsPlant, setPlantDetails, setPlantImage}) => {
         }
     };
 
+    //  this function run after user uploads plant image
     const handleChange = (e) =>{
         const file = e.target.files?.[0];
 
         if(file){
             const imageUrl = URL.createObjectURL(file);
+
             setUploadedImage(imageUrl);
             setPlantImage(imageUrl)
 
             const formData = new FormData()
             formData.append("image", file);
+
             plantInfo(formData);
         }
     };
 
-    return (
-            <div className='relative w-full h-screen z-40 flex flex-col items-center md:bg-center md:bg-cover' style={{backgroundImage: `url(${homegb})`}}>
-                <img src={phone_bg} alt="bg" className='absolute top-50 flex md:hidden'/>
-                {/* ---- Navbar ---- */}
-                <Navbar setUserProfile={setUserProfile} />
-                <div className='w-full z-50 flex-1 flex flex-col md:justify-center md:p-0 pt-5 relative md:top-20 md:left-22'>
-                    {/*  Sub titles */}
-                    <h1 className='relative hidden md:left-18 md:-top-25 text-[#4F9D4D] shrink-0 md:w-[25%] h-fit p-2 border md:flex items-center justify-center gap-2 rounded-3xl text-xl font-semibold font-["nunito"] bg-[#A8D58D] border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]'>
-                        <p>Discover</p>
-                        <GoDotFill />
-                        <p>Identify</p>
-                        <GoDotFill />
-                        <p>Grow</p>
-                    </h1>
+    if (loading) {
+        return (
+            <div className="w-screen h-screen flex flex-col items-center justify-center bg-[#E8F5E9]">
+                <div className="w-12 h-12 border-4 border-green-200 border-t-green-700 rounded-full animate-spin"></div>
 
-                    {/*  Hero Text */}
-                    <div className='md:w-[50%] h-fit p-3 flex flex-col relative md:left-10 md:-top-25 md:gap-6 gap-3'>
-                        <h1 className='md:w-[80%] text-[#2b532a] h-fit text-4xl md:text-6xl md:font-semibold font-bold font-["Fredoka"] md:pl-5'>
-                            Know Your Plants Better
-                            <FaLeaf className='md:flex hidden' />
+                <h2 className="mt-6 text-2xl font-bold text-green-900">
+                    Identifying Your Plant...
+                </h2>
+
+                <p className="mt-2 text-gray-600 text-center px-4">
+                    Analyzing your image. Please wait a moment.
+                </p>
+            </div>
+        );
+    }
+
+    return (
+            <section>
+            
+            {
+                loading ?
+                <div className='w-full h-screen z-40 flex items-center justify-center flex-col '>
+                    <h1 className='w-full h-fit text-3xl font-bold'>Loading...</h1>
+                </div>
+                :
+                <div className='relative w-full h-screen z-40 flex flex-col items-center md:bg-center md:bg-cover' style={{backgroundImage: `url(${homegb})`}}>
+                    
+                    <img src={phone_bg} alt="bg" className='absolute top-50 flex md:hidden'/>
+                    {/* ---- Navbar ---- */}
+                    <Navbar setUserProfile={setUserProfile} />
+                    <div className='w-full z-50 flex-1 flex flex-col md:justify-center md:p-0 pt-5 relative md:top-20 md:left-22'>
+                        {/*  Sub titles */}
+                        <h1 className='relative hidden md:left-18 md:-top-25 text-[#4F9D4D] shrink-0 md:w-[25%] h-fit p-2 border md:flex items-center justify-center gap-2 rounded-3xl text-xl font-semibold font-["nunito"] bg-[#A8D58D] border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]'>
+                            <p>Discover</p>
+                            <GoDotFill />
+                            <p>Identify</p>
+                            <GoDotFill />
+                            <p>Grow</p>
                         </h1>
 
-                        <p className='text-gray-700 font-["nunito"] font-medium text-[17px] md:w-[60%] md:pl-4 md:text-xl '>
-                            Take a photo, identify your plant, and get personalized care tips. Your green companion for a healthier, happier graden.
-                        </p>
-                        
-                        <input type="file" ref={plantImageRef} onChange={handleChange} accept='image/*' className='hidden' />
+                        {/*  Hero Text */}
+                        <div className='md:w-[50%] h-fit p-3 flex flex-col relative md:left-10 md:-top-25 md:gap-6 gap-3'>
+                            <h1 className='md:w-[80%] text-[#2b532a] h-fit text-4xl md:text-6xl md:font-semibold font-bold font-["Fredoka"] md:pl-5'>
+                                Know Your Plants Better
+                                <FaLeaf className='md:flex hidden' />
+                            </h1>
 
-                        <button
-                            onClick={handleButtonClick} 
-                            className='flex relative md:left-5 items-center justify-center w-fit h-fit md:p-2 px-4 py-2 border text-xl md:text-2xl gap-2 rounded-3xl md:px-6 font-bold md:pb-3 bg-[#4F9D4D] text-white transition-all duration-300 cursor-pointer hover:bg-[#3b7739] border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]'>
-                            <FaCameraRetro />
-                                Start Identifying 
-                            <FaArrowRight className='relative md:top-1 top-0.5 flex ' />
-                        </button>
+                            <p className='text-gray-700 font-["nunito"] font-medium text-[17px] md:w-[60%] md:pl-4 md:text-xl '>
+                                Take a photo, identify your plant, and get personalized care tips. Your green companion for a healthier, happier graden.
+                            </p>
+                            
+                            {/*  When this fiel change/means user uploads an plant image this will trigger a plantinfo() function */}
+                            <input type="file" ref={plantImageRef} onChange={handleChange} accept='image/*' className='hidden' />
+
+                            <button
+                                onClick={handleButtonClick} 
+                                className='flex relative md:left-5 items-center justify-center w-fit h-fit md:p-2 px-4 py-2 border text-xl md:text-2xl gap-2 rounded-3xl md:px-6 font-bold md:pb-3 bg-[#4F9D4D] text-white transition-all duration-300 cursor-pointer hover:bg-[#3b7739] border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]'>
+                                <FaCameraRetro />
+                                    Start Identifying 
+                                <FaArrowRight className='relative md:top-1 top-0.5 flex ' />
+                            </button>
+
+                        </div>
 
                     </div>
 
                 </div>
-
-            </div>
+            }
+            </section>
     )
 }
 
