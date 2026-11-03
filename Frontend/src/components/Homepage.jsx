@@ -133,8 +133,12 @@ const Homepage = ({setIsPlant, setPlantDetails, setPlantImage}) => {
                 <div className='relative w-full h-screen z-40 flex flex-col items-center md:bg-center md:bg-cover' style={{backgroundImage: `url(${homegb})`}}>
                     
                     <img src={phone_bg} alt="bg" className='absolute top-50 flex md:hidden'/>
+                    
+                    
                     {/* ---- Navbar ---- */}
-                    <Navbar setUserProfile={setUserProfile} />
+                    <Navbar/>
+
+
                     <div className='w-full z-50 flex-1 flex flex-col md:justify-center md:p-0 pt-5 relative md:top-20 md:left-22'>
                         {/*  Sub titles */}
                         <h1 className='relative hidden md:left-18 md:-top-25 text-[#4F9D4D] shrink-0 md:w-[25%] h-fit p-2 border md:flex items-center justify-center gap-2 rounded-3xl text-xl font-semibold font-["nunito"] bg-[#A8D58D] border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]'>
