@@ -9,14 +9,10 @@ import { MdOutlineCamera } from "react-icons/md";
 
 import camera from '../assets/Desktop_image/camera.png';
 
-  const Navbar = ({setUserProfile}) => {
+  const Navbar = () => {
     const [isMenu, setIsMenu] = useState(false);
     const handleMenu = () => {
       setIsMenu((prev) => !prev)
-    };
-
-    const handleProfile = () =>{
-      setUserProfile((prev) => !prev)
     };
 
     return (
@@ -47,7 +43,7 @@ import camera from '../assets/Desktop_image/camera.png';
                     Gallery
                   </NavLink>
                   <li
-                    onClick={handleProfile} 
+                    // onClick={handleProfile} 
                     className='min-w-20 h-fit py-1 flex items-center justify-center text-[18px] font-["nunito"] px-2 border rounded-2xl border-white font-bold text-gray-600 transition-all duration-150 hover:text-gray-700 hover:border-gray-200 hover:bg-[#E8F5E9]'
                     >
                     Profile
@@ -86,8 +82,7 @@ import camera from '../assets/Desktop_image/camera.png';
                       className='text-[19px] font-["nunito"] font-semibold text-gray-600 flex items-center justify-center w-full transition-all duration-200 hover:bg-gray-200 py-1'>
                       Upload
                     </NavLink>
-                    <button
-                      onClick={handleProfile}  
+                    <button  
                       className='text-[19px] font-["nunito"] font-semibold text-gray-600 flex items-center justify-center w-full transition-all duration-200 hover:bg-gray-200 py-1'>
                       Profile
                     </button>
