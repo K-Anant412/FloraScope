@@ -101,7 +101,7 @@ const Profile = () => {
   }
 
   return (
-    <section className='w-full h-screen bg-[#E8F5E9] flex items-center p-5'>
+    <section className='w-full min-w-0 h-screen bg-[#E8F5E9] flex items-center p-5'>
 
       <div className='border-white/40 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)] overflow-hidden w-full h-full border-2 rounded-3xl flex items-center'>
 
@@ -130,7 +130,8 @@ const Profile = () => {
 
         </div>
 
-        <div className='w-full h-full bg-white p-5 flex flex-col items-center pt-10'>
+        <div className='w-full min-w-0 h-full bg-white p-5 flex flex-col items-center gap-15 pt-20'>
+          {/*  ------- Tabs ------- */}
           <div className='w-full h-fit flex items-center justify-center gap-10'>
 
             <div className='w-60.5 h-27 border-2 rounded-2xl bg-[#E8F5E9] border-none flex justify-center flex-col '>
@@ -152,7 +153,76 @@ const Profile = () => {
                 Favorite's:</h1>
               <p className='w-full h-fit text-2xl font-semibold font-["nunito"] flex items-center justify-center'>
                 7</p>
+            
             </div>
+
+          </div>
+
+          {/* ------- Scans ------- */}
+          <div className='w-[87%] h-100 border-2 rounded-2xl bg-[#E8F5E9] 
+          border-none p-5 flex items-center overflow-y-hidden overflow-x-auto gap-10 scrollbar-none'>
+
+            <div className='w-60 h-80 border-2 bg-white rounded-xl shrink-0 flex flex-col p-3 gap-5'>
+              
+              <h1 className='w-full h-fit flex flex-col text-xl font-bold font-["nunito"] text-[#2b532a] shrink-0'>
+                Scan On:
+                <p className='text-gray-600 font-semibold w-full flex items-center justify-center'>12 September 2026</p>
+              </h1>
+
+              {/* ------- Plant Image ------- */}
+              <div className='w-full flex-1 border'></div>
+            </div>
+            <div className='w-60 h-80 border-2 bg-white rounded-xl shrink-0 flex flex-col p-3 gap-5'>
+              
+              <h1 className='w-full h-fit flex flex-col text-xl font-bold font-["nunito"] text-[#2b532a] shrink-0'>
+                Scan On:
+                <p className='text-gray-600 font-semibold w-full flex items-center justify-center'>12 September 2026</p>
+              </h1>
+
+              {/* ------- Plant Image ------- */}
+              <div className='w-full flex-1 border'></div>
+            </div>
+            <div className='w-60 h-80 border-2 bg-white rounded-xl shrink-0 flex flex-col p-3 gap-5'>
+              
+              <h1 className='w-full h-fit flex flex-col text-xl font-bold font-["nunito"] text-[#2b532a] shrink-0'>
+                Scan On:
+                <p className='text-gray-600 font-semibold w-full flex items-center justify-center'>12 September 2026</p>
+              </h1>
+
+              {/* ------- Plant Image ------- */}
+              <div className='w-full flex-1 border'></div>
+            </div>
+            <div className='w-60 h-80 border-2 bg-white rounded-xl shrink-0 flex flex-col p-3 gap-5'>
+              
+              <h1 className='w-full h-fit flex flex-col text-xl font-bold font-["nunito"] text-[#2b532a] shrink-0'>
+                Scan On:
+                <p className='text-gray-600 font-semibold w-full flex items-center justify-center'>12 September 2026</p>
+              </h1>
+
+              {/* ------- Plant Image ------- */}
+              <div className='w-full flex-1 border'></div>
+            </div>
+            <div className='w-60 h-80 border-2 bg-white rounded-xl shrink-0 flex flex-col p-3 gap-5'>
+              
+              <h1 className='w-full h-fit flex flex-col text-xl font-bold font-["nunito"] text-[#2b532a] shrink-0'>
+                Scan On:
+                <p className='text-gray-600 font-semibold w-full flex items-center justify-center'>12 September 2026</p>
+              </h1>
+
+              {/* ------- Plant Image ------- */}
+              <div className='w-full flex-1 border'></div>
+            </div>
+            <div className='w-60 h-80 border-2 bg-white rounded-xl shrink-0 flex flex-col p-3 gap-5'>
+              
+              <h1 className='w-full h-fit flex flex-col text-xl font-bold font-["nunito"] text-[#2b532a] shrink-0'>
+                Scan On:
+                <p className='text-gray-600 font-semibold w-full flex items-center justify-center'>12 September 2026</p>
+              </h1>
+
+              {/* ------- Plant Image ------- */}
+              <div className='w-full flex-1 border'></div>
+            </div>
+
           </div>
 
         </div>
